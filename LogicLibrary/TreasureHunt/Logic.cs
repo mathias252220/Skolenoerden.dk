@@ -1,4 +1,5 @@
-﻿using LogicLibrary.Modeller;
+﻿using LogicLibrary.Enums;
+using LogicLibrary.Modeller;
 using LogicLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,51 @@ namespace LogicLibrary.Logic
             alphabet.Add('Å');
 
             return alphabet;
+        }
+        public OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage)
+        {
+            OutpostModel outpost = new OutpostModel();
+            outpost.Name = outpostName;
+
+            foreach(char letter in outpost.ReturnNameNoSpaces())
+            {
+                outpost.Tasks.Add(CreateTask(letter, keyPage));
+            }
+
+            return outpost;
+        }
+        public TaskModel CreateTask(char letter, KeyPageModel keyPage)
+        {
+            TaskModel task = new TaskModel();
+            Random rnd = new Random();
+
+            foreach (KeyModel key in keyPage.LetterKeys)
+            {
+                if (key.KeyLetter == char.ToUpper(letter))
+                {
+                    task.Answer = key.KeyNumber;
+                }
+            }
+
+
+            task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
+
+            switch (task.TaskType)
+            {
+                case TaskTypeEnum.Plus:
+                    task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
+                    task.VariableTwo = task.Answer - task.VariableOne;
+                    task.Question = $"{task.VariableOne} + {task.VariableTwo} = {task.Answer}";
+                    break;
+
+                case TaskTypeEnum.Minus:
+                    task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 100);
+                    task.VariableTwo = task.VariableOne - task.Answer;
+                    task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
+                    break;
+            }
+
+            return task;
         }
     }
 }

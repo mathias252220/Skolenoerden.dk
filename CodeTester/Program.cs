@@ -11,9 +11,13 @@ public class Program()
 {
     private static void Main(string[] args)
     {
-
-        KeyPageModel keyPage = logic.CreateKeyPage();
+        Run();
     }
-
-
+    
+    private static void Run()
+    {
+        Logic logic = new Logic();
+        KeyPageModel keyPage = logic.CreateKeyPage();
+        logic.CreateOutpost("Skolegaarden", keyPage);
+    }
 }
