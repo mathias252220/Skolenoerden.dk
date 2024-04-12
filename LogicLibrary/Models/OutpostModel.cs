@@ -10,7 +10,7 @@ namespace LogicLibrary.Models
     public class OutpostModel
     {
         public string Name { get; set; }
-        public List<TaskModel> Tasks { get; set; }
+        public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
         public string ReturnNameUnderscored()
         {
             string nameUnderscored = string.Empty;
