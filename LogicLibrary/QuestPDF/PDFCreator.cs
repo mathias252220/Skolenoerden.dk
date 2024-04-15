@@ -89,5 +89,69 @@ namespace LogicLibrary.QuestPDF
 
             document.GeneratePdf("Nøgle.pdf");
         }
+        public void CreateOutpostPagesPDF(List<OutpostModel> outposts)
+        {
+            var document = Document.Create(container =>
+            {
+                for (int i = 0; i < outposts.Count; i++)
+                {
+                    container.Page(page =>
+                    {
+                        page.Size(PageSizes.A5);
+                        page.Margin(2, Unit.Centimetre);
+                        page.DefaultTextStyle(x => x.FontSize(20));
+
+                        page.Header()
+                        .Text(text =>
+                        {
+                            text.AlignCenter();
+                            text.Span(outposts[i].Name).SemiBold().FontSize(48);
+                        });
+
+                        page.Content()
+                        .PaddingVertical(1, Unit.Centimetre)
+                        .Table(table =>
+                        {
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
+                            });
+
+                            if (i == outposts.Count - 1)
+                            {
+                                int leftHalf = outposts[0].Tasks.Count / 2;
+                                int rightHalf = outposts[0].Tasks.Count - leftHalf;
+
+                                for (int j = 0; j < leftHalf; j++)
+                                {
+                                    table.Cell().Row((uint)j + 1).Column(2).AlignCenter().Text(outposts[0].Tasks[leftHalf + j].Question);
+                                }
+                                for (int j = 0; j < rightHalf; j++)
+                                {
+                                    table.Cell().Row((uint)j + 1).Column(1).AlignCenter().Text(outposts[0].Tasks[j].Question);
+                                }
+                            }
+                            else
+                            {
+                                int leftHalf = outposts[i + 1].Tasks.Count / 2;
+                                int rightHalf = outposts[i + 1].Tasks.Count - leftHalf;
+
+                                for (int j = 0; j < rightHalf; j++)
+                                {
+                                    table.Cell().Row((uint)j + 1).Column(2).AlignCenter().Text(outposts[i + 1].Tasks[leftHalf + j].Question);
+                                }
+                                for (int j = 0; j < leftHalf; j++)
+                                {
+                                    table.Cell().Row((uint)j + 1).Column(1).AlignCenter().Text(outposts[i + 1].Tasks[j].Question);
+                                }
+                            }
+                        });
+
+                    });
+                }
+            });
+            document.GeneratePdf("Poster.pdf");
+        }
     }
 }

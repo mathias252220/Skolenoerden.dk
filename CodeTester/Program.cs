@@ -21,8 +21,12 @@ public class Program()
         QuestPDF.Settings.License = LicenseType.Community;
         Logic logic = new Logic();
         KeyPageModel keyPage = logic.CreateKeyPage();
-        logic.CreateOutpost("Skolegaarden", keyPage);
+        List<OutpostModel> outposts = new List<OutpostModel>();
+        outposts.Add(logic.CreateOutpost("Klassen", keyPage));
+        outposts.Add(logic.CreateOutpost("Skolegaarden", keyPage));
+        outposts.Add(logic.CreateOutpost("Børnehaven", keyPage));
         PDFCreator pdfCreator = new PDFCreator();
         pdfCreator.CreateKeyPagePDF(keyPage);
+        pdfCreator.CreateOutpostPagesPDF(outposts);
     }
 }
