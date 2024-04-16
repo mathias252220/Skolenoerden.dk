@@ -14,7 +14,7 @@ namespace LogicLibrary.QuestPDF
 {
     public class PDFCreator
     {
-        public void CreateKeyPagePDF(KeyPageModel keyPage)
+        public IDocument CreateKeyPagePDF(KeyPageModel keyPage)
         {
             var document = Document.Create(container =>
             {
@@ -87,9 +87,9 @@ namespace LogicLibrary.QuestPDF
                 });
             });
 
-            document.GeneratePdf("Nøgle.pdf");
+            return document;
         }
-        public void CreateOutpostPagesPDF(List<OutpostModel> outposts)
+        public IDocument CreateOutpostPagesPDF(List<OutpostModel> outposts)
         {
             var document = Document.Create(container =>
             {
@@ -151,7 +151,12 @@ namespace LogicLibrary.QuestPDF
                     });
                 }
             });
-            document.GeneratePdf("Poster.pdf");
+            return document;
+        }
+
+        public void MergePDFs(IDocument keyPagePDF, IDocument outpostsPDF)
+        {
+            Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
         }
     }
 }
