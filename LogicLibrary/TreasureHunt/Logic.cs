@@ -93,7 +93,7 @@ namespace LogicLibrary.Logic
                 case TaskTypeEnum.Plus:
                     task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
                     task.VariableTwo = task.Answer - task.VariableOne;
-                    task.Question = $"{task.VariableOne} + {task.VariableTwo} = {task.Answer}";
+                    task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
                     break;
 
                 case TaskTypeEnum.Minus:
