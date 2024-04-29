@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLibrary", "LogicLibrar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeTester", "CodeTester\CodeTester.csproj", "{CF1C9F68-158E-4A5A-A9A7-DE30787233FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkattejagtGeneratorWebApp", "SkattejagtGeneratorWebApp\SkattejagtGeneratorWebApp.csproj", "{CAC4F6A5-BE70-4985-A7BF-FB222CBB2C1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkattejagtGeneratorWebApp", "SkattejagtGeneratorWebApp\SkattejagtGeneratorWebApp.csproj", "{CAC4F6A5-BE70-4985-A7BF-FB222CBB2C1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
