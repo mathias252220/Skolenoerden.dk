@@ -1,5 +1,32 @@
-﻿<h3>SkattejagtGenerator</h3>
+﻿@page "/SkattejagtGenerator"
+@rendermode InteractiveServer
+
+<h3>SkattejagtGenerator</h3>
+
+<label>Antal poster: @outposts.Count</label>
+<button class="btn btn-primary" @onclick="AddOutpost">+</button>
+<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
+
+@for (int i = 0; i < outposts.Count; i++)
+{
+	<label for="outpost[i]">Post @(i+1)</label>
+	<InputText id="outpost[i]"/>
+}
 
 @code {
+	public List<string> outposts { get; set; } = new List<string>();
 
+	private void AddOutpost()
+	{
+		outposts.Add(string.Empty);
+	}
+
+	private void SubtractOutpost()
+	{
+		outposts.RemoveAt(outposts.Count - 1);
+	}
+	private void PrintPDF()
+	{
+		
+	}
 }
