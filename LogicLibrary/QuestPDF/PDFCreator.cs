@@ -14,6 +14,12 @@ namespace LogicLibrary.QuestPDF
 {
     public class PDFCreator
     {
+        public void PrintFullPDF(KeyPageModel keyPage, List<OutpostModel> outposts)
+        {
+            IDocument keyPagePDF = CreateKeyPagePDF(keyPage);
+            IDocument outpostsPDF = CreateOutpostPagesPDF(outposts);
+            Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
+		}
         public IDocument CreateKeyPagePDF(KeyPageModel keyPage)
         {
             var document = Document.Create(container =>
@@ -152,11 +158,6 @@ namespace LogicLibrary.QuestPDF
                 }
             });
             return document;
-        }
-
-        public void MergePDFs(IDocument keyPagePDF, IDocument outpostsPDF)
-        {
-            Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
         }
     }
 }
