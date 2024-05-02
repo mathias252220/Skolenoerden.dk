@@ -19,6 +19,7 @@ namespace LogicLibrary.QuestPDF
             IDocument keyPagePDF = CreateKeyPagePDF(keyPage);
             IDocument outpostsPDF = CreateOutpostPagesPDF(outposts);
             Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
+			System.Diagnostics.Process.Start("Skattejagt.pdf");
 		}
         public IDocument CreateKeyPagePDF(KeyPageModel keyPage)
         {
