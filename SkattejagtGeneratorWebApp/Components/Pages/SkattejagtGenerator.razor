@@ -52,5 +52,6 @@
 		PDFCreator pdfCreator = new PDFCreator();
 
 		pdfCreator.PrintFullPDF(keyPage, outpostsFinal);
+		return File("Skattejagt.pdf", "application/pdf");
 	}
 }
