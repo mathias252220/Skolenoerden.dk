@@ -23,10 +23,9 @@ public class Program()
         KeyPageModel keyPage = logic.CreateKeyPage();
         List<OutpostModel> outposts = new List<OutpostModel>();
         outposts.Add(logic.CreateOutpost("Klassen", keyPage));
-        outposts.Add(logic.CreateOutpost("Skolegaarden", keyPage));
+        outposts.Add(logic.CreateOutpost("Skolegården", keyPage));
         outposts.Add(logic.CreateOutpost("Børnehaven", keyPage));
         PDFCreator pdfCreator = new PDFCreator();
-        pdfCreator.CreateKeyPagePDF(keyPage);
-        pdfCreator.CreateOutpostPagesPDF(outposts);
+        pdfCreator.PrintFullPDF(keyPage, outposts);
     }
 }

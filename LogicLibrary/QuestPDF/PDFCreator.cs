@@ -9,6 +9,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LogicLibrary.QuestPDF
 {
@@ -18,7 +19,8 @@ namespace LogicLibrary.QuestPDF
         {
             IDocument keyPagePDF = CreateKeyPagePDF(keyPage);
             IDocument outpostsPDF = CreateOutpostPagesPDF(outposts);
-            Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
+            Document.Merge(keyPagePDF, outpostsPDF).ShowInPreviewer();
+
 		}
         public IDocument CreateKeyPagePDF(KeyPageModel keyPage)
         {
@@ -103,11 +105,11 @@ namespace LogicLibrary.QuestPDF
                 {
                     container.Page(page =>
                     {
-                        page.Size(PageSizes.A5);
-                        page.Margin(2, Unit.Centimetre);
+                        page.Size(PageSizes.A5.Landscape());
                         page.DefaultTextStyle(x => x.FontSize(20));
 
                         page.Header()
+                        .PaddingVertical(5, Unit.Point)
                         .Text(text =>
                         {
                             text.AlignCenter();
@@ -115,7 +117,6 @@ namespace LogicLibrary.QuestPDF
                         });
 
                         page.Content()
-                        .PaddingVertical(1, Unit.Centimetre)
                         .Table(table =>
                         {
                             table.ColumnsDefinition(columns =>
@@ -131,11 +132,11 @@ namespace LogicLibrary.QuestPDF
 
                                 for (int j = 0; j < leftHalf; j++)
                                 {
-                                    table.Cell().Row((uint)j + 1).Column(2).AlignCenter().Text(outposts[0].Tasks[leftHalf + j].Question);
+                                    table.Cell().Row((uint)j + 1).Column(2).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
                                 }
                                 for (int j = 0; j < rightHalf; j++)
                                 {
-                                    table.Cell().Row((uint)j + 1).Column(1).AlignCenter().Text(outposts[0].Tasks[j].Question);
+                                    table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
                                 }
                             }
                             else
@@ -143,14 +144,29 @@ namespace LogicLibrary.QuestPDF
                                 int leftHalf = outposts[i + 1].Tasks.Count / 2;
                                 int rightHalf = outposts[i + 1].Tasks.Count - leftHalf;
 
-                                for (int j = 0; j < rightHalf; j++)
-                                {
-                                    table.Cell().Row((uint)j + 1).Column(2).AlignCenter().Text(outposts[i + 1].Tasks[leftHalf + j].Question);
-                                }
                                 for (int j = 0; j < leftHalf; j++)
                                 {
-                                    table.Cell().Row((uint)j + 1).Column(1).AlignCenter().Text(outposts[i + 1].Tasks[j].Question);
+                                    table.Cell().Row((uint)j + 1).Column(2).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i + 1].Tasks[leftHalf + j].Question}");
                                 }
+                                for (int j = 0; j < rightHalf; j++)
+                                {
+                                    table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
+                                }
+                            }
+                        });
+
+                        page.Footer()
+                        .PaddingVertical(5, Unit.Point)
+                        .Text(text =>
+                        {
+                            text.AlignCenter();
+                            if (i == outposts.Count - 1)
+                            {
+                                text.Span(outposts[0].ReturnNameUnderscored()).FontSize(48);
+                            }
+                            else
+                            {
+                                text.Span(outposts[i + 1].ReturnNameUnderscored()).FontSize(48);
                             }
                         });
 
