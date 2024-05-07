@@ -20,7 +20,6 @@ namespace LogicLibrary.QuestPDF
             IDocument keyPagePDF = CreateKeyPagePDF(keyPage, groups);
             IDocument outpostsPDF = CreateOutpostPagesPDF(outposts, groups);
             Document.Merge(keyPagePDF, outpostsPDF).ShowInPreviewer();
-
 		}
         public IDocument CreateKeyPagePDF(KeyPageModel keyPage, List<GroupModel> groups)
         {
