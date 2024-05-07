@@ -25,7 +25,17 @@ public class Program()
         outposts.Add(logic.CreateOutpost("Klassen", keyPage));
         outposts.Add(logic.CreateOutpost("Skolegården", keyPage));
         outposts.Add(logic.CreateOutpost("Børnehaven", keyPage));
+        outposts.Add(logic.CreateOutpost("Legepladsen", keyPage));
+        int numberOfGroups = 6;
+        List<GroupModel> groups = new();
+        for (int i = 0; i < numberOfGroups; i++)
+        {
+            GroupModel group = new GroupModel();
+            group.groupNumber = i + 1;
+            group.firstOutpost = i + 1;
+            groups.Add(group);
+        }
         PDFCreator pdfCreator = new PDFCreator();
-        pdfCreator.PrintFullPDF(keyPage, outposts);
+        pdfCreator.PrintFullPDF(keyPage, outposts, groups);
     }
 }
