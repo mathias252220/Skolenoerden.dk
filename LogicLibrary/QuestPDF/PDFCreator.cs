@@ -15,13 +15,12 @@ namespace LogicLibrary.QuestPDF
 {
     public class PDFCreator
     {
-        public void PrintFullPDF(KeyPageModel keyPage, List<OutpostModel> outposts, List<GroupModel> groups)
+        public IDocument PrintFullPDF(KeyPageModel keyPage, List<OutpostModel> outposts, List<GroupModel> groups)
         {
             IDocument keyPagePDF = CreateKeyPagePDF(keyPage, groups);
             IDocument outpostsPDF = CreateOutpostPagesPDF(outposts, groups);
-            Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
 
-
+            return Document.Merge(keyPagePDF, outpostsPDF);
 		}
         public IDocument CreateKeyPagePDF(KeyPageModel keyPage, List<GroupModel> groups)
         {
