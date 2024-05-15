@@ -39,7 +39,7 @@
 		outposts.RemoveAt(outposts.Count - 1);
 	}
 
-	private IResult PrintPDF()
+	private void PrintPDF()
 	{
 		Logic logic = new Logic();
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
@@ -63,6 +63,7 @@
 
 		var skattejagtTemp = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
 		var skattejagt = skattejagtTemp.GeneratePdf();
-		return Results.File(skattejagt, "application/pdf", "skattejagt.pdf");
+
+		Results.File(skattejagt, "application/pdf", "skattejagt.pdf");
 	}
 }
