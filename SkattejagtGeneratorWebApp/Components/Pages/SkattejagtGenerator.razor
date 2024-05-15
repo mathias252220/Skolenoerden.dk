@@ -1,0 +1,57 @@
+﻿@page "/SkattejagtGenerator"
+@rendermode InteractiveServer
+
+<h3>SkattejagtGenerator</h3>
+
+<label role="status">Antal poster: @numberOfOutposts</label>
+<button class="btn btn-primary" @onclick="AddOutpost">+</button>
+<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
+
+<EditForm Model="outposts" OnValidSubmit="PrintPDF">
+
+	@for (int i = 0; i < numberOfOutposts; i++)
+	{
+		int local = i;
+		<p>Post @(local + 1)</p>
+		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control"/>
+	}
+
+	<button class="btn btn-primary" type="submit">Print</button>
+</EditForm>
+
+<a href="Skattejagt.pdf" download="skattejagt">Download the pdf</a>
+
+@code {
+	private List<string> outposts = new();
+
+	private int numberOfOutposts = 0;
+
+	private void AddOutpost()
+	{
+		numberOfOutposts++;
+		outposts.Add(string.Empty);
+	}
+
+	private void SubtractOutpost()
+	{
+		numberOfOutposts--;
+		outposts.RemoveAt(outposts.Count - 1);
+	}
+
+	private void PrintPDF()
+	{
+		Logic logic = new Logic();
+		KeyPageModel keyPage = logic.CreateKeyPage();
+		List<OutpostModel> outpostsFinal = new();
+		foreach (string name in outposts)
+		{
+			OutpostModel tempOutpost = logic.CreateOutpost(name, keyPage);
+			outpostsFinal.Add(tempOutpost);
+		}
+		QuestPDF.Settings.License = LicenseType.Community;
+		PDFCreator pdfCreator = new PDFCreator();
+
+		pdfCreator.PrintFullPDF(keyPage, outpostsFinal);
+		return File("Skattejagt.pdf", "application/pdf");
+	}
+}
