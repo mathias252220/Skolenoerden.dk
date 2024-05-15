@@ -1,5 +1,6 @@
 ﻿@page "/SkattejagtGenerator"
 @rendermode InteractiveServer
+@inject IJSRuntime JS
 
 <h3>SkattejagtGenerator</h3>
 
@@ -7,8 +8,9 @@
 <button class="btn btn-primary" @onclick="AddOutpost">+</button>
 <button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
-<EditForm Model="outposts" OnValidSubmit="PrintPDF">
+<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
 
+<EditForm Model="outposts" OnValidSubmit="PrintPDF">
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
 		int local = i;
@@ -16,14 +18,12 @@
 		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control"/>
 	}
 
-	<button class="btn btn-primary" type="submit">Print</button>
+	<button class="btn btn-primary" type="submit">Generer skattejagt</button>
 </EditForm>
-
-<a href="Skattejagt.pdf" download="skattejagt">Download the pdf</a>
 
 @code {
 	private List<string> outposts = new();
-
+	string numberOfGroupsInput = string.Empty;
 	private int numberOfOutposts = 0;
 
 	private void AddOutpost()
@@ -38,9 +38,18 @@
 		outposts.RemoveAt(outposts.Count - 1);
 	}
 
-	private void PrintPDF()
+	private async Task PrintPDF()
 	{
 		Logic logic = new Logic();
+		int numberOfGroups = int.Parse(numberOfGroupsInput);
+		List<GroupModel> groups = new();
+		for (int i = 0; i < numberOfGroups; i++)
+		{
+			GroupModel group = new GroupModel();
+			group.groupNumber = i + 1;
+			group.firstOutpost = i + 1;
+			groups.Add(group);
+		}
 		KeyPageModel keyPage = logic.CreateKeyPage();
 		List<OutpostModel> outpostsFinal = new();
 		foreach (string name in outposts)
@@ -51,7 +60,19 @@
 		QuestPDF.Settings.License = LicenseType.Community;
 		PDFCreator pdfCreator = new PDFCreator();
 
-		pdfCreator.PrintFullPDF(keyPage, outpostsFinal);
-		return File("Skattejagt.pdf", "application/pdf");
+		var skattejagtTemp = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
+		skattejagtTemp.GeneratePdf("skattejagt.pdf");
+
+		var fileStream = GetFileStream();
+		var fileName = "skattejagt.pdf";
+
+		using var streamRef = new DotNetStreamReference(stream: fileStream);
+
+		await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+	}
+
+	private Stream GetFileStream()
+	{
+		return File.OpenRead("skattejagt.pdf");
 	}
 }
