@@ -1,5 +1,6 @@
 ﻿@page "/SkattejagtGenerator"
 @rendermode InteractiveServer
+@inject IJSRuntime JS
 
 <h3>SkattejagtGenerator</h3>
 
@@ -9,7 +10,7 @@
 
 <InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
 
-<EditForm Model="outposts" OnValidSubmit="PrintPDF">	
+<EditForm Model="outposts" OnValidSubmit="PrintPDF">
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
 		int local = i;
@@ -17,10 +18,8 @@
 		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control"/>
 	}
 
-	<button class="btn btn-primary" type="submit">Print</button>
+	<button class="btn btn-primary" type="submit">Generer skattejagt</button>
 </EditForm>
-
-<a href="Skattejagt.pdf" download="skattejagt">Download the pdf</a>
 
 @code {
 	private List<string> outposts = new();
@@ -39,7 +38,7 @@
 		outposts.RemoveAt(outposts.Count - 1);
 	}
 
-	private void PrintPDF()
+	private async Task PrintPDF()
 	{
 		Logic logic = new Logic();
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
@@ -62,8 +61,18 @@
 		PDFCreator pdfCreator = new PDFCreator();
 
 		var skattejagtTemp = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
-		var skattejagt = skattejagtTemp.GeneratePdf();
+		skattejagtTemp.GeneratePdf("skattejagt.pdf");
 
-		Results.File(skattejagt, "application/pdf", "skattejagt.pdf");
+		var fileStream = GetFileStream();
+		var fileName = "skattejagt.pdf";
+
+		using var streamRef = new DotNetStreamReference(stream: fileStream);
+
+		await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+	}
+
+	private Stream GetFileStream()
+	{
+		return File.OpenRead("skattejagt.pdf");
 	}
 }

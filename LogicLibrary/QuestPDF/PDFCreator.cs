@@ -141,30 +141,30 @@ namespace LogicLibrary.QuestPDF
                                 });
                                 if (i == outposts.Count - 1)
                                 {
-                                    int leftHalf = outposts[0].Tasks.Count / 2;
-                                    int rightHalf = outposts[0].Tasks.Count - leftHalf;
+                                    int rightHalf = outposts[0].Tasks.Count / 2;
+                                    int leftHalf = outposts[0].Tasks.Count - rightHalf;
 
                                     for (int j = 0; j < leftHalf; j++)
                                     {
-                                        table.Cell().Row((uint)j + 1).Column(2).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                        table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
                                     }
                                     for (int j = 0; j < rightHalf; j++)
                                     {
-                                        table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                        table.Cell().Row((uint)j + 1).Column(2).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
                                     }
                                 }
                                 else
                                 {
-                                    int leftHalf = outposts[i + 1].Tasks.Count / 2;
-                                    int rightHalf = outposts[i + 1].Tasks.Count - leftHalf;
+                                    int rightHalf = outposts[i + 1].Tasks.Count / 2;
+                                    int leftHalf = outposts[i + 1].Tasks.Count - rightHalf;
 
-                                    for (int j = 0; j < leftHalf; j++)
+									for (int j = 0; j < leftHalf; j++)
+									{
+										table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
+									}
+									for (int j = 0; j < rightHalf; j++)
                                     {
                                         table.Cell().Row((uint)j + 1).Column(2).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i + 1].Tasks[leftHalf + j].Question}");
-                                    }
-                                    for (int j = 0; j < rightHalf; j++)
-                                    {
-                                        table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
                                     }
                                 }
                             });
