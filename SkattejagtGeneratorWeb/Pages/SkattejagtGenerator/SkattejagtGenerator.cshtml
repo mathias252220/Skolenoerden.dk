@@ -2,3 +2,25 @@
 @model SkattejagtGeneratorWeb.Pages.SkattejagtGenerator.SkattejagtGeneratorModel
 @{
 }
+
+<h1>Skattejagtsgenerator</h1>
+
+<p></p>
+
+<form method="post">
+	<div class="form-group">
+		<label>Antal poster: @Model.numberOfOutposts</label>
+		<button type="button" class="btn btn-primary" onclick="@((e) -> outposts.add(new String.empty()))">+</button>
+		<button type="button" class="btn btn-primary" onclick="">-</button>
+
+		@for (int i = 0; i < Model.numberOfOutposts; i++)
+		{
+			<label asp-for="outposts[i]">Post @(i+1)</label>
+			<input asp-for="outposts[i]" type="text" placeholder="Postenavn">
+		}
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</div>
+</form>
+
+	
