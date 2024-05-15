@@ -121,7 +121,6 @@ namespace LogicLibrary.QuestPDF
                             page.DefaultTextStyle(x => x.FontSize(20));
 
                             page.Header()
-                            .PaddingVertical(5, Unit.Point)
                             .Table(table =>
                             {
                                 table.ColumnsDefinition(columns =>
