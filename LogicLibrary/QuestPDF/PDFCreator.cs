@@ -21,6 +21,7 @@ namespace LogicLibrary.QuestPDF
             IDocument outpostsPDF = CreateOutpostPagesPDF(outposts, groups);
             Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
 
+
 		}
         public IDocument CreateKeyPagePDF(KeyPageModel keyPage, List<GroupModel> groups)
         {
