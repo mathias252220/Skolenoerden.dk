@@ -19,7 +19,9 @@ namespace LogicLibrary.QuestPDF
         {
             IDocument keyPagePDF = CreateKeyPagePDF(keyPage, groups);
             IDocument outpostsPDF = CreateOutpostPagesPDF(outposts, groups);
-            Document.Merge(keyPagePDF, outpostsPDF).ShowInPreviewer();
+            Document.Merge(keyPagePDF, outpostsPDF).GeneratePdf("Skattejagt.pdf");
+
+
 		}
         public IDocument CreateKeyPagePDF(KeyPageModel keyPage, List<GroupModel> groups)
         {
@@ -120,7 +122,6 @@ namespace LogicLibrary.QuestPDF
                             page.DefaultTextStyle(x => x.FontSize(20));
 
                             page.Header()
-                            .PaddingVertical(5, Unit.Point)
                             .Table(table =>
                             {
                                 table.ColumnsDefinition(columns =>

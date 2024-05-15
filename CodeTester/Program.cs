@@ -22,11 +22,10 @@ public class Program()
         Logic logic = new Logic();
         KeyPageModel keyPage = logic.CreateKeyPage();
         List<OutpostModel> outposts = new List<OutpostModel>();
-        outposts.Add(logic.CreateOutpost("Klassen", keyPage));
-        outposts.Add(logic.CreateOutpost("Skolegården", keyPage));
-        outposts.Add(logic.CreateOutpost("Børnehaven", keyPage));
+        outposts.Add(logic.CreateOutpost("Bentes Kontor", keyPage));
         outposts.Add(logic.CreateOutpost("Legepladsen", keyPage));
-        int numberOfGroups = 6;
+        outposts.Add(logic.CreateOutpost("Fodboldbanen", keyPage));
+        int numberOfGroups = 1;
         List<GroupModel> groups = new();
         for (int i = 0; i < numberOfGroups; i++)
         {
