@@ -1,10 +1,11 @@
 ﻿using LogicLibrary.Models;
 
-namespace LogicLibrary.Logic
+namespace LogicLibrary.TreasureHunt
 {
     public interface ILogic
     {
-        List<char> CreateAlphabet();
-        KeyPageModel CreateKeyPage();
-    }
+		KeyPageModel CreateKeyPage();
+		TaskModel CreateTask(char letter, KeyPageModel keyPage);
+		OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage);
+	}
 }

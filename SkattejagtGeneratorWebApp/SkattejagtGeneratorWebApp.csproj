@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="25.2.4" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="25.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj" />
   </ItemGroup>
 

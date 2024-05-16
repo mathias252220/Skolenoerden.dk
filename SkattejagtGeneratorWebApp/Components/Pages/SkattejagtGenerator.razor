@@ -8,9 +8,16 @@
 <button class="btn btn-primary" @onclick="AddOutpost">+</button>
 <button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
-<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
+<SfDropDownList TValue="string" TItem="GradeModel" Placeholder="Vælg klassetrin" DataSource="@Grades">
+	<DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
+</SfDropDownList>
+
 
 <EditForm Model="outposts" OnValidSubmit="PrintPDF">
+	
+
+	<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
+	
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
 		int local = i;
@@ -23,6 +30,11 @@
 
 @code {
 	private List<string> outposts = new();
+	List<GradeModel> Grades = new()
+	{
+		new GradeModel() {ID = "0", Text = "0. klasse" },
+		new GradeModel() {ID = "1+2", Text = "1. og 2. klasse" }
+	};
 	string numberOfGroupsInput = string.Empty;
 	private int numberOfOutposts = 0;
 
@@ -40,12 +52,13 @@
 
 	private async Task PrintPDF()
 	{
-		Logic logic = new Logic();
+
+		LogicOneTwo logic = new();
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		List<GroupModel> groups = new();
 		for (int i = 0; i < numberOfGroups; i++)
 		{
-			GroupModel group = new GroupModel();
+			GroupModel group = new();
 			group.groupNumber = i + 1;
 			group.firstOutpost = i + 1;
 			groups.Add(group);
