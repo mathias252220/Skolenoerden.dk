@@ -18,7 +18,7 @@ namespace LogicLibrary.Factories
         public ILogic Create(string input)
         {
             var set = this.factory();
-            ILogic output = set.Where(x => x.grade.Equals(input)).First();
+            ILogic output = set.Where(x => x.grade == input).First();
             return output;
         }
     }

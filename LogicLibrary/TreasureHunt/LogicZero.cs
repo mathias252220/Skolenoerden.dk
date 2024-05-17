@@ -1,7 +1,6 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
-using LogicLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace LogicLibrary.TreasureHunt
 {
 	public class LogicZero : ILogic
 	{
-		public GradeEnum grade { get; set; } = GradeEnum.GradeZero;
+		public string grade { get; set; } = "GradeZero";
         public KeyPageModel CreateKeyPage()
 		{
 			KeyPageModel keyPage = new();
@@ -30,7 +29,7 @@ namespace LogicLibrary.TreasureHunt
 				do
 				{
 					unique = true;
-					number = rnd.Next(1, 30);
+					number = rnd.Next(1, 31);
 
 					foreach (KeyModel entry in keyPage.LetterKeys)
 					{

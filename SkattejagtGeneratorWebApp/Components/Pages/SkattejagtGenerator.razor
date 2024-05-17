@@ -9,13 +9,16 @@
 <button class="btn btn-primary" @onclick="AddOutpost">+</button>
 <button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
-<SfDropDownList TItem="GradeModel" TValue="string" DataSource="Grades">
-	<DropDownListFieldSettings Text="Name" Value="ID"></DropDownListFieldSettings>
-	<DropDownListEvents TValue="string" TItem="GradeModel" ValueChange="ChooseGrade"></DropDownListEvents>
-</SfDropDownList>
+
 
 <EditForm Model="outposts" OnValidSubmit="PrintPDF">
 	
+	<select class="form-select" @bind="gradeInput">
+		<option selected>Vælg klassetrin</option>
+		<option value="GradeZero">0. klasse</option>
+		<option value="GradeOneTwo">1. og 2. klasse</option>
+	</select>
+
 	<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
 	
 	@for (int i = 0; i < numberOfOutposts; i++)
@@ -32,19 +35,9 @@
 	private List<string> outposts = new();
 	string numberOfGroupsInput = string.Empty;
 	private int numberOfOutposts = 0;
-	private List<GradeModel> Grades = new List<GradeModel>
-	{
-		new GradeModel() { Name = "0. klasse", ID = "GradeZero" },
-		new GradeModel() { Name = "1. og 2. klasse", ID = "GradeOneTwo" }
-	};
+	string? gradeInput;
 
 	ILogic? logic;
-	
-
-	private void ChooseGrade(ChangeEventArgs<string, GradeModel> args)
-	{
-		logic = logicFactory.Create(args.Value);
-	}
 
 	private void AddOutpost()
 	{
@@ -66,6 +59,7 @@
 	private async Task PrintPDF()
 	{
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
+		logic = logicFactory.Create(gradeInput);
 		List<GroupModel> groups = new();
 		for (int i = 0; i < numberOfGroups; i++)
 		{

@@ -5,7 +5,7 @@ namespace LogicLibrary.TreasureHunt
 {
     public interface ILogic
     {
-        public GradeEnum grade { get; set; }
+        public string grade { get; set; }
         KeyPageModel CreateKeyPage();
 		TaskModel CreateTask(char letter, KeyPageModel keyPage);
 		OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage);
