@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace LogicLibrary.Enums
 {
-    public enum TaskTypeEnum
-    {
-        Plus,
-        Minus,
-        Gange,
-        Division
-    }
+	public enum GradeEnum
+	{
+		GradeZero,
+		GradeOneTwo
+	}
 }

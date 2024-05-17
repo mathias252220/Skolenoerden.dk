@@ -12,6 +12,7 @@ namespace LogicLibrary.TreasureHunt
 {
     public class LogicOneTwo : ILogic
     {
+        public GradeEnum grade { get; set; } = GradeEnum.GradeOneTwo;
         public KeyPageModel CreateKeyPage()
         {
             KeyPageModel keyPage = new();

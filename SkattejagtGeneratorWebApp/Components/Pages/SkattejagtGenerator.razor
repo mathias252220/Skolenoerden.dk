@@ -1,6 +1,7 @@
 ﻿@page "/SkattejagtGenerator"
 @rendermode InteractiveServer
 @inject IJSRuntime JS
+@inject ILogicFactory logicFactory
 
 <h3>SkattejagtGenerator</h3>
 
@@ -8,14 +9,13 @@
 <button class="btn btn-primary" @onclick="AddOutpost">+</button>
 <button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
-<SfDropDownList TValue="string" TItem="GradeModel" Placeholder="Vælg klassetrin" DataSource="@Grades">
-	<DropDownListFieldSettings Value="ID" Text="Text"></DropDownListFieldSettings>
+<SfDropDownList TItem="GradeModel" TValue="string" DataSource="Grades">
+	<DropDownListFieldSettings Text="Name" Value="ID"></DropDownListFieldSettings>
+	<DropDownListEvents TValue="string" TItem="GradeModel" ValueChange="ChooseGrade"></DropDownListEvents>
 </SfDropDownList>
-
 
 <EditForm Model="outposts" OnValidSubmit="PrintPDF">
 	
-
 	<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
 	
 	@for (int i = 0; i < numberOfOutposts; i++)
@@ -30,13 +30,21 @@
 
 @code {
 	private List<string> outposts = new();
-	List<GradeModel> Grades = new()
-	{
-		new GradeModel() {ID = "0", Text = "0. klasse" },
-		new GradeModel() {ID = "1+2", Text = "1. og 2. klasse" }
-	};
 	string numberOfGroupsInput = string.Empty;
 	private int numberOfOutposts = 0;
+	private List<GradeModel> Grades = new List<GradeModel>
+	{
+		new GradeModel() { Name = "0. klasse", ID = "GradeZero" },
+		new GradeModel() { Name = "1. og 2. klasse", ID = "GradeOneTwo" }
+	};
+
+	ILogic? logic;
+	
+
+	private void ChooseGrade(ChangeEventArgs<string, GradeModel> args)
+	{
+		logic = logicFactory.Create(args.Value);
+	}
 
 	private void AddOutpost()
 	{
@@ -50,10 +58,13 @@
 		outposts.RemoveAt(outposts.Count - 1);
 	}
 
+	private Stream GetFileStream()
+	{
+		return File.OpenRead("skattejagt.pdf");
+	}
+
 	private async Task PrintPDF()
 	{
-
-		LogicOneTwo logic = new();
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		List<GroupModel> groups = new();
 		for (int i = 0; i < numberOfGroups; i++)
@@ -84,8 +95,4 @@
 		await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
 	}
 
-	private Stream GetFileStream()
-	{
-		return File.OpenRead("skattejagt.pdf");
-	}
 }

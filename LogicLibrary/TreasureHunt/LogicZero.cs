@@ -1,6 +1,7 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
+using LogicLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace LogicLibrary.TreasureHunt
 {
 	public class LogicZero : ILogic
 	{
-		public KeyPageModel CreateKeyPage()
+		public GradeEnum grade { get; set; } = GradeEnum.GradeZero;
+        public KeyPageModel CreateKeyPage()
 		{
 			KeyPageModel keyPage = new();
 			Random rnd = new();

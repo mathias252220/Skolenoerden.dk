@@ -8,7 +8,7 @@ namespace LogicLibrary.Models
 {
     public class GradeModel
     {
+        public string Name { get; set; }
         public string ID { get; set; }
-        public string Text { get; set; }
     }
 }

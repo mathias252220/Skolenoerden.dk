@@ -1,14 +1,21 @@
 using SkattejagtGeneratorWebApp.Components;
 using Syncfusion.Blazor;
+using LogicLibrary.Factories;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddLogicFactory();
 
 var app = builder.Build();
+
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NBaF1cXmhMYVFyWmFZfVpgdl9DYlZVQWYuP1ZhSXxXdkBiXn9cdXZRQ2RbUkY=");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
