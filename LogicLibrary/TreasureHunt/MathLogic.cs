@@ -26,14 +26,13 @@ public static class MathLogic
 
 		return factors;
 	}
-
-	public static List<int> LimitFactors(List<int> factors, int maxValue)
+	public static List<int> LimitOneFactor(List<int> factors, int maxValue)
 	{
-		List<int> newFactors = new();
-
 		IEnumerable<int> query = from number in factors
 								 where number > 1 && number <= maxValue
 								 select number;
+
+		List<int> newFactors = new();
 
 		foreach (int factor in query)
 		{
@@ -41,6 +40,22 @@ public static class MathLogic
 		}
 
 		return newFactors;
+	}
+	public static List<int> LimitTwoFactors(List<int> factors, int maxValue, int product)
+	{
+		List<int> newFactors = LimitOneFactor(factors, maxValue);
+
+		List<int> newFactors2 = new();
+
+		foreach(int factor in newFactors)
+		{
+			int newFactor = product / factor;
+			newFactors2.Add(newFactor);
+		}
+
+		List<int> factorsFinal = LimitOneFactor(newFactors, maxValue);
+
+		return factorsFinal;
 	}
 	public static List<int> CreateProducts(int maxFactor)
 	{

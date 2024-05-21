@@ -1,12 +1,12 @@
 ﻿using LogicLibrary.Modeller;
-using LogicLibrary.Enums;
 using LogicLibrary.Models;
+using LogicLibrary.Enums;
 
 namespace LogicLibrary.TreasureHunt;
 
-public class LogicThree : ILogic
+public class LogicFour : ILogic
 {
-	public string grade { get; set; } = "GradeThree";
+	public string grade { get; set; } = "GradeFour";
 
 	public KeyPageModel CreateKeyPage()
 	{
@@ -16,12 +16,13 @@ public class LogicThree : ILogic
 		int number;
 		AlphabetModel alphabet = new();
 		alphabet.Alphabet = alphabet.CreateAlphabet();
-		List<int> products = MathLogic.CreateProducts(10);
+		List<int> products = MathLogic.CreateProducts(100);
 
 		foreach (char c in alphabet.Alphabet)
 		{
 			KeyModel key = new();
 			key.KeyLetter = c;
+
 
 			do
 			{
@@ -30,8 +31,8 @@ public class LogicThree : ILogic
 				if (rnd.Next(0, 3) == 0)
 				{
 					number = products[rnd.Next(products.Count)];
-
-				} else
+				}
+				else
 				{
 					number = rnd.Next(1, 1001);
 				}
@@ -79,11 +80,11 @@ public class LogicThree : ILogic
 		}
 
 		List<int> possibleFactors = MathLogic.GetFactors(Convert.ToInt16(task.Answer));
-		possibleFactors = MathLogic.LimitTwoFactors(possibleFactors, 10, Convert.ToInt16(task.Answer));
+		possibleFactors = MathLogic.LimitOneFactor(possibleFactors, 100);
 
-		if (possibleFactors.Count > 0 && task.Answer <= 100)
+		if (possibleFactors.Count > 0 && task.Answer <= 1000)
 		{
-			task.TaskType = TaskTypeEnum.Gange;
+			task.TaskType = (TaskTypeEnum)rnd.Next(0, 3);
 		}
 		else
 		{
