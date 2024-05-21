@@ -4,9 +4,9 @@ using LogicLibrary.Models;
 
 namespace LogicLibrary.TreasureHunt
 {
-    public class LogicOneTwo : ILogic
+    public class LogicTwo : ILogic
     {
-        public string grade { get; set; } = "GradeOneTwo";
+        public string grade { get; set; } = "GradeTwo";
         public KeyPageModel CreateKeyPage()
         {
             KeyPageModel keyPage = new();

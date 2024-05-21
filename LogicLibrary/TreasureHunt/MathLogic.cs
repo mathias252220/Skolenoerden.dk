@@ -26,10 +26,10 @@ public static class MathLogic
 
 		return factors;
 	}
-	public static List<int> LimitOneFactor(List<int> factors, int maxValue)
+	public static List<int> LimitOneFactor(List<int> factors, int maxFactorValue)
 	{
 		IEnumerable<int> query = from number in factors
-								 where number > 1 && number <= maxValue
+								 where number > 1 && number <= maxFactorValue
 								 select number;
 
 		List<int> newFactors = new();
@@ -41,9 +41,9 @@ public static class MathLogic
 
 		return newFactors;
 	}
-	public static List<int> LimitTwoFactors(List<int> factors, int maxValue, int product)
+	public static List<int> LimitTwoFactors(List<int> factors, int maxFactorValue, int product)
 	{
-		List<int> newFactors = LimitOneFactor(factors, maxValue);
+		List<int> newFactors = LimitOneFactor(factors, maxFactorValue);
 
 		List<int> newFactors2 = new();
 
@@ -53,19 +53,19 @@ public static class MathLogic
 			newFactors2.Add(newFactor);
 		}
 
-		List<int> factorsFinal = LimitOneFactor(newFactors, maxValue);
+		List<int> factorsFinal = LimitOneFactor(newFactors2, maxFactorValue);
 
 		return factorsFinal;
 	}
-	public static List<int> CreateProducts(int maxFactor)
+	public static List<int> CreateProducts(int maxFactor1, int maxFactor2)
 	{
 		List<int> products = new();
 		bool unique;
 		int product;
 
-		for (int i = 2; i <= maxFactor; i++)
+		for (int i = 2; i <= maxFactor1; i++)
 		{
-			for (int j = 2; j <= maxFactor; j++)
+			for (int j = 2; j <= maxFactor2; j++)
 			{
 				unique = true;
 				product = i * j;
@@ -80,5 +80,19 @@ public static class MathLogic
 			}
 		}
 		return products;
+	}
+	public static (int, int) GetMinuendAndSubtrahend()
+	{
+		Random rnd = new();
+
+		int digit1 = rnd.Next(0, 10);
+		int digit2 = rnd.Next(0, 10);
+		int digit3 = rnd.Next(0, 10);
+		int digit4 = rnd.Next(0, 10);
+
+		int minuend = int.Parse(Math.Max(digit1, digit2).ToString() + Math.Max(digit3, digit4).ToString());
+		int subtrahend = int.Parse(Math.Min(digit1, digit2).ToString() + Math.Min(digit3, digit4).ToString());
+
+		return (minuend, subtrahend);
 	}
 }

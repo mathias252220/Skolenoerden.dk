@@ -16,21 +16,25 @@ public class LogicFour : ILogic
 		int number;
 		AlphabetModel alphabet = new();
 		alphabet.Alphabet = alphabet.CreateAlphabet();
-		List<int> products = MathLogic.CreateProducts(100);
+		List<int> products = MathLogic.CreateProducts(10, 100);
 
 		foreach (char c in alphabet.Alphabet)
 		{
 			KeyModel key = new();
 			key.KeyLetter = c;
 
-
 			do
 			{
 				unique = true;
+				int answerTypeInt = rnd.Next(0, 4);
 
-				if (rnd.Next(0, 3) == 0)
+				if (answerTypeInt == 0)
 				{
 					number = products[rnd.Next(products.Count)];
+				}
+				else if (answerTypeInt == 1)
+				{
+					number = rnd.Next(1,11);
 				}
 				else
 				{
@@ -82,7 +86,11 @@ public class LogicFour : ILogic
 		List<int> possibleFactors = MathLogic.GetFactors(Convert.ToInt16(task.Answer));
 		possibleFactors = MathLogic.LimitOneFactor(possibleFactors, 100);
 
-		if (possibleFactors.Count > 0 && task.Answer <= 1000)
+		if (task.Answer <= 10)
+		{
+			task.TaskType = TaskTypeEnum.Division;
+		}
+		else if (possibleFactors.Count > 0 && task.Answer <= 1000)
 		{
 			task.TaskType = (TaskTypeEnum)rnd.Next(0, 3);
 		}
@@ -109,6 +117,12 @@ public class LogicFour : ILogic
 				task.VariableOne = possibleFactors[rnd.Next(0, possibleFactors.Count)];
 				task.VariableTwo = task.Answer / task.VariableOne;
 				task.Question = $"{task.VariableOne} \u22C5 {task.VariableTwo} =";
+				break;
+
+			case TaskTypeEnum.Division:
+				task.VariableOne = rnd.Next(2, 10);
+				task.VariableTwo = task.Answer * task.VariableOne;
+				task.Question = $"{task.VariableTwo} : {task.VariableOne} =";
 				break;
 		}
 

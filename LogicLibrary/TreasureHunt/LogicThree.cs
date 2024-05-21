@@ -16,7 +16,7 @@ public class LogicThree : ILogic
 		int number;
 		AlphabetModel alphabet = new();
 		alphabet.Alphabet = alphabet.CreateAlphabet();
-		List<int> products = MathLogic.CreateProducts(10);
+		List<int> products = MathLogic.CreateProducts(10, 10);
 
 		foreach (char c in alphabet.Alphabet)
 		{

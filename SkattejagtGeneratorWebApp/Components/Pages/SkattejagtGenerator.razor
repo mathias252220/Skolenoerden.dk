@@ -9,18 +9,18 @@
 <button class="btn btn-primary" @onclick="AddOutpost">+</button>
 <button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
-
-
 <EditForm Model="outposts" OnValidSubmit="PrintPDF">
 	
 	<select class="form-select" @bind="gradeInput">
 		<option selected>Vælg klassetrin</option>
 		<option value="GradeZero">0. klasse</option>
-		<option value="GradeOneTwo">1. og 2. klasse</option>
+		<option value="GradeOne">1. klasse</option>
+		<option value="GradeTwo">2. klasse</option>
 		<option value="GradeThree">3. klasse</option>
+		<option value="GradeFour">4. klasse</option>
 	</select>
 
-	<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control"/>
+	<InputText @bind-Value="numberOfGroupsInput" placeholder="Antal grupper" class="form-control"/>
 	
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
