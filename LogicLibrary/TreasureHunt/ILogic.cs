@@ -1,5 +1,4 @@
 ﻿using LogicLibrary.Models;
-using LogicLibrary.Enums;
 
 namespace LogicLibrary.TreasureHunt
 {
@@ -7,7 +6,7 @@ namespace LogicLibrary.TreasureHunt
     {
         public string grade { get; set; }
         KeyPageModel CreateKeyPage();
-		TaskModel CreateTask(char letter, KeyPageModel keyPage);
 		OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage);
+		TaskModel CreateTask(char letter, KeyPageModel keyPage);
 	}
 }

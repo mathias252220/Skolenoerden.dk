@@ -14,6 +14,7 @@ public static class DifferentImplementationsFactoryExtension
     {
         services.AddTransient<ILogic, LogicZero>();
         services.AddTransient<ILogic, LogicOneTwo>();
+        services.AddTransient<ILogic, LogicThree>();
         services.AddSingleton<Func<IEnumerable<ILogic>>>(x => () => x.GetService<IEnumerable<ILogic>>());
         services.AddSingleton<ILogicFactory, LogicFactory>();
     }

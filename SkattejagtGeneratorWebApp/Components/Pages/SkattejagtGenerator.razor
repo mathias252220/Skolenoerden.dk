@@ -17,9 +17,10 @@
 		<option selected>Vælg klassetrin</option>
 		<option value="GradeZero">0. klasse</option>
 		<option value="GradeOneTwo">1. og 2. klasse</option>
+		<option value="GradeThree">3. klasse</option>
 	</select>
 
-	<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
+	<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control"/>
 	
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
@@ -32,9 +33,9 @@
 </EditForm>
 
 @code {
-	private List<string> outposts = new();
-	string numberOfGroupsInput = string.Empty;
-	private int numberOfOutposts = 0;
+	List<string> outposts = new();
+	string? numberOfGroupsInput;
+	int numberOfOutposts = 0;
 	string? gradeInput;
 
 	ILogic? logic;

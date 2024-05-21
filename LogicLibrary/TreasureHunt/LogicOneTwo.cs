@@ -1,12 +1,6 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
-using QuestPDF.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogicLibrary.TreasureHunt
 {
@@ -30,7 +24,7 @@ namespace LogicLibrary.TreasureHunt
                 do
                 {
                     unique = true;
-                    number = rnd.Next(1, 100);
+                    number = rnd.Next(1, 101);
 
                     foreach (KeyModel entry in keyPage.LetterKeys)
                     {
@@ -46,6 +40,18 @@ namespace LogicLibrary.TreasureHunt
             }
 
             return keyPage;
+        }
+		public OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage)
+        {
+            OutpostModel outpost = new();
+            outpost.Name = outpostName;
+
+            foreach (char letter in outpost.ReturnNameNoSpaces())
+            {
+                outpost.Tasks.Add(CreateTask(letter, keyPage));
+            }
+
+            return outpost;
         }
 		public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 		{
@@ -71,7 +77,7 @@ namespace LogicLibrary.TreasureHunt
 					break;
 
 				case TaskTypeEnum.Minus:
-					task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 100);
+					task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 101);
 					task.VariableTwo = task.VariableOne - task.Answer;
 					task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
 					break;
@@ -79,17 +85,5 @@ namespace LogicLibrary.TreasureHunt
 
 			return task;
 		}
-		public OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage)
-        {
-            OutpostModel outpost = new();
-            outpost.Name = outpostName;
-
-            foreach(char letter in outpost.ReturnNameNoSpaces())
-            {
-                outpost.Tasks.Add(CreateTask(letter, keyPage));
-            }
-
-            return outpost;
-        }
-    }
+	}
 }

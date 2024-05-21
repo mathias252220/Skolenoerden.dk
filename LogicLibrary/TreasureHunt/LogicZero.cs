@@ -1,11 +1,6 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogicLibrary.TreasureHunt
 {
@@ -46,6 +41,18 @@ namespace LogicLibrary.TreasureHunt
 
 			return keyPage;
 		}
+		public OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage)
+		{
+			OutpostModel outpost = new();
+			outpost.Name = outpostName;
+
+			foreach (char letter in outpost.ReturnNameNoSpaces())
+			{
+				outpost.Tasks.Add(CreateTask(letter, keyPage));
+			}
+
+			return outpost;
+		}
 		public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 		{
 			TaskModel task = new();
@@ -71,18 +78,6 @@ namespace LogicLibrary.TreasureHunt
 			}
 
 			return task;
-		}
-		public OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage)
-		{
-			OutpostModel outpost = new();
-			outpost.Name = outpostName;
-
-			foreach (char letter in outpost.ReturnNameNoSpaces())
-			{
-				outpost.Tasks.Add(CreateTask(letter, keyPage));
-			}
-
-			return outpost;
 		}
 	}
 }
