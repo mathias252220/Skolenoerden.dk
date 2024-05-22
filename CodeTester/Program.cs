@@ -19,7 +19,7 @@ public class Program()
     private static void Run()
     {
         QuestPDF.Settings.License = LicenseType.Community;
-        Logic logic = new Logic();
+        LogicOneTwo logic = new LogicOneTwo();
         KeyPageModel keyPage = logic.CreateKeyPage();
         List<OutpostModel> outposts = new List<OutpostModel>();
         outposts.Add(logic.CreateOutpost("Bentes Kontor", keyPage));

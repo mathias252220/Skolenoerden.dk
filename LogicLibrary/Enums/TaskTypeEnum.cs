@@ -9,6 +9,8 @@ namespace LogicLibrary.Enums
     public enum TaskTypeEnum
     {
         Plus,
-        Minus
+        Minus,
+        Gange,
+        Division
     }
 }

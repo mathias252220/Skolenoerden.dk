@@ -1,10 +1,13 @@
 using SkattejagtGeneratorWebApp.Components;
+using LogicLibrary.Factories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddLogicFactory();
 
 var app = builder.Build();
 
