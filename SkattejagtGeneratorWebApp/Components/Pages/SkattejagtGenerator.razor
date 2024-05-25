@@ -4,14 +4,14 @@
 @inject ILogicFactory logicFactory
 
 <h3>SkattejagtGenerator</h3>
+<br/>
 
 <label role="status">Antal poster: @numberOfOutposts</label>
 <button class="btn btn-primary" @onclick="AddOutpost">+</button>
 <button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
 <EditForm Model="outposts" OnValidSubmit="PrintPDF">
-	
-	<select class="form-select" @bind="gradeInput">
+	<select class="form-select w-25" @bind="gradeInput">
 		<option selected>Vælg klassetrin</option>
 		<option value="GradeZero">0. klasse</option>
 		<option value="GradeOne">1. klasse</option>
@@ -20,13 +20,15 @@
 		<option value="GradeFour">4. klasse</option>
 	</select>
 
-	<InputText @bind-Value="numberOfGroupsInput" placeholder="Antal grupper" class="form-control"/>
-	
+	<InputText @bind-Value="numberOfGroupsInput" placeholder="Vælg antal grupper" class="form-control w-25"/>
+	<br>
+
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
+		<br>
 		int local = i;
 		<p>Post @(local + 1)</p>
-		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control"/>
+		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control w-25"/>
 	}
 
 	<button class="btn btn-primary" type="submit">Generer skattejagt</button>

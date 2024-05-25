@@ -2,21 +2,27 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-image: url('/Images/Background.png');
+    background-size: cover;
+    font-family: cursive;
 }
 
 main {
     flex: 1;
+    color: black;
+    background-color: transparent;
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, #A2D240 0%, #1B8B00 100%);
 }
 
 .top-row {
-    background-color: #f7f7f7;
+    background-image: linear-gradient(319deg, #faa499 0%, #f7dd85 37%, #ffc55c 100%);
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
-    height: 3.5rem;
+    height: 5rem;
+    font-size: 2rem;
     display: flex;
     align-items: center;
 }
@@ -52,7 +58,7 @@ main {
     }
 
     .sidebar {
-        width: 250px;
+        width: 350px;
         height: 100vh;
         position: sticky;
         top: 0;
