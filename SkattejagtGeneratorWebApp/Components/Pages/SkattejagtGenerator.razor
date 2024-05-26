@@ -1,30 +1,46 @@
 ﻿@page "/SkattejagtGenerator"
 @rendermode InteractiveServer
 @inject IJSRuntime JS
+@inject ILogicFactory logicFactory
 
 <h3>SkattejagtGenerator</h3>
+<br/>
 
 <label role="status">Antal poster: @numberOfOutposts</label>
 <button class="btn btn-primary" @onclick="AddOutpost">+</button>
 <button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
-<InputText @bind-Value="numberOfGroupsInput" placerholder="Antal grupper" class="form-control" />
-
 <EditForm Model="outposts" OnValidSubmit="PrintPDF">
+	<select class="form-select w-25" @bind="gradeInput">
+		<option selected>Vælg klassetrin</option>
+		<option value="GradeZero">0. klasse</option>
+		<option value="GradeOne">1. klasse</option>
+		<option value="GradeTwo">2. klasse</option>
+		<option value="GradeThree">3. klasse</option>
+		<option value="GradeFour">4. klasse</option>
+	</select>
+
+	<InputText @bind-Value="numberOfGroupsInput" placeholder="Vælg antal grupper" class="form-control w-25"/>
+	<br>
+
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
+		<br>
 		int local = i;
 		<p>Post @(local + 1)</p>
-		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control"/>
+		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control w-25"/>
 	}
 
 	<button class="btn btn-primary" type="submit">Generer skattejagt</button>
 </EditForm>
 
 @code {
-	private List<string> outposts = new();
-	string numberOfGroupsInput = string.Empty;
-	private int numberOfOutposts = 0;
+	List<string> outposts = new();
+	string? numberOfGroupsInput;
+	int numberOfOutposts = 0;
+	string? gradeInput;
+
+	ILogic? logic;
 
 	private void AddOutpost()
 	{
@@ -38,14 +54,19 @@
 		outposts.RemoveAt(outposts.Count - 1);
 	}
 
+	private Stream GetFileStream()
+	{
+		return File.OpenRead("skattejagt.pdf");
+	}
+
 	private async Task PrintPDF()
 	{
-		Logic logic = new Logic();
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
+		logic = logicFactory.Create(gradeInput);
 		List<GroupModel> groups = new();
 		for (int i = 0; i < numberOfGroups; i++)
 		{
-			GroupModel group = new GroupModel();
+			GroupModel group = new();
 			group.groupNumber = i + 1;
 			group.firstOutpost = i + 1;
 			groups.Add(group);
@@ -71,8 +92,4 @@
 		await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
 	}
 
-	private Stream GetFileStream()
-	{
-		return File.OpenRead("skattejagt.pdf");
-	}
 }
