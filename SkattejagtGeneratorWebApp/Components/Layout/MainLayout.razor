@@ -1,6 +1,51 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+<div class="page col-12 container-fluid">
+
+    <div class="empty-top"></div>
+
+    <div class="top-row fixed-top col-12">
+        <div class="row top-item">
+            <div class="top-item col-7"></div>
+
+            <div class="top-item col-3 d-flex">
+                <NavLink class="nav-link" href="">
+                    <span>Om Skolenørden</span>
+                </NavLink>
+            </div>
+
+            <div class="top-item col-2 d-flex">
+                <NavLink class="nav-link" href="">
+                    <span>Kontakt</span>
+                </NavLink>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-2"></div>
+
+        <div class="sidebar position-fixed col-2 vh-100">
+            <NavMenu />
+        </div>
+
+        <div class="content col-10 vh-100">
+            @Body
+        </div>
+
+    </div>  
+
+</div>
+
+
+
+
+
+
+
+
+@* <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -15,10 +60,4 @@
             @Body
         </article>
     </main>
-</div>
-
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+</div> *@

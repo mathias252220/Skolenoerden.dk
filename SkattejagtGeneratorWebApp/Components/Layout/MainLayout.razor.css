@@ -1,102 +1,33 @@
 .page {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background-image: url('/Images/Background.png');
-    background-size: cover;
     font-family: cursive;
+    background: url('/Images/Background.png');
+    background-size: cover;
 }
 
-main {
-    flex: 1;
+.empty-top {
+    height: 8rem;
+}
+.top-row {
+    height: 8rem;
+    background: linear-gradient(90deg, rgba(248, 155, 41, 0.25) 0%, rgba(255,15,123,0.25) 100%);
+}
+
+.top-item {
+    height: 8rem;
+    font-size: 2rem;
     color: black;
-    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-item ::deep .nav-link {
+    color: black;
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, #A2D240 0%, #1B8B00 100%);
+    background: linear-gradient(180deg, rgba(248, 155, 41, 0.25) 0%, rgba(255,15,123,0.25) 100%);
 }
 
-.top-row {
-    background-image: linear-gradient(319deg, #faa499 0%, #f7dd85 37%, #ffc55c 100%);
-    border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
-    height: 5rem;
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
+.content {
+
 }
-
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-        text-decoration: none;
-    }
-
-    .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-        text-decoration: underline;
-    }
-
-    .top-row ::deep a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-@media (max-width: 640.98px) {
-    .top-row {
-        justify-content: space-between;
-    }
-
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        margin-left: 0;
-    }
-}
-
-@media (min-width: 641px) {
-    .page {
-        flex-direction: row;
-    }
-
-    .sidebar {
-        width: 350px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
-    .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-
-    .top-row.auth ::deep a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
-    }
-
-    .top-row, article {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
-    }
-}
-
-#blazor-error-ui {
-    background: lightyellow;
-    bottom: 0;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-    display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-}
-
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
