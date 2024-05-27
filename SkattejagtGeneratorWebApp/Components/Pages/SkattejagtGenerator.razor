@@ -60,7 +60,7 @@
 		return File.OpenRead("skattejagt.pdf");
 	}
 
-	private IActionResult PrintPDF()
+	private Task<IActionResult> PrintPDF()
 	{
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		logic = logicFactory.Create(gradeInput);
@@ -84,16 +84,13 @@
 
 		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
 
-
 		byte[] data = skattejagt.GeneratePdf();
-		Stream stream = new MemoryStream(data);
 
+		MemoryStream stream = new MemoryStream(data);
 
-		FileStreamResult actionResult = new FileStreamResult(stream, "application/pdf");
+		return Results.File(stream, contentType: "application/pdf", fileDownloadName: "skattejagt.pdf");
 
-		actionResult.FileDownloadName = "skattejagt.pdf";
-
-		return actionResult;
+		// await JS.InvokeAsync<object>("downloadFile", "skattejagt.pdf", stream);
 	}
 
 }
