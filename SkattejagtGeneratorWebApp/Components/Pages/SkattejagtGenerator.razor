@@ -88,6 +88,7 @@
 		byte[] data = skattejagt.GeneratePdf();
 		Stream stream = new MemoryStream(data);
 
+
 		FileStreamResult actionResult = new FileStreamResult(stream, "application/pdf");
 
 		actionResult.FileDownloadName = "skattejagt.pdf";
