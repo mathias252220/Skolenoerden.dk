@@ -1,4 +1,5 @@
 ﻿@page "/SkattejagtGenerator"
+@using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject ILogicFactory logicFactory
@@ -59,7 +60,7 @@
 		return File.OpenRead("skattejagt.pdf");
 	}
 
-	private async Task PrintPDF()
+	private IActionResult PrintPDF()
 	{
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		logic = logicFactory.Create(gradeInput);
@@ -81,15 +82,17 @@
 		QuestPDF.Settings.License = LicenseType.Community;
 		PDFCreator pdfCreator = new PDFCreator();
 
-		var skattejagtTemp = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
-		skattejagtTemp.GeneratePdf("skattejagt.pdf");
+		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
 
-		var fileStream = GetFileStream();
-		var fileName = "skattejagt.pdf";
 
-		using var streamRef = new DotNetStreamReference(stream: fileStream);
+		byte[] data = skattejagt.GeneratePdf();
+		Stream stream = new MemoryStream(data);
 
-		await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+		FileStreamResult actionResult = new FileStreamResult(stream, "application/pdf");
+
+		actionResult.FileDownloadName = "skattejagt.pdf";
+
+		return actionResult;
 	}
 
 }

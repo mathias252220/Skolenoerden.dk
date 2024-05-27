@@ -17,8 +17,8 @@ namespace LogicLibrary.QuestPDF
     {
         public IDocument PrintFullPDF(KeyPageModel keyPage, List<OutpostModel> outposts, List<GroupModel> groups)
         {
-            IDocument keyPagePDF = CreateKeyPagePDF(keyPage, groups);
-            IDocument outpostsPDF = CreateOutpostPagesPDF(outposts, groups);
+            var keyPagePDF = CreateKeyPagePDF(keyPage, groups);
+            var outpostsPDF = CreateOutpostPagesPDF(outposts, groups);
 
             return Document.Merge(keyPagePDF, outpostsPDF);
 		}
