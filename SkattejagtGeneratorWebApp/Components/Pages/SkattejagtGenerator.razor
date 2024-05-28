@@ -1,7 +1,19 @@
 ﻿@page "/SkattejagtGenerator"
+@using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject ILogicFactory logicFactory
+
+<script>
+	function saveByteArray(fileName, byte) {
+		var blob = new Blob([byte], { type: "application/pdf" });
+		var link = document.createElement('a');
+		link.href = window.URL.createObjectURL(blob);
+		var tempName = fileName;
+		link.download = tempName;
+		link.click();
+	}
+</script>
 
 <h3>SkattejagtGenerator</h3>
 <br/>
@@ -81,15 +93,17 @@
 		QuestPDF.Settings.License = LicenseType.Community;
 		PDFCreator pdfCreator = new PDFCreator();
 
-		var skattejagtTemp = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
-		skattejagtTemp.GeneratePdf("skattejagt.pdf");
+		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
 
-		var fileStream = GetFileStream();
-		var fileName = "skattejagt.pdf";
+		byte[] data = skattejagt.GeneratePdf();
 
-		using var streamRef = new DotNetStreamReference(stream: fileStream);
+		// MemoryStream stream = new MemoryStream(data);
 
-		await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+		await JS.InvokeVoidAsync("saveByteArray", "Skattejagt.pdf", data);
+
+		// return Results.File(stream, contentType: "application/pdf", fileDownloadName: "skattejagt.pdf");
+		
+		// await JS.InvokeAsync<object>("downloadFile", "skattejagt.pdf", stream);
 	}
 
 }
