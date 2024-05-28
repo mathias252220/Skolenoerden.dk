@@ -4,16 +4,7 @@
 @inject IJSRuntime JS
 @inject ILogicFactory logicFactory
 
-<script>
-	function saveByteArray(fileName, byte) {
-		var blob = new Blob([byte], { type: "application/pdf" });
-		var link = document.createElement('a');
-		link.href = window.URL.createObjectURL(blob);
-		var tempName = fileName;
-		link.download = tempName;
-		link.click();
-	}
-</script>
+
 
 <h3>SkattejagtGenerator</h3>
 <br/>
