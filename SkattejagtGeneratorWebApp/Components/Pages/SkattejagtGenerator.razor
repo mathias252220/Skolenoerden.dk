@@ -4,6 +4,17 @@
 @inject IJSRuntime JS
 @inject ILogicFactory logicFactory
 
+<script>
+	function saveByteArray(fileName, byte) {
+		var blob = new Blob([byte], { type: "application/pdf" });
+		var link = document.createElement('a');
+		link.href = window.URL.createObjectURL(blob);
+		var tempName = fileName;
+		link.download = tempName;
+		link.click();
+	}
+</script>
+
 <h3>SkattejagtGenerator</h3>
 <br/>
 
@@ -60,7 +71,7 @@
 		return File.OpenRead("skattejagt.pdf");
 	}
 
-	private Task<IActionResult> PrintPDF()
+	private async Task PrintPDF()
 	{
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		logic = logicFactory.Create(gradeInput);
@@ -86,10 +97,12 @@
 
 		byte[] data = skattejagt.GeneratePdf();
 
-		MemoryStream stream = new MemoryStream(data);
+		// MemoryStream stream = new MemoryStream(data);
 
-		return Results.File(stream, contentType: "application/pdf", fileDownloadName: "skattejagt.pdf");
+		await JS.InvokeVoidAsync("saveByteArray", "Skattejagt.pdf", data);
 
+		// return Results.File(stream, contentType: "application/pdf", fileDownloadName: "skattejagt.pdf");
+		
 		// await JS.InvokeAsync<object>("downloadFile", "skattejagt.pdf", stream);
 	}
 
