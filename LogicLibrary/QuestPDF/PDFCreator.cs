@@ -120,7 +120,7 @@ namespace LogicLibrary.QuestPDF
                         {
                             page.Size(PageSizes.A5.Landscape());
 
-                            page.DefaultTextStyle(x => x.FontSize(20).FontFamily("Cambria"));
+                            page.DefaultTextStyle(x => x.FontSize(20));
 
                             page.Header()
                             .Table(table =>

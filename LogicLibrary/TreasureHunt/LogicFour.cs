@@ -116,7 +116,7 @@ public class LogicFour : ILogic
 			case TaskTypeEnum.Gange:
 				task.VariableOne = possibleFactors[rnd.Next(0, possibleFactors.Count)];
 				task.VariableTwo = task.Answer / task.VariableOne;
-				task.Question = $"{task.VariableOne} \u22C5 {task.VariableTwo} =";
+				task.Question = $"{task.VariableOne} x {task.VariableTwo} =";
 				break;
 
 			case TaskTypeEnum.Division:
