@@ -57,13 +57,9 @@
 		outposts.RemoveAt(outposts.Count - 1);
 	}
 
-	private Stream GetFileStream()
-	{
-		return File.OpenRead("skattejagt.pdf");
-	}
-
 	private async Task PrintPDF()
 	{
+		Console.WriteLine("Goddag Nutzy");
 		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		logic = logicFactory.Create(gradeInput);
 		List<GroupModel> groups = new();
