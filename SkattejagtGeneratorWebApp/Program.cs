@@ -1,5 +1,7 @@
 using SkattejagtGeneratorWebApp.Components;
 using LogicLibrary.Factories;
+using QuestPDF.Drawing;
+using QuestPDF.Infrastructure;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddLogicFactory();
 
 var app = builder.Build();
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

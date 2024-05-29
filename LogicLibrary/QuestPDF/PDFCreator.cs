@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LogicLibrary.Models;
+using QuestPDF.Drawing;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -17,7 +18,7 @@ namespace LogicLibrary.QuestPDF
     {
         public IDocument PrintFullPDF(KeyPageModel keyPage, List<OutpostModel> outposts, List<GroupModel> groups)
         {
-            var keyPagePDF = CreateKeyPagePDF(keyPage, groups);
+			var keyPagePDF = CreateKeyPagePDF(keyPage, groups);
             var outpostsPDF = CreateOutpostPagesPDF(outposts, groups);
 
             return Document.Merge(keyPagePDF, outpostsPDF);
@@ -119,7 +120,7 @@ namespace LogicLibrary.QuestPDF
                         {
                             page.Size(PageSizes.A5.Landscape());
 
-                            page.DefaultTextStyle(x => x.FontSize(20).FontFamily(Fonts.Cambria));
+                            page.DefaultTextStyle(x => x.FontSize(20).FontFamily("Cambria"));
 
                             page.Header()
                             .Table(table =>

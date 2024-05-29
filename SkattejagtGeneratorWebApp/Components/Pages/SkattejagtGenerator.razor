@@ -76,20 +76,14 @@
 			OutpostModel tempOutpost = logic.CreateOutpost(name, keyPage);
 			outpostsFinal.Add(tempOutpost);
 		}
-		QuestPDF.Settings.License = LicenseType.Community;
+		
 		PDFCreator pdfCreator = new PDFCreator();
 
 		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
 
 		byte[] data = skattejagt.GeneratePdf();
 
-		// MemoryStream stream = new MemoryStream(data);
-
 		await JS.InvokeVoidAsync("saveByteArray", "Skattejagt.pdf", data);
-
-		// return Results.File(stream, contentType: "application/pdf", fileDownloadName: "skattejagt.pdf");
-		
-		// await JS.InvokeAsync<object>("downloadFile", "skattejagt.pdf", stream);
 	}
 
 }
