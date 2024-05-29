@@ -118,7 +118,7 @@ namespace LogicLibrary.QuestPDF
                         container.Page(page =>
                         {
                             page.Size(PageSizes.A5.Landscape());
-                            page.DefaultTextStyle(x => x.FontSize(20).FontFamily("Cambria"));
+                            page.DefaultTextStyle(x => x.FontSize(20).FontFamily("Dejavu Sans"));
 
                             page.Header()
                             .Table(table =>
