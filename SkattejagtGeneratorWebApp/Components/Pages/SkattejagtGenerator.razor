@@ -7,13 +7,9 @@
 
 
 <h3>SkattejagtGenerator</h3>
-<br/>
+<br>
 
-<label role="status">Antal poster: @numberOfOutposts</label>
-<button class="btn btn-primary" @onclick="AddOutpost">+</button>
-<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
-
-<EditForm Model="outposts" OnValidSubmit="PrintPDF">
+<div class="chooseGrade">
 	<select class="form-select w-25" @bind="gradeInput">
 		<option selected>Vælg klassetrin</option>
 		<option value="GradeZero">0. klasse</option>
@@ -22,53 +18,91 @@
 		<option value="GradeThree">3. klasse</option>
 		<option value="GradeFour">4. klasse</option>
 	</select>
+</div>
 
-	<InputText @bind-Value="numberOfGroupsInput" placeholder="Vælg antal grupper" class="form-control w-25"/>
-	<br>
+<br>
+
+<div class="groupButtons">
+	<label role="status">Antal grupper: @numberOfGroups</label>
+	<button class="btn btn-primary" @onclick="AddGroup">+</button>
+	<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
+</div>
+
+<br>
+
+<div class="outpostButtons">
+	<label role="status">Antal poster: @numberOfOutposts</label>
+	<button class="btn btn-primary" @onclick="AddOutpost">+</button>
+	<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 
 	@for (int i = 0; i < numberOfOutposts; i++)
 	{
 		<br>
 		int local = i;
 		<p>Post @(local + 1)</p>
-		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control w-25"/>
+		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control w-25" />
 	}
+</div>
 
-	<button class="btn btn-primary" type="submit">Generer skattejagt</button>
-</EditForm>
+<br>
+
+<div class="generateTreasureHunt">
+		<button class="btn btn-primary" @onclick="PrintPDF">Generer skattejagt</button>
+</div>
+
 
 @code {
-	List<string> outposts = new();
-	string? numberOfGroupsInput;
-	int numberOfOutposts = 0;
+	List<string> outposts = new List<string> {string.Empty};
+
+	List<GroupModel> groups = new List<GroupModel>
+	{
+		new GroupModel { groupNumber = 1, firstOutpost = 1 }
+	};
+
+	int numberOfGroups = 1;
+	int numberOfOutposts = 1;
 	string? gradeInput;
 
 	ILogic? logic;
 
 	private void AddOutpost()
 	{
-		numberOfOutposts++;
-		outposts.Add(string.Empty);
+		if (numberOfOutposts < 10)
+		{
+			numberOfOutposts++;
+			outposts.Add(string.Empty);
+		}
+	}
+	private void AddGroup()
+	{
+		if (numberOfGroups < 10)
+		{
+			numberOfGroups++;
+			groups.Add(new GroupModel { groupNumber = numberOfGroups, firstOutpost = numberOfGroups });
+		}
 	}
 
 	private void SubtractOutpost()
 	{
-		numberOfOutposts--;
-		outposts.RemoveAt(outposts.Count - 1);
+		if (numberOfOutposts > 1)
+		{
+			numberOfOutposts--;
+			outposts.RemoveAt(outposts.Count - 1);
+		}
+	}
+
+	private void SubtractGroup()
+	{
+		if (numberOfGroups > 1)
+		{
+			numberOfGroups--;
+			groups.RemoveAt(groups.Count - 1);
+		}
 	}
 
 	private async Task PrintPDF()
 	{
-		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		logic = logicFactory.Create(gradeInput);
-		List<GroupModel> groups = new();
-		for (int i = 0; i < numberOfGroups; i++)
-		{
-			GroupModel group = new();
-			group.groupNumber = i + 1;
-			group.firstOutpost = i + 1;
-			groups.Add(group);
-		}
 		KeyPageModel keyPage = logic.CreateKeyPage();
 		List<OutpostModel> outpostsFinal = new();
 		foreach (string name in outposts)

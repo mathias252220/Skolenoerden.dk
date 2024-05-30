@@ -14,8 +14,4 @@
     <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Fonts\" />
-  </ItemGroup>
-
 </Project>
