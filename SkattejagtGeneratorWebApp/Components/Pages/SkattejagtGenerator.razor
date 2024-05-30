@@ -1,10 +1,7 @@
 ﻿@page "/SkattejagtGenerator"
-@using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject ILogicFactory logicFactory
-
-
 
 <h3>SkattejagtGenerator</h3>
 <br>
@@ -23,7 +20,7 @@
 <br>
 
 <div class="groupButtons">
-	<label role="status">Antal grupper: @numberOfGroups</label>
+	<label role="status">Antal grupper: @groups.Count</label>
 	<button class="btn btn-primary" @onclick="AddGroup">+</button>
 	<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
 </div>
@@ -31,93 +28,100 @@
 <br>
 
 <div class="outpostButtons">
-	<label role="status">Antal poster: @numberOfOutposts</label>
+	<label role="status">Antal poster: @outposts.Count</label>
 	<button class="btn btn-primary" @onclick="AddOutpost">+</button>
 	<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
+</div>
 
-	@for (int i = 0; i < numberOfOutposts; i++)
-	{
+<div class="form">
+	<EditForm method="post" Model="@outposts" OnValidSubmit="PrintPDF(editContext)" EditContext="@editContext">
+		<DataAnnotationsValidator/>
+
+		@foreach(OutpostModel outpost in outposts)
+		{
+			<br>
+			<p>Post @(outposts.IndexOf(outpost) + 1)</p>
+			<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control w-25" />
+			<ValidationMessage For="() => outpost.Name"/>
+		}
+
 		<br>
-		int local = i;
-		<p>Post @(local + 1)</p>
-		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control w-25" />
-	}
+
+		<button class="btn btn-primary" type="submit">Generer skattejagt</button>
+
+	</EditForm>
 </div>
-
-<br>
-
-<div class="generateTreasureHunt">
-		<button class="btn btn-primary" @onclick="PrintPDF">Generer skattejagt</button>
-</div>
-
 
 @code {
-	List<string> outposts = new List<string> {string.Empty};
+	List<OutpostModel> outposts = new List<OutpostModel>
+	{
+		new OutpostModel{}
+	};
 
 	List<GroupModel> groups = new List<GroupModel>
 	{
-		new GroupModel { groupNumber = 1, firstOutpost = 1 }
+		new GroupModel{}
 	};
 
-	int numberOfGroups = 1;
-	int numberOfOutposts = 1;
 	string? gradeInput;
 
 	ILogic? logic;
 
 	private void AddOutpost()
 	{
-		if (numberOfOutposts < 10)
+		if (outposts.Count < 10)
 		{
-			numberOfOutposts++;
-			outposts.Add(string.Empty);
+			outposts.Add(new OutpostModel{});
 		}
 	}
+
 	private void AddGroup()
 	{
-		if (numberOfGroups < 10)
+		if (groups.Count < 10)
 		{
-			numberOfGroups++;
-			groups.Add(new GroupModel { groupNumber = numberOfGroups, firstOutpost = numberOfGroups });
+			groups.Add(new GroupModel{});
 		}
 	}
 
 	private void SubtractOutpost()
 	{
-		if (numberOfOutposts > 1)
+		if (outposts.Count > 1)
 		{
-			numberOfOutposts--;
 			outposts.RemoveAt(outposts.Count - 1);
 		}
 	}
 
 	private void SubtractGroup()
 	{
-		if (numberOfGroups > 1)
+		if (groups.Count > 1)
 		{
-			numberOfGroups--;
 			groups.RemoveAt(groups.Count - 1);
 		}
 	}
 
-	private async Task PrintPDF()
+	private async Task PrintPDF(EditContext editContext;)
 	{
 		logic = logicFactory.Create(gradeInput);
 		KeyPageModel keyPage = logic.CreateKeyPage();
-		List<OutpostModel> outpostsFinal = new();
-		foreach (string name in outposts)
+
+		foreach (OutpostModel outpost in outposts)
 		{
-			OutpostModel tempOutpost = logic.CreateOutpost(name, keyPage);
-			outpostsFinal.Add(tempOutpost);
+
+			logic.PopulateOutpost(outpost, keyPage);
 		}
-		
+
+		foreach (GroupModel group in groups)
+		{
+			group.groupNumber = groups.IndexOf(group);
+			group.firstOutpost = group.groupNumber;
+		}
+
 		PDFCreator pdfCreator = new PDFCreator();
 
-		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
+		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outposts, groups);
 
 		byte[] data = skattejagt.GeneratePdf();
 
 		await JS.InvokeVoidAsync("saveByteArray", "Skattejagt.pdf", data);
 	}
-
 }
