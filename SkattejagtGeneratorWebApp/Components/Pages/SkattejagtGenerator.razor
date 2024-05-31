@@ -6,6 +6,22 @@
 <h3>SkattejagtGenerator</h3>
 <br>
 
+<div class="groupButtons">
+	<label role="status">Antal grupper: @groups.Count</label>
+	<button class="btn btn-primary" @onclick="AddGroup">+</button>
+	<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
+</div>
+
+<br>
+
+<div class="outpostButtons">
+	<label role="status">Antal poster: @outposts.Count</label>
+	<button class="btn btn-primary" @onclick="AddOutpost">+</button>
+	<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
+</div>
+
+<br>
+
 <div class="form">
 	<EditForm method="post" Model="outposts" OnValidSubmit="PrintPDF">
 		<ObjectGraphDataAnnotationsValidator />
@@ -19,22 +35,6 @@
 			<option value="GradeThree">3. klasse</option>
 			<option value="GradeFour">4. klasse</option>
 		</select>
-	</div>
-
-	<br>
-
-	<div class="groupButtons">
-		<label role="status">Antal grupper: @groups.Count</label>
-		<button class="btn btn-primary" @onclick="AddGroup">+</button>
-		<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
-	</div>
-
-	<br>
-
-	<div class="outpostButtons">
-		<label role="status">Antal poster: @outposts.Count</label>
-		<button class="btn btn-primary" @onclick="AddOutpost">+</button>
-		<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 	</div>
 
 	<div class="inputOutposts">
