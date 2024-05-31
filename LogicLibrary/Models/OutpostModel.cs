@@ -26,8 +26,10 @@ namespace LogicLibrary.Models
                 {
                     nameUnderscored += "  ";
                 }
-
-                nameUnderscored += "_ ";
+                else
+                {
+                    nameUnderscored += "_ ";
+                }
             }
 
             return nameUnderscored;

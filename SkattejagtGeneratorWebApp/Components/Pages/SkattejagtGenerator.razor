@@ -34,8 +34,8 @@
 </div>
 
 <div class="form">
-	<EditForm method="post" Model="@outposts" OnValidSubmit="PrintPDF(editContext)" EditContext="@editContext">
-		<DataAnnotationsValidator/>
+	<EditForm method="post" Model="outposts" OnValidSubmit="PrintPDF">
+		<ObjectGraphDataAnnotationsValidator/>
 
 		@foreach(OutpostModel outpost in outposts)
 		{
@@ -99,7 +99,7 @@
 		}
 	}
 
-	private async Task PrintPDF(EditContext editContext;)
+	private async Task PrintPDF()
 	{
 		logic = logicFactory.Create(gradeInput);
 		KeyPageModel keyPage = logic.CreateKeyPage();
@@ -112,7 +112,7 @@
 
 		foreach (GroupModel group in groups)
 		{
-			group.groupNumber = groups.IndexOf(group);
+			group.groupNumber = groups.IndexOf(group) + 1;
 			group.firstOutpost = group.groupNumber;
 		}
 
