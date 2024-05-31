@@ -55,6 +55,7 @@
 @code {
 	List<OutpostModel> outposts = new List<OutpostModel>
 	{
+		new OutpostModel{},
 		new OutpostModel{}
 	};
 
@@ -85,7 +86,7 @@
 
 	private void SubtractOutpost()
 	{
-		if (outposts.Count > 1)
+		if (outposts.Count > 2)
 		{
 			outposts.RemoveAt(outposts.Count - 1);
 		}
