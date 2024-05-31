@@ -6,49 +6,51 @@
 <h3>SkattejagtGenerator</h3>
 <br>
 
-<div class="chooseGrade">
-	<select class="form-select w-25" @bind="gradeInput">
-		<option selected>Vælg klassetrin</option>
-		<option value="GradeZero">0. klasse</option>
-		<option value="GradeOne">1. klasse</option>
-		<option value="GradeTwo">2. klasse</option>
-		<option value="GradeThree">3. klasse</option>
-		<option value="GradeFour">4. klasse</option>
-	</select>
-</div>
-
-<br>
-
-<div class="groupButtons">
-	<label role="status">Antal grupper: @groups.Count</label>
-	<button class="btn btn-primary" @onclick="AddGroup">+</button>
-	<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
-</div>
-
-<br>
-
-<div class="outpostButtons">
-	<label role="status">Antal poster: @outposts.Count</label>
-	<button class="btn btn-primary" @onclick="AddOutpost">+</button>
-	<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
-</div>
-
 <div class="form">
 	<EditForm method="post" Model="outposts" OnValidSubmit="PrintPDF">
-		<ObjectGraphDataAnnotationsValidator/>
+		<ObjectGraphDataAnnotationsValidator />
 
-		@foreach(OutpostModel outpost in outposts)
+	<div class="chooseGrade">
+		<select class="form-select w-25" @bind="gradeInput" required>
+			<option selected value="">Vælg klassetrin</option>
+			<option value="GradeZero">0. klasse</option>
+			<option value="GradeOne">1. klasse</option>
+			<option value="GradeTwo">2. klasse</option>
+			<option value="GradeThree">3. klasse</option>
+			<option value="GradeFour">4. klasse</option>
+		</select>
+	</div>
+
+	<br>
+
+	<div class="groupButtons">
+		<label role="status">Antal grupper: @groups.Count</label>
+		<button class="btn btn-primary" @onclick="AddGroup">+</button>
+		<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
+	</div>
+
+	<br>
+
+	<div class="outpostButtons">
+		<label role="status">Antal poster: @outposts.Count</label>
+		<button class="btn btn-primary" @onclick="AddOutpost">+</button>
+		<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
+	</div>
+
+	<div class="inputOutposts">
+		@foreach (OutpostModel outpost in outposts)
 		{
 			<br>
 			<p>Post @(outposts.IndexOf(outpost) + 1)</p>
 			<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control w-25" />
-			<ValidationMessage For="() => outpost.Name"/>
+			<ValidationMessage For="() => outpost.Name" />
 		}
 
 		<br>
 
 		<button class="btn btn-primary" type="submit">Generer skattejagt</button>
 
+	</div>
 	</EditForm>
 </div>
 
