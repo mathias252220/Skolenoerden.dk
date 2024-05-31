@@ -6,7 +6,7 @@ namespace LogicLibrary.TreasureHunt
     {
         public string grade { get; set; }
         KeyPageModel CreateKeyPage();
-		OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage);
+		void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage);
 		TaskModel CreateTask(char letter, KeyPageModel keyPage);
 	}
 }

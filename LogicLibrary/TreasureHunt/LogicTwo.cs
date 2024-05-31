@@ -41,17 +41,12 @@ namespace LogicLibrary.TreasureHunt
 
             return keyPage;
         }
-		public OutpostModel CreateOutpost(string outpostName, KeyPageModel keyPage)
+		public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
         {
-            OutpostModel outpost = new();
-            outpost.Name = outpostName;
-
             foreach (char letter in outpost.ReturnNameNoSpaces())
             {
                 outpost.Tasks.Add(CreateTask(letter, keyPage));
             }
-
-            return outpost;
         }
 		public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 		{

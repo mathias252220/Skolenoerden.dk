@@ -1,19 +1,12 @@
 ﻿@page "/SkattejagtGenerator"
-@using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject ILogicFactory logicFactory
 
-
-
 <h3>SkattejagtGenerator</h3>
-<br/>
+<br>
 
-<label role="status">Antal poster: @numberOfOutposts</label>
-<button class="btn btn-primary" @onclick="AddOutpost">+</button>
-<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
-
-<EditForm Model="outposts" OnValidSubmit="PrintPDF">
+<div class="chooseGrade">
 	<select class="form-select w-25" @bind="gradeInput">
 		<option selected>Vælg klassetrin</option>
 		<option value="GradeZero">0. klasse</option>
@@ -22,68 +15,113 @@
 		<option value="GradeThree">3. klasse</option>
 		<option value="GradeFour">4. klasse</option>
 	</select>
+</div>
 
-	<InputText @bind-Value="numberOfGroupsInput" placeholder="Vælg antal grupper" class="form-control w-25"/>
-	<br>
+<br>
 
-	@for (int i = 0; i < numberOfOutposts; i++)
-	{
+<div class="groupButtons">
+	<label role="status">Antal grupper: @groups.Count</label>
+	<button class="btn btn-primary" @onclick="AddGroup">+</button>
+	<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
+</div>
+
+<br>
+
+<div class="outpostButtons">
+	<label role="status">Antal poster: @outposts.Count</label>
+	<button class="btn btn-primary" @onclick="AddOutpost">+</button>
+	<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
+</div>
+
+<div class="form">
+	<EditForm method="post" Model="outposts" OnValidSubmit="PrintPDF">
+		<ObjectGraphDataAnnotationsValidator/>
+
+		@foreach(OutpostModel outpost in outposts)
+		{
+			<br>
+			<p>Post @(outposts.IndexOf(outpost) + 1)</p>
+			<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control w-25" />
+			<ValidationMessage For="() => outpost.Name"/>
+		}
+
 		<br>
-		int local = i;
-		<p>Post @(local + 1)</p>
-		<InputText @bind-Value="outposts[local]" placeholder="Navn på post" class="form-control w-25"/>
-	}
 
-	<button class="btn btn-primary" type="submit">Generer skattejagt</button>
-</EditForm>
+		<button class="btn btn-primary" type="submit">Generer skattejagt</button>
+
+	</EditForm>
+</div>
 
 @code {
-	List<string> outposts = new();
-	string? numberOfGroupsInput;
-	int numberOfOutposts = 0;
+	List<OutpostModel> outposts = new List<OutpostModel>
+	{
+		new OutpostModel{}
+	};
+
+	List<GroupModel> groups = new List<GroupModel>
+	{
+		new GroupModel{}
+	};
+
 	string? gradeInput;
 
 	ILogic? logic;
 
 	private void AddOutpost()
 	{
-		numberOfOutposts++;
-		outposts.Add(string.Empty);
+		if (outposts.Count < 10)
+		{
+			outposts.Add(new OutpostModel{});
+		}
+	}
+
+	private void AddGroup()
+	{
+		if (groups.Count < 10)
+		{
+			groups.Add(new GroupModel{});
+		}
 	}
 
 	private void SubtractOutpost()
 	{
-		numberOfOutposts--;
-		outposts.RemoveAt(outposts.Count - 1);
+		if (outposts.Count > 1)
+		{
+			outposts.RemoveAt(outposts.Count - 1);
+		}
+	}
+
+	private void SubtractGroup()
+	{
+		if (groups.Count > 1)
+		{
+			groups.RemoveAt(groups.Count - 1);
+		}
 	}
 
 	private async Task PrintPDF()
 	{
-		int numberOfGroups = int.Parse(numberOfGroupsInput);
 		logic = logicFactory.Create(gradeInput);
-		List<GroupModel> groups = new();
-		for (int i = 0; i < numberOfGroups; i++)
-		{
-			GroupModel group = new();
-			group.groupNumber = i + 1;
-			group.firstOutpost = i + 1;
-			groups.Add(group);
-		}
 		KeyPageModel keyPage = logic.CreateKeyPage();
-		List<OutpostModel> outpostsFinal = new();
-		foreach (string name in outposts)
+
+		foreach (OutpostModel outpost in outposts)
 		{
-			OutpostModel tempOutpost = logic.CreateOutpost(name, keyPage);
-			outpostsFinal.Add(tempOutpost);
+
+			logic.PopulateOutpost(outpost, keyPage);
 		}
-		
+
+		foreach (GroupModel group in groups)
+		{
+			group.groupNumber = groups.IndexOf(group) + 1;
+			group.firstOutpost = group.groupNumber;
+		}
+
 		PDFCreator pdfCreator = new PDFCreator();
 
-		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outpostsFinal, groups);
+		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outposts, groups);
 
 		byte[] data = skattejagt.GeneratePdf();
 
 		await JS.InvokeVoidAsync("saveByteArray", "Skattejagt.pdf", data);
 	}
-
 }

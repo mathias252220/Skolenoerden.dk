@@ -1,6 +1,8 @@
 ﻿using LogicLibrary.Modeller;
+using LogicLibrary.Validators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +11,10 @@ namespace LogicLibrary.Models
 {
     public class OutpostModel
     {
-        public string Name { get; set; }
+        [Required]
+		[ContainsOnlyLettersAndSpaces(ErrorMessage = "Dine poster må kun indeholde bogstaver og mellemrum")]
+		[Length(1, 15, ErrorMessage = "Dine poster skal indeholde mellem 1 og 15 tegn (inkl. mellemrum)")]
+		public string Name { get; set; }
         public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
         public string ReturnNameUnderscored()
         {
@@ -21,8 +26,10 @@ namespace LogicLibrary.Models
                 {
                     nameUnderscored += "  ";
                 }
-
-                nameUnderscored += "_ ";
+                else
+                {
+                    nameUnderscored += "_ ";
+                }
             }
 
             return nameUnderscored;
