@@ -15,4 +15,8 @@
     <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\Images\Newspaper.png" />
+  </ItemGroup>
+
 </Project>
