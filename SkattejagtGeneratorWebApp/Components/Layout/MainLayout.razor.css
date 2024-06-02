@@ -1,7 +1,9 @@
 .page {
     font-family: cursive;
     background: url('/Images/Background.png');
+    background-repeat: no-repeat;
     background-size: cover;
+    min-height: 100vh;
 }
 
 .empty-top {
@@ -29,5 +31,5 @@
 }
 
 .content {
-    font-size: 24px
+    font-size: 24px;
 }
