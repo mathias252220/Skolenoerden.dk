@@ -82,13 +82,31 @@
 			</div>
 
 			<div class="row">
-				<div class="col-12">
+
+				<div class="col-6">
 					@foreach (OutpostModel outpost in outposts)
 					{
-						<br>
-						<p>Post @(outposts.IndexOf(outpost) + 1)</p>
-						<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
-						<ValidationMessage For="() => outpost.Name" />
+						
+							@if (outposts.IndexOf(outpost) < 5)
+							{
+								<br>
+								<p>Post @(outposts.IndexOf(outpost) + 1)</p>
+								<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
+								<ValidationMessage For="() => outpost.Name" />
+							}
+					}
+				</div>
+
+				<div class="col-6">
+					@foreach (OutpostModel outpost in outposts)
+					{
+						@if (outposts.IndexOf(outpost) >= 5)
+						{
+							<br>
+							<p>Post @(outposts.IndexOf(outpost) + 1)</p>
+							<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
+							<ValidationMessage For="() => outpost.Name" />
+						}
 					}
 				</div>
 			</div>
