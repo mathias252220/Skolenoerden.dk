@@ -114,7 +114,7 @@ namespace LogicLibrary.QuestPDF
                     OutpostModel tempOutpost = outposts[1];
                     outposts.RemoveAt(1);
                     outposts.Add(tempOutpost);
-                    for (int i = 0; i < outposts.Count / 2; i++)
+                    for (int i = 0; i < outposts.Count; i++)
                     {
                         container.Page(page =>
                         {
@@ -122,60 +122,122 @@ namespace LogicLibrary.QuestPDF
 
                             page.DefaultTextStyle(x => x.FontSize(20));
 
-                            page.Content()
-                            .Grid(grid =>
+                            page.Content().Column(c =>
                             {
-                                grid.Columns(12);
+                                c.Item().Height(421).Table(pageOne =>
+                                    {
+                                        pageOne.ColumnsDefinition(columns =>
+                                        {
+                                            columns.RelativeColumn();
+                                            columns.RelativeColumn();
+                                            columns.RelativeColumn();
+                                        });
 
-                                grid.Item(12).AlignCenter().Text(outposts[i].Name).SemiBold().FontSize(48);
+                                        pageOne.Header(header =>
+                                        {
+                                            header.Cell().Row(1).ColumnSpan(3).AlignCenter().Text(outposts[i].Name).SemiBold().FontSize(48);
+                                            header.Cell().Row(2).ColumnSpan(3).AlignCenter().Text($"Gruppe {group.groupNumber}").FontSize(12);
+                                        });
 
-                                grid.Item(12).AlignCenter().Text($"Gruppe {group.groupNumber}").FontSize(12);
+                                        if (i == outposts.Count - 1)
+                                        {
+                                            int rightHalf = outposts[0].Tasks.Count / 2;
+                                            int leftHalf = outposts[0].Tasks.Count - rightHalf;
 
-                                if (i == outposts.Count - 1)
+                                            for (int j = 0; j < leftHalf; j++)
+                                            {
+                                                pageOne.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                            }
+                                            for (int j = 0; j < rightHalf; j++)
+                                            {
+                                                pageOne.Cell().Row((uint)j + 1).Column(3).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            int rightHalf = outposts[i + 1].Tasks.Count / 2;
+                                            int leftHalf = outposts[i + 1].Tasks.Count - rightHalf;
+
+                                            for (int j = 0; j < leftHalf; j++)
+                                            {
+                                                pageOne.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
+                                            }
+                                            for (int j = 0; j < rightHalf; j++)
+                                            {
+                                                pageOne.Cell().Row((uint)j + 1).Column(3).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i + 1].Tasks[leftHalf + j].Question}");
+                                            }
+                                        }
+                                        pageOne.Footer(footer =>
+                                        {
+                                            if (i == outposts.Count - 1)
+                                            {
+                                                footer.Cell().ColumnSpan(3).AlignCenter().Text(outposts[0].ReturnNameUnderscored()).FontSize(48);
+                                            }
+                                            else
+                                            {
+                                                footer.Cell().ColumnSpan(3).AlignCenter().Text(outposts[i + 1].ReturnNameUnderscored()).FontSize(48);
+                                            }
+                                        });
+                                
+                                    });
+                                c.Item().Height(421).Table(pageTwo =>
                                 {
-                                    int rightHalf = outposts[0].Tasks.Count / 2;
-                                    int leftHalf = outposts[0].Tasks.Count - rightHalf;
+                                    pageTwo.ColumnsDefinition(columns =>
+                                    {
+                                        columns.RelativeColumn();
+                                        columns.RelativeColumn();
+                                        columns.RelativeColumn();
+                                    });
 
-                                    for (int j = 0; j < leftHalf; j++)
+                                    pageTwo.Header(header =>
                                     {
-                                        grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
-                                    }
-                                    for (int j = 0; j < rightHalf; j++)
-                                    {
-                                        grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
-                                    }
-                                }
-                                else
-                                {
-                                    int rightHalf = outposts[i + 1].Tasks.Count / 2;
-                                    int leftHalf = outposts[i + 1].Tasks.Count - rightHalf;
+                                        header.Cell().Row(1).ColumnSpan(3).AlignCenter().Text(outposts[i].Name).SemiBold().FontSize(48);
+                                        header.Cell().Row(2).ColumnSpan(3).AlignCenter().Text($"Gruppe {group.groupNumber}").FontSize(12);
+                                    });
 
-									for (int j = 0; j < leftHalf; j++)
-									{
-										grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
-									}
-									for (int j = 0; j < rightHalf; j++)
+                                    if (i == outposts.Count - 1)
                                     {
-                                        grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i + 1].Tasks[leftHalf + j].Question}");
+                                        int rightHalf = outposts[0].Tasks.Count / 2;
+                                        int leftHalf = outposts[0].Tasks.Count - rightHalf;
+
+                                        for (int j = 0; j < leftHalf; j++)
+                                        {
+                                            pageTwo.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                        }
+                                        for (int j = 0; j < rightHalf; j++)
+                                        {
+                                            pageTwo.Cell().Row((uint)j + 1).Column(3).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                        }
                                     }
-                                }
+                                    else
+                                    {
+                                        int rightHalf = outposts[i + 1].Tasks.Count / 2;
+                                        int leftHalf = outposts[i + 1].Tasks.Count - rightHalf;
+
+                                        for (int j = 0; j < leftHalf; j++)
+                                        {
+                                            pageTwo.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
+                                        }
+                                        for (int j = 0; j < rightHalf; j++)
+                                        {
+                                            pageTwo.Cell().Row((uint)j + 1).Column(3).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i + 1].Tasks[leftHalf + j].Question}");
+                                        }
+                                    }
+                                    pageTwo.Footer(footer =>
+                                    {
+                                        if (i == outposts.Count - 1)
+                                        {
+                                            footer.Cell().ColumnSpan(3).AlignCenter().Text(outposts[0].ReturnNameUnderscored()).FontSize(48);
+                                        }
+                                        else
+                                        {
+                                            footer.Cell().ColumnSpan(3).AlignCenter().Text(outposts[i + 1].ReturnNameUnderscored()).FontSize(48);
+                                        }
+                                    });
+
+                                });
+
                             });
-
-                            page.Footer()
-                            .PaddingVertical(5, Unit.Point)
-                            .Text(text =>
-                            {
-                                text.AlignCenter();
-                                if (i == outposts.Count - 1)
-                                {
-                                    text.Span(outposts[0].ReturnNameUnderscored()).FontSize(48);
-                                }
-                                else
-                                {
-                                    text.Span(outposts[i + 1].ReturnNameUnderscored()).FontSize(48);
-                                }
-                            });
-
                         });
                     }
                 }
