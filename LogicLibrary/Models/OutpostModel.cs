@@ -13,7 +13,7 @@ namespace LogicLibrary.Models
     {
         [Required(ErrorMessage = "Posten mangler et navn")]
 		[ContainsOnlyLettersAndSpaces(ErrorMessage = "Dine poster må kun indeholde bogstaver og mellemrum")]
-		[Length(1, 20, ErrorMessage = "Dine poster skal indeholde mellem 1 og 20 tegn (inkl. mellemrum)")]
+		[Length(1, 16, ErrorMessage = "Dine poster skal indeholde mellem 1 og 16 tegn (inkl. mellemrum)")]
 		public string Name { get; set; }
         public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
         public string ReturnNameUnderscored()

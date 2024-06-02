@@ -12,7 +12,7 @@ KeyPageModel keyPage = logic.CreateKeyPage();
 List<OutpostModel> outposts = new List<OutpostModel>
 {
     new OutpostModel{Name = "Klassen"},
-    new OutpostModel{Name = "Fodboldbanen"},
+    new OutpostModel{Name = "FodboldbanenAAAA"},
     new OutpostModel{Name = "Hallen"},
     new OutpostModel{Name = "Græsset"},
     new OutpostModel{Name = "Busstoppet"}
