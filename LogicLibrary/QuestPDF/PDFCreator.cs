@@ -114,33 +114,23 @@ namespace LogicLibrary.QuestPDF
                     OutpostModel tempOutpost = outposts[1];
                     outposts.RemoveAt(1);
                     outposts.Add(tempOutpost);
-                    for (int i = 0; i < outposts.Count; i++)
+                    for (int i = 0; i < outposts.Count / 2; i++)
                     {
                         container.Page(page =>
                         {
-                            page.Size(PageSizes.A5.Landscape());
+                            page.Size(PageSizes.A4);
 
                             page.DefaultTextStyle(x => x.FontSize(20));
 
-                            page.Header()
-                            .Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).AlignCenter().Text(outposts[i].Name).SemiBold().FontSize(48);
-                                table.Cell().Row(2).AlignCenter().Text($"Gruppe {group.groupNumber}").FontSize(12);
-                            });
-
                             page.Content()
-                            .Table(table =>
+                            .Grid(grid =>
                             {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn(1);
-                                    columns.RelativeColumn(1);
-                                });
+                                grid.Columns(12);
+
+                                grid.Item(12).AlignCenter().Text(outposts[i].Name).SemiBold().FontSize(48);
+
+                                grid.Item(12).AlignCenter().Text($"Gruppe {group.groupNumber}").FontSize(12);
+
                                 if (i == outposts.Count - 1)
                                 {
                                     int rightHalf = outposts[0].Tasks.Count / 2;
@@ -148,11 +138,11 @@ namespace LogicLibrary.QuestPDF
 
                                     for (int j = 0; j < leftHalf; j++)
                                     {
-                                        table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                        grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
                                     }
                                     for (int j = 0; j < rightHalf; j++)
                                     {
-                                        table.Cell().Row((uint)j + 1).Column(2).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                        grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
                                     }
                                 }
                                 else
@@ -162,11 +152,11 @@ namespace LogicLibrary.QuestPDF
 
 									for (int j = 0; j < leftHalf; j++)
 									{
-										table.Cell().Row((uint)j + 1).Column(1).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
+										grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i + 1].Tasks[j].Question}");
 									}
 									for (int j = 0; j < rightHalf; j++)
                                     {
-                                        table.Cell().Row((uint)j + 1).Column(2).AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i + 1].Tasks[leftHalf + j].Question}");
+                                        grid.Item().AlignCenter().PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i + 1].Tasks[leftHalf + j].Question}");
                                     }
                                 }
                             });
