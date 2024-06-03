@@ -7,16 +7,16 @@
 }
 
 .empty-top {
-    height: 8rem;
+    height: 10vw;
 }
 .top-row {
-    height: 8rem;
+    height: 10vw;
     background: linear-gradient(90deg, rgba(248, 155, 41, 0.25) 0%, rgba(255,15,123,0.25) 100%);
 }
 
 .top-item {
-    height: 8rem;
-    font-size: 2rem;
+    height: 10vw;
+    font-size: 1.5vw;
     color: black;
     align-items: center;
     justify-content: center;
@@ -31,5 +31,31 @@
 }
 
 .content {
-    font-size: 24px;
+    font-size: 1vw;
 }
+
+    .content ::deep .btn-primary{
+        font-size: 1vw;
+        min-width: 4vw;
+    }
+
+    .content ::deep .row {
+        align-items: center;
+    }
+
+    .content ::deep .card-title {
+        font-size: 1.5vw;
+    }
+
+    .content ::deep .card-text {
+        font-size: 0.75vw;
+    }
+
+    .content ::deep .card-date {
+        font-size: 0.50vw;
+        text-align: right;
+    }
+
+    .content ::deep .image {
+        width: 100%
+    }
