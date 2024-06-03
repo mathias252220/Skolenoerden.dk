@@ -24,10 +24,10 @@
 				<label role="status">Antal grupper: @groups.Count</label>
 			</div>
 			<div class="col-2">
-				<button class="btn btn-primary w-75" @onclick="AddGroup">+</button>
+				<button class="btn btn-primary" @onclick="AddGroup">+</button>
 			</div>
 			<div class="col-2">
-				<button class="btn btn-primary w-75" @onclick="SubtractGroup">-</button>
+				<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
 			</div>
 			<div class="col-4"/>
 		</div>
@@ -42,15 +42,15 @@
 	<div class="col-3"/>
 
 	<div class="col-6">
-		<div class="row">
+		<div class="row" style="align-items:center">
 			<div class="col-4">
-				<label role="status">Antal poster: @outposts.Count</label>
+				<label  role="status">Antal poster: @outposts.Count</label>
 			</div>
 			<div class="col-2">
-				<button class="btn btn-primary w-75" @onclick="AddOutpost">+</button>
+				<button class="btn btn-primary" @onclick="AddOutpost">+</button>
 			</div>
 			<div class="col-2">
-				<button class="btn btn-primary w-75" @onclick="SubtractOutpost">-</button>
+				<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
 			</div>
 			<div class="col-4" />
 		</div>
@@ -65,12 +65,12 @@
 	<div class="col-3"/>
 
 	<div class="col-6">
-		<EditForm method="post" Model="outposts" OnValidSubmit="PrintPDF">
+		<EditForm class="content" method="post" Model="outposts" OnValidSubmit="PrintPDF">
 			<ObjectGraphDataAnnotationsValidator />
 		
 			<div class="row">
 				<div class="col-4">
-					<select class="form-select" @bind="gradeInput" required>
+					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
 						<option selected value="">Vælg klassetrin</option>
 						<option value="GradeZero">0. klasse</option>
 						<option value="GradeOne">1. klasse</option>
@@ -91,7 +91,7 @@
 							{
 								<br>
 								<p>Post @(outposts.IndexOf(outpost) + 1)</p>
-								<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
+								<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
 								<ValidationMessage For="() => outpost.Name" />
 							}
 					}
@@ -104,7 +104,7 @@
 						{
 							<br>
 							<p>Post @(outposts.IndexOf(outpost) + 1)</p>
-							<InputText @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
+							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
 							<ValidationMessage For="() => outpost.Name" />
 						}
 					}
@@ -115,7 +115,7 @@
 
 			<div class="row">
 				<div class="col-12">
-					<button class="btn btn-primary" type="submit">Generer skattejagt</button>
+					<button style="font-size: 1vw" class="btn btn-primary" type="submit">Generer skattejagt</button>
 				</div>
 			</div>
 		</EditForm>	
