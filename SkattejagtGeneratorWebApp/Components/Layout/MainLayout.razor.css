@@ -42,3 +42,11 @@
     .content ::deep .row {
         align-items: center;
     }
+
+    .content ::deep .card-title {
+        font-size: 2vw;
+    }
+
+    .content ::deep .card-text {
+        font-size: 1vw;
+    }
