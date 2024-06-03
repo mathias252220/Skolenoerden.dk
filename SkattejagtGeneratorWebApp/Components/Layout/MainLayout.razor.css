@@ -20,7 +20,7 @@
     color: black;
     align-items: center;
     justify-content: center;
-}
+} 
 
 .top-item ::deep .nav-link {
     color: black;
