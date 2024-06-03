@@ -7,16 +7,16 @@
 }
 
 .nav-logo {
-    height: 5rem;
+    height: 2vh;
 }
 
 .nav-title {
-    font-size: 1rem;
+    font-size: 1vw;
     color:black;
     text-align: center;
 }
 .nav-item {
-    font-size: 2rem;
+    font-size: 1.5vw;
     color: black;
     text-align: center;
 }
