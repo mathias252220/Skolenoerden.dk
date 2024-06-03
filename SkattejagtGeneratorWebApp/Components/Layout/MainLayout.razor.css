@@ -1,9 +1,14 @@
 .page {
-    font-family: 'Comic Sans MS';
+    font-family: ComicSans;
     background: url('/Images/Background.png');
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
+}
+
+@font-face {
+    font-family: ComicSans;
+    src: url(/Fonts/ComicSans.ttf);
 }
 
 .empty-top {
@@ -28,6 +33,7 @@
 
 .sidebar {
     background: linear-gradient(180deg, rgba(248, 155, 41, 0.25) 0%, rgba(255,15,123,0.25) 100%);
+    width: 15vw;
 }
 
 .content {
