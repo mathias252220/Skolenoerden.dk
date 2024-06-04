@@ -39,6 +39,10 @@
 .content {
     font-size: 1vw;
 }
+    .content ::deep .page-title{
+        font-size: 3vw;
+        text-align: center;
+    }
 
     .content ::deep .btn-primary{
         font-size: 1vw;
@@ -57,7 +61,6 @@
 
     .content ::deep .card-text {
         font-size: 0.75vw;
-        height: ;
     }
 
     .content ::deep .card-date {
@@ -70,8 +73,8 @@
     }
 
     .content ::deep .card {
-        width: 15vw;
-        height: 20vw;
+        width: 95%;
+        height: 25vw;
     }
 
     .content ::deep .card-img-top {
