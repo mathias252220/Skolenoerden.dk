@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LogicLibrary.TreasureHunt;
 
-public class LogicFive : ILogic
+public class LogicSix : ILogic
 {
-    public string grade { get; set; } = "GradeFive";
+    public string grade { get; set; } = "GradeSix";
 
     public KeyPageModel CreateKeyPage()
     {
@@ -21,7 +21,7 @@ public class LogicFive : ILogic
         double number;
         AlphabetModel alphabet = new();
         alphabet.Alphabet = alphabet.CreateAlphabet();
-        List<int> products = MathLogic.CreateProducts(50, 50);
+        List<int> products = MathLogic.CreateProducts(100, 100);
 
         foreach (char c in alphabet.Alphabet)
         {
@@ -39,15 +39,14 @@ public class LogicFive : ILogic
                 }
                 else if (answerTypeInt == 1)
                 {
-                    number = Convert.ToDouble(rnd.Next(10, 101));
+                    number = Convert.ToDouble(rnd.Next(50, 251));
                 }
                 else
                 {
                     do
                     {
-                        number = Math.Round(rnd.NextDouble() * 100, 2);
-                    }
-                    while (number < 10);
+                        number = Math.Round(rnd.NextDouble() * 1000, 2);
+                    } while (number < 100);
                 }
 
                 foreach (KeyModel entry in keyPage.LetterKeys)
@@ -86,7 +85,7 @@ public class LogicFive : ILogic
             possibleFactors = MathLogic.GetFactors(Convert.ToInt16(task.Answer));
             possibleFactors = MathLogic.LimitOneFactor(possibleFactors, 100);
         }
-        
+
         if (task.Answer < 100 && task.Answer % 1 == 0)
         {
             task.TaskType = TaskTypeEnum.Division;
@@ -97,7 +96,7 @@ public class LogicFive : ILogic
         }
         else
         {
-            task.TaskType =(TaskTypeEnum)rnd.Next(0, 2);
+            task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
         }
 
         switch (task.TaskType)
@@ -105,7 +104,7 @@ public class LogicFive : ILogic
             case TaskTypeEnum.Plus:
                 do
                 {
-                    task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
+                    task.VariableOne = Math.Round(rnd.NextDouble() * 1000, 2);
                 } while (task.VariableOne > task.Answer);
 
                 task.VariableTwo = Math.Round(task.Answer - task.VariableOne, 2);
@@ -116,7 +115,7 @@ public class LogicFive : ILogic
             case TaskTypeEnum.Minus:
                 do
                 {
-                    task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
+                    task.VariableOne = Math.Round(rnd.NextDouble() * 1000, 2);
                 } while (task.VariableOne < task.Answer);
 
                 task.VariableTwo = Math.Round(task.VariableOne - task.Answer, 2);
