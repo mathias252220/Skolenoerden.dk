@@ -148,11 +148,13 @@ namespace LogicLibrary.QuestPDF
 
                                         for (int j = 0; j < leftHalf; j++)
                                         {
-                                            pageOne.Cell().Row((uint)j + 1).Column(1).ColumnSpan(2).AlignLeft().PaddingLeft(125).PaddingVertical(5).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                         }
                                         for (int j = 0; j < rightHalf; j++)
                                         {
-                                            pageOne.Cell().Row((uint)j + 1).Column(3).ColumnSpan(2).AlignLeft().PaddingLeft(125).PaddingVertical(5).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                         }
                                         for (int j = 0; j < (8 - leftHalf); j++)
                                         {
@@ -166,11 +168,13 @@ namespace LogicLibrary.QuestPDF
 
                                         for (int j = 0; j < leftHalf; j++)
                                         {
-                                            pageOne.Cell().Row((uint)j + 1).Column(1).ColumnSpan(2).AlignLeft().PaddingLeft(125).PaddingVertical(5).Text($"{j + 1}) {outposts[i * 2 + 1].Tasks[j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5).Text($"{j + 1}) {outposts[i * 2 + 1].Tasks[j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                         }
                                         for (int j = 0; j < rightHalf; j++)
                                         {
-                                            pageOne.Cell().Row((uint)j + 1).Column(3).ColumnSpan(2).AlignLeft().PaddingLeft(125).PaddingVertical(5).Text($"{leftHalf + j + 1}) {outposts[i * 2 + 1].Tasks[leftHalf + j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5).Text($"{leftHalf + j + 1}) {outposts[i * 2 + 1].Tasks[leftHalf + j].Question}");
+                                            pageOne.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                         }
                                         for (int j = 0; j < (8-leftHalf); j++)
                                         {
@@ -182,12 +186,17 @@ namespace LogicLibrary.QuestPDF
                                     {
                                         if (i * 2 == outposts.Count - 1)
                                         {
-                                            footer.Cell().ColumnSpan(5).AlignCenter().Text(outposts[0].ReturnNameUnderscored()).FontSize(48);
+                                            footer.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[0].ReturnNameUnderscored()).FontSize(48);
                                         }
                                         else
                                         {
-                                            footer.Cell().ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].ReturnNameUnderscored()).FontSize(48);
+                                            footer.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].ReturnNameUnderscored()).FontSize(48);
                                         }
+                                        var scissorImage = File.ReadAllBytes("wwwroot/Images/ScissorIcon.png");
+                                        footer.Cell().Row(2).Column(1).AlignLeft().PaddingLeft(10).Height(5, Unit.Millimetre).Image(scissorImage).FitHeight();
+                                        footer.Cell().Row(2).ColumnSpan(5).AlignCenter()
+                                        .Text("--------------------------------------------------------------------------------------------------------------------------------")
+                                        .FontSize(12);
                                     });
                                 });
 
@@ -226,11 +235,13 @@ namespace LogicLibrary.QuestPDF
 
                                             for (int j = 0; j < leftHalf; j++)
                                             {
-                                                pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(2).AlignCenter().PaddingLeft(125).PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[0].Tasks[j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                             }
                                             for (int j = 0; j < rightHalf; j++)
                                             {
-                                                pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(2).AlignCenter().PaddingLeft(125).PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[0].Tasks[leftHalf + j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                             }
                                             for (int j = 0; j < (8 - leftHalf); j++)
                                             {
@@ -244,11 +255,13 @@ namespace LogicLibrary.QuestPDF
 
                                             for (int j = 0; j < leftHalf; j++)
                                             {
-                                                pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(2).AlignCenter().PaddingLeft(125).PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i * 2 + 2].Tasks[j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i * 2 + 2].Tasks[j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                             }
                                             for (int j = 0; j < rightHalf; j++)
                                             {
-                                                pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(2).AlignCenter().PaddingLeft(125).PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i * 2 + 2].Tasks[leftHalf + j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i * 2 + 2].Tasks[leftHalf + j].Question}");
+                                                pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
                                             }
                                             for (int j = 0; j < (8 - leftHalf); j++)
                                             {

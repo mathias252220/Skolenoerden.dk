@@ -8,7 +8,7 @@ namespace LogicLibrary.Modeller
 {
     public class KeyModel
     {
-        public int KeyNumber { get; set; }
+        public double KeyNumber { get; set; }
         public char KeyLetter { get; set; }
     }
 }

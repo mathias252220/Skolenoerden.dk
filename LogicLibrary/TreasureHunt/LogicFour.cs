@@ -57,14 +57,6 @@ public class LogicFour : ILogic
 		return keyPage;
 	}
 
-	public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
-	{
-		foreach (char letter in outpost.ReturnNameNoSpaces())
-		{
-			outpost.Tasks.Add(CreateTask(letter, keyPage));
-		}
-	}
-
 	public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 	{
 		TaskModel task = new();
@@ -123,4 +115,13 @@ public class LogicFour : ILogic
 
 		return task;
 	}
+    public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
+    {
+		outpost.Tasks.Clear();
+		
+        foreach (char letter in outpost.ReturnNameNoSpaces())
+        {
+            outpost.Tasks.Add(CreateTask(letter, keyPage));
+        }
+    }
 }
