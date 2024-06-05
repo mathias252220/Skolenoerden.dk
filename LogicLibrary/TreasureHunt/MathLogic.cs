@@ -107,6 +107,7 @@ public static class MathLogic
 			numberString = $"{numberString}{digit}";
 		}
 
-		return Math.Round(double.Parse(numberString), 2);
+		return double.Parse(numberString);
+		//return Math.Round(double.Parse(numberString), 2);
 	}
 }

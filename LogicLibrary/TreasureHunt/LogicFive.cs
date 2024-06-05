@@ -105,7 +105,7 @@ public class LogicFive : ILogic
                 break;
 
             case TaskTypeEnum.Minus:
-                task.VariableOne = MathLogic.NextDouble(Convert.ToInt32(task.Answer + 50), 1050, 2);
+                task.VariableOne = MathLogic.NextDouble(Convert.ToInt32(task.Answer + 50), 1100, 2);
                 task.VariableTwo = Math.Round(task.VariableOne - task.Answer, 2);
                 task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
                 break;
