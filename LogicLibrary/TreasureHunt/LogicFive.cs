@@ -35,11 +35,11 @@ public class LogicFive : ILogic
 
                 if (answerTypeInt == 0)
                 {
-                    number = products[rnd.Next(products.Count)];
+                    number = Convert.ToDouble(products[rnd.Next(products.Count)]);
                 }
                 else if (answerTypeInt == 1)
                 {
-                    number = rnd.Next(10, 101);
+                    number = Convert.ToDouble(rnd.Next(10, 101));
                 }
                 else
                 {
