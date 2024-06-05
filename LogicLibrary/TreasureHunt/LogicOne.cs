@@ -51,6 +51,8 @@ namespace LogicLibrary.TreasureHunt
 
 		public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
 		{
+			outpost.Tasks.Clear();
+
 			foreach (char letter in outpost.ReturnNameNoSpaces())
 			{
 				outpost.Tasks.Add(CreateTask(letter, keyPage));
