@@ -79,7 +79,7 @@ public class LogicFive : ILogic
 
         if (task.Answer % 1 == 0)
         {
-            possibleFactors = MathLogic.GetFactors(Convert.ToInt16(task.Answer));
+            possibleFactors = MathLogic.GetFactors(Convert.ToInt32(task.Answer));
             possibleFactors = MathLogic.LimitOneFactor(possibleFactors, 100);
         }
         
@@ -99,25 +99,25 @@ public class LogicFive : ILogic
         switch (task.TaskType)
         {
             case TaskTypeEnum.Plus:
-                task.VariableOne = MathLogic.NextDouble(10, Convert.ToInt16(task.Answer - 50), 2);
+                task.VariableOne = MathLogic.NextDouble(10, Convert.ToInt32(task.Answer - 50), 2);
                 task.VariableTwo = Math.Round(task.Answer - task.VariableOne, 2);
                 task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
                 break;
 
             case TaskTypeEnum.Minus:
-                task.VariableOne = MathLogic.NextDouble(Convert.ToInt16(task.Answer + 50), 1050, 2);
+                task.VariableOne = MathLogic.NextDouble(Convert.ToInt32(task.Answer + 50), 1050, 2);
                 task.VariableTwo = Math.Round(task.VariableOne - task.Answer, 2);
                 task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
                 break;
 
             case TaskTypeEnum.Gange:
-                task.VariableOne = possibleFactors[rnd.Next(0, possibleFactors.Count)];
+                task.VariableOne = Convert.ToDouble(possibleFactors[rnd.Next(0, possibleFactors.Count)]);
                 task.VariableTwo = task.Answer / task.VariableOne;
                 task.Question = $"{task.VariableOne} x {task.VariableTwo} =";
                 break;
 
             case TaskTypeEnum.Division:
-                task.VariableOne = rnd.Next(2, 10);
+                task.VariableOne = Convert.ToDouble(rnd.Next(2, 10));
                 task.VariableTwo = task.Answer * task.VariableOne;
                 task.Question = $"{task.VariableTwo} : {task.VariableOne} =";
                 break;
