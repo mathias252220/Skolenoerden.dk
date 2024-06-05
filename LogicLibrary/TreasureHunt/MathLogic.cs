@@ -99,7 +99,7 @@ public static class MathLogic
 	{
 		Random rnd = new();
 		int wholeNumber = rnd.Next(minValue, maxValue);
-		string numberString = $"{wholeNumber.ToString()},";
+		string numberString = $"{wholeNumber.ToString()}.";
 
 		for (int i = 0;  i < numberOfDecimals; i++)
 		{
@@ -107,7 +107,6 @@ public static class MathLogic
 			numberString = $"{numberString}{digit}";
 		}
 
-		return double.Parse(numberString);
-		//return Math.Round(double.Parse(numberString), 2);
+		return Math.Round(double.Parse(numberString), 2);
 	}
 }
