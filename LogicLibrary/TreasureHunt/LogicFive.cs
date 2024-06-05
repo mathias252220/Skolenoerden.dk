@@ -112,7 +112,7 @@ public class LogicFive : ILogic
 
                 task.VariableTwo = Math.Round(task.Answer - task.VariableOne, 2);
                 task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-                task.Question.Replace('.', ',');
+                task.Question = task.Question.Replace('.', ',');
                 break;
 
             case TaskTypeEnum.Minus:
@@ -123,21 +123,21 @@ public class LogicFive : ILogic
                 while (task.VariableOne < task.Answer);
                 task.VariableTwo = Math.Round(task.VariableOne - task.Answer, 2);
                 task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-                task.Question.Replace('.', ',');
+                task.Question = task.Question.Replace('.', ',');
                 break;
 
             case TaskTypeEnum.Gange:
                 task.VariableOne = Convert.ToDouble(possibleFactors[rnd.Next(0, possibleFactors.Count)]);
                 task.VariableTwo = task.Answer / task.VariableOne;
                 task.Question = $"{task.VariableOne} x {task.VariableTwo} =";
-                task.Question.Replace('.', ',');
+                task.Question = task.Question.Replace('.', ',');
                 break;
 
             case TaskTypeEnum.Division:
                 task.VariableOne = Convert.ToDouble(rnd.Next(2, 10));
                 task.VariableTwo = task.Answer * task.VariableOne;
                 task.Question = $"{task.VariableTwo} : {task.VariableOne} =";
-                task.Question.Replace('.', ',');
+                task.Question = task.Question.Replace('.', ',');
                 break;
         }
 
