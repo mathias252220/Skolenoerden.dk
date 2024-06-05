@@ -43,7 +43,12 @@ public class LogicFive : ILogic
                 }
                 else
                 {
-                    number = MathLogic.NextDouble(100, 1000, 2);
+                    do
+                    {
+                        number = Math.Round(rnd.NextDouble() * 1000, 2);
+                    }
+                    while (number < 100);
+
                 }
 
                 foreach (KeyModel entry in keyPage.LetterKeys)
@@ -99,13 +104,22 @@ public class LogicFive : ILogic
         switch (task.TaskType)
         {
             case TaskTypeEnum.Plus:
-                task.VariableOne = MathLogic.NextDouble(10, Convert.ToInt32(task.Answer - 50), 2);
+                do
+                {
+                    task.VariableOne = Math.Round(rnd.NextDouble() * 1000, 2);
+                }
+                while (task.VariableOne > task.Answer);
+
                 task.VariableTwo = Math.Round(task.Answer - task.VariableOne, 2);
                 task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
                 break;
 
             case TaskTypeEnum.Minus:
-                task.VariableOne = MathLogic.NextDouble(Convert.ToInt32(task.Answer + 50), 1100, 2);
+                do
+                {
+                    task.VariableOne = Math.Round(rnd.NextDouble() * 1000, 2);
+                }
+                while (task.VariableOne < task.Answer);
                 task.VariableTwo = Math.Round(task.VariableOne - task.Answer, 2);
                 task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
                 break;

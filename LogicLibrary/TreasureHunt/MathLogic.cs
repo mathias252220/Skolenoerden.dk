@@ -95,18 +95,4 @@ public static class MathLogic
 
 		return (minuend, subtrahend);
 	}
-	public static double NextDouble(int minValue, int maxValue, int numberOfDecimals)
-	{
-		Random rnd = new();
-		int wholeNumber = rnd.Next(minValue, maxValue);
-		string numberString = $"{wholeNumber.ToString()}.";
-
-		for (int i = 0;  i < numberOfDecimals; i++)
-		{
-			int digit = rnd.Next(0, 10);
-			numberString = $"{numberString}{digit}";
-		}
-
-		return Math.Round(double.Parse(numberString), 2);
-	}
 }
