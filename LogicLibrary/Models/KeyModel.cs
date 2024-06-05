@@ -10,5 +10,11 @@ namespace LogicLibrary.Modeller
     {
         public double KeyNumber { get; set; }
         public char KeyLetter { get; set; }
+        public string getString()
+        {
+            string keyString = $"{KeyLetter} = {KeyNumber}";
+            keyString = keyString.Replace('.', ',');
+            return keyString;
+        }
     }
 }
