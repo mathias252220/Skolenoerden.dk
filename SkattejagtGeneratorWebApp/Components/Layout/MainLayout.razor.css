@@ -53,6 +53,14 @@
         align-items: center;
     }
 
+    .content ::deep .vejledning {
+        text-align: center;
+        Display: block;
+        Margin: auto;
+        min-width: 5vw;
+        max-width: fit-content;
+    }
+
     .content ::deep .card-title {
         font-size: 1.5vw;
         text-align: center;
