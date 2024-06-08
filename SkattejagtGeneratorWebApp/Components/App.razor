@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode=RenderMode.InteractiveServer/>
     <script src="_framework/blazor.web.js"></script>
     <script>
 	function saveByteArray(fileName, byte) {
@@ -24,7 +24,16 @@
 		link.download = tempName;
 		link.click();
 	}
-</script>
+    </script>
+    <script>
+    window.triggerFileDownload = (fileName, url) => {
+        const anchorElement = document.createElement('a');
+        anchorElement.href = url;
+        anchorElement.download = fileName ?? '';
+        anchorElement.click();
+        anchorElement.remove();
+    }
+    </script>
 </body>
 
 </html>

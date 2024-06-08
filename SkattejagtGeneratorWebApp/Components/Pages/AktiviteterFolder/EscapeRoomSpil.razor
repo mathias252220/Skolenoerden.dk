@@ -1,0 +1,82 @@
+﻿@inject IJSRuntime JS
+@page "/Aktiviteter/EscapeRoomSpil"
+
+
+<PageTitle>Escape Room Spil</PageTitle>
+
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="page-title">Escape Room Spil</h1>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-2" />
+
+    <div class="col-6">
+        <p>Kaptajn Sortskæg har efterladt sig sin dagbog, og det er nu op til dig at løse dens gåder og 
+            finde Sortskægs gemte skat!</p>
+        <p>Klip, fold og tegn dig igennem alle gåderne!</p>
+        <p><b>Indhold:</b></p>
+        <p>I denne aktivitet skal du bruge:</p>
+        <p>- En "Dagbog" til hver elevgruppe (enkelsidet print)</p>
+        <p>- En "Kopper" til hver elevgruppe</p>
+        <p>- Et sæt "Rigtig/Forkert" til klassen (dobbelsidet print, klippet ud)</p>
+        <p>- Papir, blyant og saks til hver elevgruppe</p>
+
+        <br>
+
+        <div class="row">
+            <div class="col-2">
+                <button class="btn btn-primary" @onclick="DownloadDagbog">Dagbog</button>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" @onclick="DownloadKopper">Kopper</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary" @onclick="DownloadRigtigForkert">Rigtig/Forkert</button>
+            </div>
+            <div class="col-3">
+                <a class="btn btn-primary" href="/Vejledninger/EscapeRoomSpil">Vejledning</a>
+            </div>
+        </div>
+
+        <br>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <img class="image" src="" />
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private async Task DownloadDagbog()
+    {
+        var fileName = "Dagbog.pdf";
+        var fileURL = "/Ressourcer/EscapeRoomSpil/Dagbog.pdf";
+        await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
+    }
+    private async Task DownloadKopper()
+    {
+        var fileName = "Kopper.pdf";
+        var fileURL = "/Ressourcer/EscapeRoomSpil/Kopper.pdf";
+        await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
+    }
+    private async Task DownloadRigtigForkert()
+    {
+        var fileName = "RigtigForkert.pdf";
+        var fileURL = "/Ressourcer/EscapeRoomSpil/RigtigForkert.pdf";
+        await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
+    }
+}
