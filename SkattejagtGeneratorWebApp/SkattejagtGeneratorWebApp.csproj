@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\Images\SkolenoerdenAnbefaler\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Ressourcer\EscapeRoomSpil\Dagbog.pdf" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,58 @@
+﻿@inject IJSRuntime JS
+@page "/Aktiviteter/100Gangestykker"
+
+
+<PageTitle>100 Gangestykker</PageTitle>
+
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="page-title">100 Gangestykker</h1>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-2" />
+
+    <div class="col-6">
+        <p>"100 Gangestykker" er en sjov aktivitet, der kan bruges til tabeltræning. Aktiviteten er fælles 
+            for hele klassen!
+        </p>
+
+        <br>
+
+        <div class="row">
+            <div class="col-4">
+                <button class="btn btn-primary" @onclick="Download100Gangestykker">100 Gangestykker</button>
+            </div>
+
+            <div class="col-4">
+                <a class="btn btn-primary" href="/Vejledninger/100Gangestykker">Vejledning</a>
+            </div>
+        </div>
+
+        <br>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <img class="image" src="" />
+        </div>
+    </div>
+</div>
+
+@code {
+    private async Task Download100Gangestykker()
+    {
+        var fileName = "100Gangestykker.pdf";
+        var fileURL = "/Ressourcer/100Gangestykker.pdf";
+        await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
+    }
+}
