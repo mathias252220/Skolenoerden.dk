@@ -95,24 +95,44 @@
 				<div class="col-6">
 					@foreach (OutpostModel outpost in outposts)
 					{
-						
-							@if (outposts.IndexOf(outpost) < 5)
+						@if (outposts.IndexOf(outpost) == 0)
+						{
+							<br>
+							<p>Startpost (Fælles mødested)</p>
+							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
+							<ValidationMessage For="() => outpost.Name" />
+						}
+						else if (outposts.IndexOf(outpost) < 5 && outposts.IndexOf(outpost) != outposts.Count - 1)
 							{
 								<br>
 								<p>Post @(outposts.IndexOf(outpost) + 1)</p>
 								<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
-								<ValidationMessage For="() => outpost.Name" />
-							}
+							<ValidationMessage For="() => outpost.Name" />
+						}
+						else if (outposts.IndexOf(outpost) < 5 && outposts.IndexOf(outpost) == outposts.Count - 1)
+						{
+							<br>
+							<p>Sidste post (Fælles mødested)</p>
+							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
+							<ValidationMessage For="() => outpost.Name" />
+						}
 					}
 				</div>
 
 				<div class="col-6">
 					@foreach (OutpostModel outpost in outposts)
 					{
-						@if (outposts.IndexOf(outpost) >= 5)
+						@if (outposts.IndexOf(outpost) >= 5 && outposts.IndexOf(outpost) != outposts.Count - 1)
 						{
 							<br>
 							<p>Post @(outposts.IndexOf(outpost) + 1)</p>
+							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
+							<ValidationMessage For="() => outpost.Name" />
+						}
+						else if (outposts.IndexOf(outpost) >= 5 && outposts.IndexOf(outpost) == outposts.Count - 1)
+						{
+							<br>
+							<p>Sidste post</p>
 							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
 							<ValidationMessage For="() => outpost.Name" />
 						}
@@ -155,7 +175,7 @@
 	{
 		if (outposts.Count < 10)
 		{
-			outposts.Add(new OutpostModel{});
+			outposts.Insert(outposts.Count-1,new OutpostModel{});
 		}
 	}
 
@@ -171,7 +191,7 @@
 	{
 		if (outposts.Count > 2)
 		{
-			outposts.RemoveAt(outposts.Count - 1);
+			outposts.RemoveAt(outposts.Count - 2);
 		}
 	}
 
