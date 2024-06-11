@@ -53,7 +53,7 @@ namespace LogicLibrary.TreasureHunt
 		{
 			outpost.Tasks.Clear();
 
-			foreach (char letter in outpost.ReturnNameNoSpaces())
+			foreach (char letter in outpost.ReturnNameOnlyChars())
 			{
 				outpost.Tasks.Add(CreateTask(letter, keyPage));
 			}

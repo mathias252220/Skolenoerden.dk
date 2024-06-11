@@ -33,7 +33,7 @@ namespace LogicLibrary.QuestPDF
                     {
                         page.Size(PageSizes.A4);
                         page.Margin(2, Unit.Centimetre);
-                        page.DefaultTextStyle(x => x.FontSize(20));
+                        page.DefaultTextStyle(x => x.FontSize(14));
 
                         page.Header()
                         .Table(table =>
@@ -96,9 +96,21 @@ namespace LogicLibrary.QuestPDF
                             table.Cell().Row(19).Text(string.Empty);
                             table.Cell().Row(20).Column(1).AlignCenter().Text(keyPage.LetterKeys[27].getString());
                             table.Cell().Row(20).Column(2).AlignCenter().Text(keyPage.LetterKeys[28].getString());
-
-
-                        });
+                            table.Cell().Row(20).Column(3).AlignCenter().Text(keyPage.LetterKeys[29].getString());
+							table.Cell().Row(21).Text(string.Empty);
+							table.Cell().Row(22).Column(1).AlignCenter().Text(keyPage.LetterKeys[30].getString());
+							table.Cell().Row(22).Column(2).AlignCenter().Text(keyPage.LetterKeys[31].getString());
+							table.Cell().Row(22).Column(3).AlignCenter().Text(keyPage.LetterKeys[32].getString());
+							table.Cell().Row(23).Text(string.Empty);
+							table.Cell().Row(24).Column(1).AlignCenter().Text(keyPage.LetterKeys[33].getString());
+							table.Cell().Row(24).Column(2).AlignCenter().Text(keyPage.LetterKeys[34].getString());
+							table.Cell().Row(24).Column(3).AlignCenter().Text(keyPage.LetterKeys[35].getString());
+							table.Cell().Row(25).Text(string.Empty);
+							table.Cell().Row(26).Column(1).AlignCenter().Text(keyPage.LetterKeys[36].getString());
+							table.Cell().Row(26).Column(2).AlignCenter().Text(keyPage.LetterKeys[37].getString());
+							table.Cell().Row(26).Column(3).AlignCenter().Text(keyPage.LetterKeys[38].getString());
+							table.Cell().Row(27).Text(string.Empty);
+						});
                     });
                 }
             });

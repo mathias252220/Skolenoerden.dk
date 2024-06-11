@@ -12,8 +12,8 @@ namespace LogicLibrary.Models
     public class OutpostModel
     {
         [Required(ErrorMessage = "Posten mangler et navn")]
-		[ContainsOnlyLettersAndSpaces(ErrorMessage = "Dine poster må kun indeholde bogstaver og mellemrum")]
-		[Length(1, 16, ErrorMessage = "Dine poster skal indeholde mellem 1 og 16 tegn (inkl. mellemrum)")]
+		[ContainsOnlyCertainChars(ErrorMessage = "Dine poster må kun indeholde bogstaver, tal, mellemrum, punktum og komma")]
+		[LengthModified(ErrorMessage = "Dine poster skal indeholde mellem 1 og 16 tegn (eksl. mellemrum, punktum og komma)")]
 		public string Name { get; set; }
         public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
         public string ReturnNameUnderscored()
@@ -26,6 +26,14 @@ namespace LogicLibrary.Models
                 {
                     nameUnderscored += "  ";
                 }
+                else if (c == '.')
+                {
+                    nameUnderscored += ". ";
+                }
+                else if (c == ',')
+                {
+                    nameUnderscored += ", ";
+                }
                 else
                 {
                     nameUnderscored += "_ ";
@@ -34,13 +42,13 @@ namespace LogicLibrary.Models
 
             return nameUnderscored;
         }
-        public string ReturnNameNoSpaces()
+        public string ReturnNameOnlyChars()
         {
             string nameNoSpaces = string.Empty;
 
             foreach(char c in Name)
             {
-                if (c != ' ')
+                if (c != ' ' && c != '.' && c != ',')
                 {
                     nameNoSpaces += c;
                 }
