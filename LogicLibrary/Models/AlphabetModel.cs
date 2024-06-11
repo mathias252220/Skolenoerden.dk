@@ -23,6 +23,11 @@ namespace LogicLibrary.Models
 			alphabet.Add('Ø');
 			alphabet.Add('Å');
 
+			for (char number = '0'; number <= '9'; number++)
+			{
+				alphabet.Add(number);
+			}
+
 			return alphabet;
 		}
 	}
