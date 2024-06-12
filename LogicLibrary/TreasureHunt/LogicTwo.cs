@@ -2,54 +2,54 @@
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
 
-namespace LogicLibrary.TreasureHunt
+namespace LogicLibrary.TreasureHunt;
+
+public class LogicTwo : ILogic
 {
-    public class LogicTwo : ILogic
+    public string grade { get; set; } = "GradeTwo";
+    public KeyPageModel CreateKeyPage()
     {
-        public string grade { get; set; } = "GradeTwo";
-        public KeyPageModel CreateKeyPage()
+        KeyPageModel keyPage = new();
+        Random rnd = new();
+        bool unique;
+        int number;
+        AlphabetModel alphabet = new();
+        alphabet.Alphabet = alphabet.CreateAlphabet();
+
+        foreach (char c in alphabet.Alphabet)
         {
-            KeyPageModel keyPage = new();
-            Random rnd = new();
-            bool unique;
-            int number;
-            AlphabetModel alphabet = new();
-            alphabet.Alphabet = alphabet.CreateAlphabet();
+            KeyModel key = new();
+            key.KeyLetter = c;
 
-            foreach (char c in alphabet.Alphabet)
+            do
             {
-                KeyModel key = new();
-                key.KeyLetter = c;
+                unique = true;
+                number = rnd.Next(1, 101);
 
-                do
+                foreach (KeyModel entry in keyPage.LetterKeys)
                 {
-                    unique = true;
-                    number = rnd.Next(1, 101);
-
-                    foreach (KeyModel entry in keyPage.LetterKeys)
+                    if (entry.KeyNumber == number)
                     {
-                        if (entry.KeyNumber == number)
-                        {
-                            unique = false;
-                        }
+                        unique = false;
                     }
-                } while (unique == false);
+                }
+            } while (unique == false);
 
-                key.KeyNumber = number;
-                keyPage.LetterKeys.Add(key);
-            }
-
-            return keyPage;
+            key.KeyNumber = number;
+            keyPage.LetterKeys.Add(key);
         }
+
+        return keyPage;
+    }
 		public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
-        {
-            outpost.Tasks.Clear();
+    {
+        outpost.Tasks.Clear();
 
-            foreach (char letter in outpost.ReturnNameOnlyChars())
-            {
-                outpost.Tasks.Add(CreateTask(letter, keyPage));
-            }
+        foreach (char letter in outpost.ReturnNameOnlyChars())
+        {
+            outpost.Tasks.Add(CreateTask(letter, keyPage));
         }
+    }
 		public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 		{
 			TaskModel task = new();
@@ -83,4 +83,3 @@ namespace LogicLibrary.TreasureHunt
 			return task;
 		}
 	}
-}

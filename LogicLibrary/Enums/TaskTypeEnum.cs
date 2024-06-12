@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLibrary.Enums
+namespace LogicLibrary.Enums;
+
+public enum TaskTypeEnum
 {
-    public enum TaskTypeEnum
-    {
-        Addition,
-        Subtraction,
-        Multiplication,
-        Division
-    }
+    Addition,
+    Subtraction,
+    Multiplication,
+    Division
 }

@@ -1,12 +1,11 @@
 ﻿using LogicLibrary.Models;
 
-namespace LogicLibrary.TreasureHunt
+namespace LogicLibrary.TreasureHunt;
+
+public interface ILogic
 {
-    public interface ILogic
-    {
-        public string grade { get; set; }
-        KeyPageModel CreateKeyPage();
+    public string grade { get; set; }
+    KeyPageModel CreateKeyPage();
 		void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage);
 		TaskModel CreateTask(char letter, KeyPageModel keyPage);
 	}
-}

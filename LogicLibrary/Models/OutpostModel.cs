@@ -7,54 +7,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLibrary.Models
+namespace LogicLibrary.Models;
+
+public class OutpostModel
 {
-    public class OutpostModel
-    {
-        [Required(ErrorMessage = "Posten mangler et navn")]
+    [Required(ErrorMessage = "Posten mangler et navn")]
 		[ContainsOnlyCertainChars(ErrorMessage = "Dine poster må kun indeholde bogstaver, tal, mellemrum, punktum og komma")]
 		[LengthModified(ErrorMessage = "Dine poster skal indeholde mellem 1 og 16 tegn (eksl. mellemrum, punktum og komma)")]
 		public string Name { get; set; }
-        public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
-        public string ReturnNameUnderscored()
+    public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
+    public string ReturnNameUnderscored()
+    {
+        string nameUnderscored = string.Empty;
+
+        foreach(char c in Name)
         {
-            string nameUnderscored = string.Empty;
-
-            foreach(char c in Name)
+            if (c == ' ')
             {
-                if (c == ' ')
-                {
-                    nameUnderscored += "  ";
-                }
-                else if (c == '.')
-                {
-                    nameUnderscored += ". ";
-                }
-                else if (c == ',')
-                {
-                    nameUnderscored += ", ";
-                }
-                else
-                {
-                    nameUnderscored += "_ ";
-                }
+                nameUnderscored += "  ";
             }
-
-            return nameUnderscored;
+            else if (c == '.')
+            {
+                nameUnderscored += ". ";
+            }
+            else if (c == ',')
+            {
+                nameUnderscored += ", ";
+            }
+            else
+            {
+                nameUnderscored += "_ ";
+            }
         }
-        public string ReturnNameOnlyChars()
+
+        return nameUnderscored;
+    }
+    public string ReturnNameOnlyChars()
+    {
+        string nameNoSpaces = string.Empty;
+
+        foreach(char c in Name)
         {
-            string nameNoSpaces = string.Empty;
-
-            foreach(char c in Name)
+            if (c != ' ' && c != '.' && c != ',')
             {
-                if (c != ' ' && c != '.' && c != ',')
-                {
-                    nameNoSpaces += c;
-                }
+                nameNoSpaces += c;
             }
-
-            return nameNoSpaces;
         }
+
+        return nameNoSpaces;
     }
 }

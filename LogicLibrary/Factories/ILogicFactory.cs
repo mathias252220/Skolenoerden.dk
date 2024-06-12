@@ -1,9 +1,8 @@
 ﻿using LogicLibrary.TreasureHunt;
 
-namespace LogicLibrary.Factories
+namespace LogicLibrary.Factories;
+
+public interface ILogicFactory
 {
-    public interface ILogicFactory
-    {
-        ILogic Create(string input);
-    }
+    ILogic Create(string input);
 }

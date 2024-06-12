@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using static QuestPDF.Helpers.Colors;
 
 namespace LogicLibrary.Validators;
-
 public class ContainsOnlyCertainCharsAttribute : ValidationAttribute
 {
 	public override bool IsValid(object value)
