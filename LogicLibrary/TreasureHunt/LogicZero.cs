@@ -67,7 +67,7 @@ namespace LogicLibrary.TreasureHunt
 
 			switch (task.TaskType)
 			{
-				case TaskTypeEnum.Plus:
+				case TaskTypeEnum.Addition:
 					task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
 					task.VariableTwo = task.Answer - task.VariableOne;
 					task.Question = $"{task.VariableOne} + {task.VariableTwo} =";

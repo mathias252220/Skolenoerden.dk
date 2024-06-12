@@ -93,7 +93,7 @@ public class LogicFive : ILogic
         }
         else if (possibleFactors.Count > 0)
         {
-            task.TaskType = TaskTypeEnum.Gange;
+            task.TaskType = TaskTypeEnum.Multiplication;
         }
         else
         {
@@ -102,7 +102,7 @@ public class LogicFive : ILogic
 
         switch (task.TaskType)
         {
-            case TaskTypeEnum.Plus:
+            case TaskTypeEnum.Addition:
                 do
                 {
                     task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
@@ -113,7 +113,7 @@ public class LogicFive : ILogic
                 task.Question = task.Question.Replace('.', ',');
                 break;
 
-            case TaskTypeEnum.Minus:
+            case TaskTypeEnum.Subtraction:
                 do
                 {
                     task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
@@ -124,7 +124,7 @@ public class LogicFive : ILogic
                 task.Question = task.Question.Replace('.', ',');
                 break;
 
-            case TaskTypeEnum.Gange:
+            case TaskTypeEnum.Multiplication:
                 task.VariableOne = Convert.ToDouble(possibleFactors[rnd.Next(0, possibleFactors.Count)]);
                 task.VariableTwo = task.Answer / task.VariableOne;
                 task.Question = $"{task.VariableOne} x {task.VariableTwo} =";
