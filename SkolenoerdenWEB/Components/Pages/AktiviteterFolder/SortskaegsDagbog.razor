@@ -1,8 +1,8 @@
 ﻿@inject IJSRuntime JS
-@page "/Aktiviteter/EscapeRoomSpil"
+@page "/Aktiviteter/SortskaegsDagbog"
 
 
-<PageTitle>Escape Room Spil</PageTitle>
+<PageTitle>Sortskægs Dagbog</PageTitle>
 
 <br>
 <br>
@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-12">
-        <h1 class="page-title">Escape Room Spil</h1>
+        <h1 class="page-title">Sortskægs Dagbog</h1>
     </div>
 </div>
 
@@ -45,7 +45,7 @@
                 <button class="btn btn-primary" @onclick="DownloadRigtigForkert">Rigtig/Forkert</button>
             </div>
             <div class="col-3">
-                <a class="btn btn-primary" href="/Vejledninger/EscapeRoomSpil">Vejledning</a>
+                <a class="btn btn-primary" href="/Vejledninger/SortskaegsDagbog">Vejledning</a>
             </div>
         </div>
 
@@ -54,7 +54,7 @@
 
     <div class="col-4">
         <div class="card">
-            <img class="image" src="/Images/Forside/EscapeRoomSpil.png" />
+            <img class="image" src="/Images/Forside/Dagbog.png" />
         </div>
     </div>
 </div>
@@ -64,19 +64,19 @@
     private async Task DownloadDagbog()
     {
         var fileName = "Dagbog.pdf";
-        var fileURL = "/Ressourcer/EscapeRoomSpil/Dagbog.pdf";
+        var fileURL = "/Ressourcer/SortskægsDagbog/Dagbog.pdf";
         await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
     }
     private async Task DownloadKopper()
     {
         var fileName = "Kopper.pdf";
-        var fileURL = "/Ressourcer/EscapeRoomSpil/Kopper.pdf";
+        var fileURL = "/Ressourcer/SortskægsDagbog/Kopper.pdf";
         await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
     }
     private async Task DownloadRigtigForkert()
     {
         var fileName = "RigtigForkert.pdf";
-        var fileURL = "/Ressourcer/EscapeRoomSpil/RigtigForkert.pdf";
+        var fileURL = "/Ressourcer/SortskægsDagbog/RigtigForkert.pdf";
         await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
     }
 }

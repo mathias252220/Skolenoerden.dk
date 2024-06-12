@@ -80,7 +80,7 @@ public class LogicThree : ILogic
 
 		if (possibleFactors.Count > 0 && task.Answer <= 100)
 		{
-			task.TaskType = TaskTypeEnum.Gange;
+			task.TaskType = TaskTypeEnum.Multiplication;
 		}
 		else
 		{
@@ -89,19 +89,19 @@ public class LogicThree : ILogic
 
 		switch (task.TaskType)
 		{
-			case TaskTypeEnum.Plus:
+			case TaskTypeEnum.Addition:
 				task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
 				task.VariableTwo = task.Answer - task.VariableOne;
 				task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
 				break;
 
-			case TaskTypeEnum.Minus:
+			case TaskTypeEnum.Subtraction:
 				task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 1001);
 				task.VariableTwo = task.VariableOne - task.Answer;
 				task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
 				break;
 
-			case TaskTypeEnum.Gange:
+			case TaskTypeEnum.Multiplication:
 				task.VariableOne = possibleFactors[rnd.Next(0, possibleFactors.Count)];
 				task.VariableTwo = task.Answer / task.VariableOne;
 				task.Question = $"{task.VariableOne} x {task.VariableTwo} =";

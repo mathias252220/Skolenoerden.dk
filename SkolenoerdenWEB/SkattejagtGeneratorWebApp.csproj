@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Ressourcer\EscapeRoomSpil\Dagbog.pdf" />
+    <None Include="wwwroot\Ressourcer\SortskægsDagbog\Dagbog.pdf" />
   </ItemGroup>
 
 </Project>

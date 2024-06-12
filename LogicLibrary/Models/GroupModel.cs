@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLibrary.Models
+namespace LogicLibrary.Models;
+
+public class GroupModel
 {
-    public class GroupModel
-    {
-        public int groupNumber { get; set; }
-        public int firstOutpost { get; set; }
-    }
+    public int groupNumber { get; set; }
+    public int firstOutpost { get; set; }
 }

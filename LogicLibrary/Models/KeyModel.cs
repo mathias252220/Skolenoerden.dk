@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLibrary.Modeller
+namespace LogicLibrary.Modeller;
+
+public class KeyModel
 {
-    public class KeyModel
+    public double KeyNumber { get; set; }
+    public char KeyLetter { get; set; }
+    public string getString()
     {
-        public double KeyNumber { get; set; }
-        public char KeyLetter { get; set; }
-        public string getString()
-        {
-            string keyString = $"{KeyLetter} = {KeyNumber}";
-            keyString = keyString.Replace('.', ',');
-            return keyString;
-        }
+        string keyString = $"{KeyLetter} = {KeyNumber}";
+        keyString = keyString.Replace('.', ',');
+        return keyString;
     }
 }

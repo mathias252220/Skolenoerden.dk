@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLibrary.Models
+namespace LogicLibrary.Models;
+
+public class KeyPageModel
 {
-    public class KeyPageModel
-    {
-        public List<KeyModel> LetterKeys { get; set; } = new List<KeyModel>();
-    }
+    public List<KeyModel> LetterKeys { get; set; } = new List<KeyModel>();
 }
