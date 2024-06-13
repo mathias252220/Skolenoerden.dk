@@ -81,17 +81,33 @@ public static class MathLogic
 		}
 		return products;
 	}
-	public static (int, int) GetMinuendAndSubtrahend()
+	public static (int, int) GetMinuendAndSubtrahend(double answer)
 	{
 		Random rnd = new();
 
-		int digit1 = rnd.Next(0, 10);
-		int digit2 = rnd.Next(0, 10);
-		int digit3 = rnd.Next(0, 10);
-		int digit4 = rnd.Next(0, 10);
+        int answerInt = Convert.ToInt16(answer);
+        int minDigit1;
+        int minDigit2;
+        int subDigit1;
+        int subDigit2;
 
-		int minuend = int.Parse(Math.Max(digit1, digit2).ToString() + Math.Max(digit3, digit4).ToString());
-		int subtrahend = int.Parse(Math.Min(digit1, digit2).ToString() + Math.Min(digit3, digit4).ToString());
+        if (answer.ToString().Length < 2)
+        {
+            minDigit1 = rnd.Next(0, 10);
+            subDigit1 = minDigit1;
+            minDigit2 = rnd.Next(answerInt, 10);
+            subDigit2 = minDigit2 - answerInt;
+        }
+        else
+        {
+            minDigit1 = rnd.Next(answerInt / 10, 10);
+            subDigit1 = minDigit1 - (answerInt / 10);
+            minDigit2 = rnd.Next(answerInt % 10, 10);
+            subDigit2 = minDigit2 - (answerInt % 10);
+        }
+
+		int minuend = int.Parse(minDigit1.ToString() + minDigit2.ToString());
+		int subtrahend = int.Parse(subDigit1.ToString() + subDigit2.ToString());
 
 		return (minuend, subtrahend);
 	}

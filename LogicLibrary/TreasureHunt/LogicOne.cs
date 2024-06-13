@@ -35,7 +35,7 @@ public class LogicOne : ILogic
 
 				foreach (KeyModel entry in keyPage.LetterKeys)
 				{
-					if (entry.KeyLetter == number)
+					if (entry.KeyNumber == number)
 					{
 						unique = false;
 					}
@@ -83,7 +83,7 @@ public class LogicOne : ILogic
 				break;
 
 			case TaskTypeEnum.Subtraction:
-				(task.VariableOne, task.VariableTwo) = MathLogic.GetMinuendAndSubtrahend();
+				(task.VariableOne, task.VariableTwo) = MathLogic.GetMinuendAndSubtrahend(task.Answer);
 				task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
 				break;
 		}
