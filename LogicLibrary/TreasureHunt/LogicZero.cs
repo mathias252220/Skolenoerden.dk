@@ -24,11 +24,11 @@ public class LogicZero : ILogic
 			do
 			{
 				unique = true;
-				number = rnd.Next(1, 31);
+				number = rnd.Next(1, 41);
 
 				foreach (KeyModel entry in keyPage.LetterKeys)
 				{
-					if (entry.KeyLetter == number)
+					if (entry.KeyNumber == number)
 					{
 						unique = false;
 					}

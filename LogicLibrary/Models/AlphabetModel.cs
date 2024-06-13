@@ -8,7 +8,7 @@ namespace LogicLibrary.Models;
 
 public class AlphabetModel
 {
-        public List<char> Alphabet { get; set; }
+    public List<char> Alphabet { get; set; }
 
 	public List<char> CreateAlphabet()
 	{

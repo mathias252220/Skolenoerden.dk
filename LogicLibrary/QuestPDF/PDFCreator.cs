@@ -117,59 +117,6 @@ public class PDFCreator
             });
         };
     }
-    private static Action<TableDescriptor> CreatePageTwo(List<OutpostModel> outposts, GroupModel group, int i)
-    {
-        return pageTwo =>
-        {
-            pageTwo.ColumnsDefinition(columns =>
-            {
-                columns.RelativeColumn();
-                columns.RelativeColumn();
-                columns.RelativeColumn();
-                columns.RelativeColumn();
-                columns.RelativeColumn();
-            });
-
-            if (i * 2 + 1 < outposts.Count - 1)
-            {
-                pageTwo.Header(header =>
-                {
-                    header.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].Name).SemiBold().FontSize(48);
-                    header.Cell().Row(2).ColumnSpan(5).AlignCenter().PaddingBottom(20).Text($"Gruppe {group.groupNumber}").FontSize(12);
-                });
-            }
-
-            if (i * 2 + 1 < outposts.Count - 1)
-            {
-                int rightHalf = outposts[i * 2 + 2].Tasks.Count / 2;
-                int leftHalf = outposts[i * 2 + 2].Tasks.Count - rightHalf;
-
-                for (int j = 0; j < leftHalf; j++)
-                {
-                    pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i * 2 + 2].Tasks[j].Question}");
-                    pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
-                }
-                for (int j = 0; j < rightHalf; j++)
-                {
-                    pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i * 2 + 2].Tasks[leftHalf + j].Question}");
-                    pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
-                }
-                for (int j = 0; j < (8 - leftHalf); j++)
-                {
-                    pageTwo.Cell().Row((uint)leftHalf + (uint)j).PaddingVertical(5).Text(" ");
-                }
-            }
-
-            if (i * 2 + 1 < outposts.Count - 1)
-            {
-                pageTwo.Footer(footer =>
-                {
-                    footer.Cell().ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 2].ReturnNameUnderscored()).FontSize(48);
-
-                });
-            }
-        };
-    }
     private static Action<TableDescriptor> CreatePageOne(List<OutpostModel> outposts, GroupModel group, int i)
     {
         return pageOne =>
@@ -226,4 +173,58 @@ public class PDFCreator
             }
         };
     }
+    private static Action<TableDescriptor> CreatePageTwo(List<OutpostModel> outposts, GroupModel group, int i)
+    {
+        return pageTwo =>
+        {
+            pageTwo.ColumnsDefinition(columns =>
+            {
+                columns.RelativeColumn();
+                columns.RelativeColumn();
+                columns.RelativeColumn();
+                columns.RelativeColumn();
+                columns.RelativeColumn();
+            });
+
+            if (i * 2 + 1 < outposts.Count - 1)
+            {
+                pageTwo.Header(header =>
+                {
+                    header.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].Name).SemiBold().FontSize(48);
+                    header.Cell().Row(2).ColumnSpan(5).AlignCenter().PaddingBottom(20).Text($"Gruppe {group.groupNumber}").FontSize(12);
+                });
+            }
+
+            if (i * 2 + 1 < outposts.Count - 1)
+            {
+                int rightHalf = outposts[i * 2 + 2].Tasks.Count / 2;
+                int leftHalf = outposts[i * 2 + 2].Tasks.Count - rightHalf;
+
+                for (int j = 0; j < leftHalf; j++)
+                {
+                    pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{j + 1}) {outposts[i * 2 + 2].Tasks[j].Question}");
+                    pageTwo.Cell().Row((uint)j + 1).Column(1).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
+                }
+                for (int j = 0; j < rightHalf; j++)
+                {
+                    pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignLeft().PaddingLeft(75).PaddingVertical(5, Unit.Point).Text($"{leftHalf + j + 1}) {outposts[i * 2 + 2].Tasks[leftHalf + j].Question}");
+                    pageTwo.Cell().Row((uint)j + 1).Column(3).ColumnSpan(3).AlignRight().PaddingRight(75).PaddingVertical(5).Text("__________");
+                }
+                for (int j = 0; j < (8 - leftHalf); j++)
+                {
+                    pageTwo.Cell().Row((uint)leftHalf + (uint)j).PaddingVertical(5).Text(" ");
+                }
+            }
+
+            if (i * 2 + 1 < outposts.Count - 1)
+            {
+                pageTwo.Footer(footer =>
+                {
+                    footer.Cell().ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 2].ReturnNameUnderscored()).FontSize(48);
+
+                });
+            }
+        };
+    }
+    
 }
