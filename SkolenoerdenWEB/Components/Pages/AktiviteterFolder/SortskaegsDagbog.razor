@@ -64,19 +64,19 @@
     private async Task DownloadDagbog()
     {
         var fileName = "Dagbog.pdf";
-        var fileURL = "/Ressourcer/SortskægsDagbog/Dagbog.pdf";
+        var fileURL = "/Ressourcer/SortskaegsDagbog/Dagbog.pdf";
         await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
     }
     private async Task DownloadKopper()
     {
         var fileName = "Kopper.pdf";
-        var fileURL = "/Ressourcer/SortskægsDagbog/Kopper.pdf";
+        var fileURL = "/Ressourcer/SortskaegsDagbog/Kopper.pdf";
         await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
     }
     private async Task DownloadRigtigForkert()
     {
         var fileName = "RigtigForkert.pdf";
-        var fileURL = "/Ressourcer/SortskægsDagbog/RigtigForkert.pdf";
+        var fileURL = "/Ressourcer/SortskaegsDagbog/RigtigForkert.pdf";
         await JS.InvokeVoidAsync("triggerFileDownload", fileName, fileURL);
     }
 }
