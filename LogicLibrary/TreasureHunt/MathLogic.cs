@@ -101,7 +101,7 @@ public static class MathLogic
         else
         {
             minDigit1 = rnd.Next(answerInt / 10, 10);
-            subDigit1 = minDigit1;
+            subDigit1 = minDigit1 - (answerInt / 10);
             minDigit2 = rnd.Next(answerInt % 10, 10);
             subDigit2 = minDigit2 - (answerInt % 10);
         }
