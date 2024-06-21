@@ -1,6 +1,6 @@
 .page {
     font-family: ComicSans;
-    background: url('/Images/Background.png');
+    background-color: #00CBDF;
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
@@ -11,16 +11,11 @@
     src: url(/Fonts/ComicSans.ttf);
 }
 
-.empty-top {
-    height: 10vw;
-}
 .top-row {
-    height: 10vw;
     background: linear-gradient(90deg, rgba(248, 155, 41, 0.25) 0%, rgba(255,15,123,0.25) 100%);
 }
 
 .top-item {
-    height: 10vw;
     font-size: 1.5vw;
     color: black;
     align-items: center;
@@ -29,11 +24,6 @@
 
 .top-item ::deep .nav-link {
     color: black;
-}
-
-.sidebar {
-    background: linear-gradient(180deg, rgba(248, 155, 41, 0.25) 0%, rgba(255,15,123,0.25) 100%);
-    width: 15vw;
 }
 
 .content {

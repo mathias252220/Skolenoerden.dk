@@ -1,39 +1,62 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page col-12 container-fluid">
+<div class="page col-12">
 
-    <div class="empty-top"></div>
+    <div class="top-row fixed-top">
 
-    <div class="top-row fixed-top col-12">
-        <div class="row">
-            <div class="top-item col-7"></div>
 
-            <div class="top-item col-3 d-flex">
+            <div class="top-item col-2">
+                <div class="nav-item">
+                    <NavLink class="nav-link" href="/Nyheder">
+                        <span>Nyheder</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <div class="top-item col-2">
+                <div class="nav-item">
+                    <NavLink class="nav-link" href="/Aktiviteter">
+                        <span>Aktiviteter</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <div class="top-item col-2">
+                <div class="nav-item">
+                    <NavLink class="nav-link" href="/SkolenoerdenAnbefaler">
+                        <span>Skolenørden Anbefaler</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <div class="top-item col-2">
                 <NavLink class="nav-link" href="/OmSkolenoerden">
                     <span>Om Skolenørden</span>
                 </NavLink>
             </div>
 
-            <div class="top-item col-2 d-flex">
+            <div class="top-item col-2">
                 <NavLink class="nav-link" href="/Kontakt">
                     <span>Kontakt</span>
                 </NavLink>
             </div>
-        </div>
-    </div>
 
+    </div>
+    
     <div class="row">
         
-        <div class="col-2"/>
+        <div class="col-1"/>
 
-        <div class="sidebar position-fixed col-2 vh-100">
-            <NavMenu />
+        <div class="col-10">
+
+            <div class="content col-12">
+                @Body
+            </div>
+
         </div>
 
-        <div class="content col-10">
-            @Body
-        </div>
+        <div class="col-1"/>
 
-    </div>  
+    </div>
 
 </div>
