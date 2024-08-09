@@ -13,6 +13,7 @@
 
 .top-row {
     background: rgba(0, 150, 255, 1);
+    background: linear-gradient(90deg, rgba(248, 155, 41, 0.25) 0%, rgba(255,15,123,0.25) 100%);
 }
 
 .top-item {
