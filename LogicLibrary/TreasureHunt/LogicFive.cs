@@ -12,6 +12,7 @@ namespace LogicLibrary.TreasureHunt;
 public class LogicFive : ILogic
 {
     public string grade { get; set; } = "GradeFive";
+    public string taskTypes { get; set; } = "Elemental";
 
     public KeyPageModel CreateKeyPage()
     {
@@ -33,14 +34,17 @@ public class LogicFive : ILogic
                 unique = true;
                 int answerTypeInt = rnd.Next(0, 4);
 
+                // A whole non-prime number between 1 and 2500. Used for multiplication tasks.
                 if (answerTypeInt == 0)
                 {
                     number = Convert.ToDouble(products[rnd.Next(products.Count)]);
                 }
+                // A whole number between 10 and 100. Used for division tasks.
                 else if (answerTypeInt == 1)
                 {
                     number = Convert.ToDouble(rnd.Next(10, 101));
                 }
+                // A random number between 10 and 100 with 2 decimals. Used for addition and subtraction tasks.
                 else
                 {
                     do
@@ -103,43 +107,63 @@ public class LogicFive : ILogic
         switch (task.TaskType)
         {
             case TaskTypeEnum.Addition:
-                do
-                {
-                    task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
-                } while (task.VariableOne > task.Answer);
-
-                task.VariableTwo = Math.Round(task.Answer - task.VariableOne, 2);
-                task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-                task.Question = task.Question.Replace('.', ',');
+                CreateAddition(task, rnd);
                 break;
 
             case TaskTypeEnum.Subtraction:
-                do
-                {
-                    task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
-                } while (task.VariableOne < task.Answer);
-
-                task.VariableTwo = Math.Round(task.VariableOne - task.Answer, 2);
-                task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-                task.Question = task.Question.Replace('.', ',');
+                CreateSubtraction(task, rnd);
                 break;
 
             case TaskTypeEnum.Multiplication:
-                task.VariableOne = Convert.ToDouble(possibleFactors[rnd.Next(0, possibleFactors.Count)]);
-                task.VariableTwo = task.Answer / task.VariableOne;
-                task.Question = $"{task.VariableOne} x {task.VariableTwo} =";
-                task.Question = task.Question.Replace('.', ',');
+                CreateMultiplication(task, rnd, possibleFactors);
                 break;
 
             case TaskTypeEnum.Division:
-                task.VariableOne = Convert.ToDouble(rnd.Next(2, 10));
-                task.VariableTwo = task.Answer * task.VariableOne;
-                task.Question = $"{task.VariableTwo} : {task.VariableOne} =";
-                task.Question = task.Question.Replace('.', ',');
+                CreateDivision(task, rnd);
                 break;
         }
 
         return task;
+    }
+
+    private static void CreateAddition(TaskModel task, Random rnd)
+    {
+        do
+        {
+            task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
+        } while (task.VariableOne > task.Answer);
+
+        task.VariableTwo = Math.Round(task.Answer - task.VariableOne, 2);
+        task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
+        task.Question = task.Question.Replace('.', ',');
+    }
+
+    private static void CreateSubtraction(TaskModel task, Random rnd)
+    {
+        do
+        {
+            task.VariableOne = Math.Round(rnd.NextDouble() * 100, 2);
+        } while (task.VariableOne < task.Answer);
+
+        task.VariableTwo = Math.Round(task.VariableOne - task.Answer, 2);
+        task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
+        task.Question = task.Question.Replace('.', ',');
+    }
+
+    private static void CreateMultiplication(TaskModel task, Random rnd, List<int> possibleFactors)
+    {
+        task.VariableOne = Convert.ToDouble(possibleFactors[rnd.Next(0, possibleFactors.Count)]);
+        task.VariableTwo = task.Answer / task.VariableOne;
+        task.Question = $"{task.VariableOne} · {task.VariableTwo} =";
+        task.Question = task.Question.Replace('.', ',');
+    }
+
+    private static void CreateDivision(TaskModel task, Random rnd)
+    {
+        task.VariableOne = Convert.ToDouble(rnd.Next(2, 10));
+        task.VariableTwo = task.Answer * task.VariableOne;
+        task.Question = $"{task.VariableTwo} : {task.VariableOne} =";
+        task.Question = task.Question.Replace('.', ',');
     }
 
     public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)

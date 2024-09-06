@@ -7,6 +7,9 @@ namespace LogicLibrary.TreasureHunt;
 public class LogicTwo : ILogic
 {
     public string grade { get; set; } = "GradeTwo";
+
+    public string taskTypes { get; set; } = "Elemental";
+
     public KeyPageModel CreateKeyPage()
     {
         KeyPageModel keyPage = new();
@@ -24,6 +27,7 @@ public class LogicTwo : ILogic
             do
             {
                 unique = true;
+                // A whole number between 1 and 100. Used for Addition and subtraction.
                 number = rnd.Next(1, 101);
 
                 foreach (KeyModel entry in keyPage.LetterKeys)
@@ -41,16 +45,8 @@ public class LogicTwo : ILogic
 
         return keyPage;
     }
-		public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
-    {
-        outpost.Tasks.Clear();
 
-        foreach (char letter in outpost.ReturnNameOnlyChars())
-        {
-            outpost.Tasks.Add(CreateTask(letter, keyPage));
-        }
-    }
-		public TaskModel CreateTask(char letter, KeyPageModel keyPage)
+	public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 		{
 			TaskModel task = new();
 			Random rnd = new();
@@ -67,19 +63,39 @@ public class LogicTwo : ILogic
 
 			switch (task.TaskType)
 			{
-				case TaskTypeEnum.Addition:
-					task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-					task.VariableTwo = task.Answer - task.VariableOne;
-					task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-					break;
+            case TaskTypeEnum.Addition:
+                CreateAddition(task, rnd);
+                break;
 
-				case TaskTypeEnum.Subtraction:
-					task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 101);
-					task.VariableTwo = task.VariableOne - task.Answer;
-					task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-					break;
-			}
+            case TaskTypeEnum.Subtraction:
+                CreateSubtraction(task, rnd);
+                break;
+        }
 
 			return task;
 		}
-	}
+
+    private static void CreateAddition(TaskModel task, Random rnd)
+    {
+        task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
+        task.VariableTwo = task.Answer - task.VariableOne;
+        task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
+    }
+
+    private static void CreateSubtraction(TaskModel task, Random rnd)
+    {
+        task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 101);
+        task.VariableTwo = task.VariableOne - task.Answer;
+        task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
+    }
+
+    public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
+    {
+        outpost.Tasks.Clear();
+
+        foreach (char letter in outpost.ReturnNameOnlyChars())
+        {
+            outpost.Tasks.Add(CreateTask(letter, keyPage));
+        }
+    }
+}

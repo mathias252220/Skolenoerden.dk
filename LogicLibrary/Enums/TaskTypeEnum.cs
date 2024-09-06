@@ -11,5 +11,7 @@ public enum TaskTypeEnum
     Addition,
     Subtraction,
     Multiplication,
-    Division
+    Division,
+    Fraction,
+    Equation
 }

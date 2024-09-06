@@ -14,7 +14,9 @@ public class LogicOne : ILogic
 {
 	public string grade { get; set; } = "GradeOne";
 
-	public KeyPageModel CreateKeyPage()
+    public string taskTypes { get; set; } = "Elemental";
+
+    public KeyPageModel CreateKeyPage()
 	{
 		KeyPageModel keyPage = new();
 		Random rnd = new();
@@ -31,6 +33,7 @@ public class LogicOne : ILogic
 			do
 			{
 				unique = true;
+                // A whole number between 1 and 100. Used for addition and subtraction tasks.
 				number = rnd.Next(1, 101);
 
 				foreach (KeyModel entry in keyPage.LetterKeys)
@@ -47,16 +50,6 @@ public class LogicOne : ILogic
 		}
 
 		return keyPage;
-	}
-
-	public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
-	{
-		outpost.Tasks.Clear();
-
-		foreach (char letter in outpost.ReturnNameOnlyChars())
-		{
-			outpost.Tasks.Add(CreateTask(letter, keyPage));
-		}
 	}
 
 	public TaskModel CreateTask(char letter, KeyPageModel keyPage)
@@ -76,18 +69,38 @@ public class LogicOne : ILogic
 
 		switch (task.TaskType)
 		{
-			case TaskTypeEnum.Addition:
-				task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-				task.VariableTwo = task.Answer - task.VariableOne;
-				task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-				break;
+            case TaskTypeEnum.Addition:
+                CreateAddition(task, rnd);
+                break;
 
-			case TaskTypeEnum.Subtraction:
-				(task.VariableOne, task.VariableTwo) = MathLogic.GetMinuendAndSubtrahend(task.Answer);
-				task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-				break;
-		}
+            case TaskTypeEnum.Subtraction:
+                CreateSubtraction(task);
+                break;
+        }
 
 		return task;
 	}
+
+    private static void CreateAddition(TaskModel task, Random rnd)
+    {
+        task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
+        task.VariableTwo = task.Answer - task.VariableOne;
+        task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
+    }
+
+    private static void CreateSubtraction(TaskModel task)
+    {
+        (task.VariableOne, task.VariableTwo) = MathLogic.GetMinuendAndSubtrahend(task.Answer);
+        task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
+    }
+
+    public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
+    {
+        outpost.Tasks.Clear();
+
+        foreach (char letter in outpost.ReturnNameOnlyChars())
+        {
+            outpost.Tasks.Add(CreateTask(letter, keyPage));
+        }
+    }
 }

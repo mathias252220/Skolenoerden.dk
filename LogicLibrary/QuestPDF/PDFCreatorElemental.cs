@@ -14,8 +14,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace LogicLibrary.QuestPDF;
 
-public class PDFCreator
+public class PDFCreatorElemental : IPDFCreator
 {
+    public string taskTypes { get; set; } = "Elemental";
+
     public IDocument PrintFullPDF(KeyPageModel keyPage, List<OutpostModel> outposts, List<GroupModel> groups)
     {
         var keyPagePDF = CreateKeyPagePDF(keyPage, groups);
@@ -226,5 +228,5 @@ public class PDFCreator
             }
         };
     }
-    
+
 }
