@@ -93,7 +93,7 @@ public class FractionGenerator : ITaskGenerator
     {
         Random rnd = new();
 
-        return CreateFraction((Fraction)taskAnswer, rnd.Next(0, 4), 10);
+        return CreateFraction(Fraction.FromDoubleRounded(taskAnswer), rnd.Next(0, 4), 10);
     }
 
     public TaskModel CreateTaskEight()
@@ -120,7 +120,7 @@ public class FractionGenerator : ITaskGenerator
     {
         Random rnd = new();
 
-        return CreateFraction((Fraction)taskAnswer, rnd.Next(0, 4), 20);
+        return CreateFraction(Fraction.FromDoubleRounded(taskAnswer), rnd.Next(0, 4), 20);
     }
 
     private static TaskModel CreateFraction(Fraction taskAnswer, int fractionType, int maxDivisor)
@@ -157,7 +157,7 @@ public class FractionGenerator : ITaskGenerator
         do
         {
             variableOne = new Fraction(rnd.Next(1, maxDivisor + 1), rnd.Next(1, maxDivisor + 2));
-        } while (variableOne > answer);
+        } while (variableOne >= answer);
 
         task.Answer = (double)answer;
         task.VariableOne = (double)variableOne;
@@ -178,7 +178,7 @@ public class FractionGenerator : ITaskGenerator
         do
         {
             variableOne = new Fraction(rnd.Next(1, maxDivisor + 2), rnd.Next(1, maxDivisor + 1));
-        } while (variableOne < answer);
+        } while (variableOne <= answer);
 
         task.Answer = (double)answer;
         task.VariableOne = (double)variableOne;

@@ -246,7 +246,7 @@ public class EquationGenerator : ITaskGenerator
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer + task.VariableTwo;
-        task.Question = $"{task.VariableOne} + x - {task.VariableTwo} = {task.VariableThree}";
+        task.Question = $"{task.VariableOne} + x + {task.VariableTwo} = {task.VariableThree}";
 
         return task;
     }
@@ -281,7 +281,7 @@ public class EquationGenerator : ITaskGenerator
         return task;
     }
 
-    //Equation of type a - x * b = c
+    //Equation of type a - b * x b = c
     private static TaskModel CreateEquationType3(double taskAnswer)
     {
         Random rnd = new();
