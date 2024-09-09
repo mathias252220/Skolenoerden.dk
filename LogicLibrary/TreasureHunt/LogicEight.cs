@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fractions;
+using LogicLibrary.TaskGenerator;
 
 namespace LogicLibrary.TreasureHunt;
 public class LogicEight : ILogic
@@ -75,181 +76,18 @@ public class LogicEight : ILogic
             }
         }
 
+        ITaskGenerator taskGenerator;
+
         if (task.Answer % 1 == 0)
         {
-            task.TaskType = Enums.TaskTypeEnum.Equation;
+            taskGenerator = new EquationGenerator();
         }
         else
         {
-            task.TaskType = Enums.TaskTypeEnum.Fraction;
+            taskGenerator = new FractionGenerator();
         }
 
-        switch (task.TaskType)
-        {
-            case Enums.TaskTypeEnum.Equation:
-                CreateEquation(task, rnd);
-                break;
-
-            case Enums.TaskTypeEnum.Fraction:
-                CreateFraction(task, rnd);
-                break;
-        }
-        return task;
-    }
-
-    private static void CreateEquation(TaskModel task, Random rnd)
-    {
-        int equationTypeInt = rnd.Next(0, 6);
-        // Equation of type a + (x + b) = c
-        if (equationTypeInt == 0)
-        {
-            CreateEquationType0(task, rnd);
-        }
-        // Equation of type a + (x - b) = c
-        else if (equationTypeInt == 1)
-        {
-            CreateEquationType1(task, rnd);
-        }
-        // Equation of type a - (x + b) = c
-        else if (equationTypeInt == 2)
-        {
-            CreateEquationType2(task, rnd);
-        }
-        // Equation of type a - (x - b) = c
-        else if (equationTypeInt == 3)
-        {
-            CreateEquationType3(task, rnd);
-        }
-        // Equation of type a * (x + b) = c
-        else if (equationTypeInt == 4)
-        {
-            CreateEquationType4(task, rnd);
-        }
-        // Equation of type a * (x - b) = c
-        else if (equationTypeInt == 5)
-        {
-            CreateEquationType5(task, rnd);
-        }
-    }
-
-    private static void CreateFraction(TaskModel task, Random rnd)
-    {
-        int fractionTypeInt = rnd.Next(0, 4);
-
-        Fraction variableOne;
-        Fraction variableTwo;
-        Fraction answer = Fraction.FromDoubleRounded(task.Answer);
-
-        // a/b + c/d =
-        if (fractionTypeInt == 0)
-        {
-            CreateFractionType0(task, rnd, out variableOne, out variableTwo, answer);
-        }
-        // a/b - c/d =
-        else if (fractionTypeInt == 1)
-        {
-            CreateFractionType1(task, rnd, out variableOne, out variableTwo, answer);
-        }
-        // a/b * c/d =
-        else if (fractionTypeInt == 2)
-        {
-            CreateFraction2(task, rnd, out variableOne, out variableTwo, answer);
-        }
-        // a/b : c/d =
-        else if (fractionTypeInt == 3)
-        {
-            CreateFractionType3(task, rnd, out variableOne, out variableTwo, answer);
-        }
-    }
-
-    private static void CreateEquationType0(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
-        task.VariableThree = task.VariableOne + task.Answer + task.VariableTwo;
-        task.Question = $"{task.VariableOne} + (x + {task.VariableTwo}) = {task.VariableThree}";
-    }
-
-    private static void CreateEquationType1(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
-        task.VariableThree = task.VariableOne + task.Answer - task.VariableTwo;
-        task.Question = $"{task.VariableOne} + (x - {task.VariableTwo}) = {task.VariableThree}";
-    }
-
-    private static void CreateEquationType2(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
-        task.VariableThree = task.VariableOne - task.Answer - task.VariableTwo;
-        task.Question = $"{task.VariableOne} - (x + {task.VariableTwo}) = {task.VariableThree}";
-    }
-
-    private static void CreateEquationType3(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
-        task.VariableThree = task.VariableOne - task.Answer + task.VariableTwo;
-        task.Question = $"{task.VariableOne} - (x - {task.VariableTwo}) = {task.VariableThree}";
-    }
-
-    private static void CreateEquationType4(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, 11);
-        task.VariableTwo = rnd.Next(1, 51);
-        task.VariableThree = task.VariableOne * (task.Answer + task.VariableTwo);
-        task.Question = $"{task.VariableOne}(x + {task.VariableTwo}) = {task.VariableThree}";
-    }
-
-    private static void CreateEquationType5(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, 11);
-        task.VariableTwo = rnd.Next(1, 51);
-        task.VariableThree = task.VariableOne * (task.Answer - task.VariableTwo);
-        task.Question = $"{task.VariableOne}(x - {task.VariableTwo}) = {task.VariableThree}";
-    }
-
-    private static void CreateFractionType0(TaskModel task, Random rnd, out Fraction variableOne, out Fraction variableTwo, Fraction answer)
-    {
-        do
-        {
-            variableOne = new Fraction(rnd.Next(1, 11), rnd.Next(1, 12));
-        } while (variableOne > answer);
-        task.VariableOne = (double)variableOne;
-        variableTwo = answer - variableOne;
-        task.VariableTwo = (double)variableTwo;
-        task.Question = $"{variableOne} + {variableTwo} =";
-    }
-
-    private static void CreateFractionType1(TaskModel task, Random rnd, out Fraction variableOne, out Fraction variableTwo, Fraction answer)
-    {
-        do
-        {
-            variableOne = new Fraction(rnd.Next(1, 12), rnd.Next(1, 11));
-        } while (variableOne < answer);
-        task.VariableOne = (double)variableOne;
-        variableTwo = variableOne - answer;
-        task.VariableTwo = (double)variableTwo;
-        task.Question = $"{variableOne} - {variableTwo} =";
-    }
-
-    private static void CreateFraction2(TaskModel task, Random rnd, out Fraction variableOne, out Fraction variableTwo, Fraction answer)
-    {
-        variableOne = new Fraction(rnd.Next(1, 11), rnd.Next(1, 11));
-        task.VariableOne = (double)variableOne;
-        variableTwo = answer / variableOne;
-        task.VariableTwo = (double)variableTwo;
-        task.Question = $"{variableOne} · {variableTwo} =";
-    }
-
-    private static void CreateFractionType3(TaskModel task, Random rnd, out Fraction variableOne, out Fraction variableTwo, Fraction answer)
-    {
-        variableOne = new Fraction(rnd.Next(1, 11), rnd.Next(1, 11));
-        task.VariableOne = (double)variableOne;
-        variableTwo = variableOne / answer;
-        task.VariableTwo = (double)variableTwo;
-        task.Question = $"{variableOne} : {variableTwo} =";
+        return taskGenerator.CreateTaskEight(task.Answer);
     }
 
     public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)

@@ -1,6 +1,7 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
+using LogicLibrary.TaskGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,12 @@ public class LogicOne : ILogic
 
     public KeyPageModel CreateKeyPage()
 	{
-		KeyPageModel keyPage = new();
 		Random rnd = new();
 		bool unique;
 		int number;
-		AlphabetModel alphabet = new();
+
+        KeyPageModel keyPage = new();
+        AlphabetModel alphabet = new();
 		alphabet.Alphabet = alphabet.CreateAlphabet();
 
 		foreach (char c in alphabet.Alphabet)
@@ -32,11 +34,11 @@ public class LogicOne : ILogic
 
 			do
 			{
-				unique = true;
                 // A whole number between 1 and 100. Used for addition and subtraction tasks.
 				number = rnd.Next(1, 101);
+                unique = true;
 
-				foreach (KeyModel entry in keyPage.LetterKeys)
+                foreach (KeyModel entry in keyPage.LetterKeys)
 				{
 					if (entry.KeyNumber == number)
 					{
@@ -66,27 +68,23 @@ public class LogicOne : ILogic
 		}
 
 		task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
+        ITaskGenerator taskGenerator;
 
-		switch (task.TaskType)
-		{
-            case TaskTypeEnum.Addition:
-                CreateAddition(task, rnd);
-                break;
-
-            case TaskTypeEnum.Subtraction:
-                CreateSubtraction(task);
-                break;
+        if (task.TaskType == TaskTypeEnum.Addition)
+        {
+            taskGenerator = new AdditionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Subtraction)
+        {
+            taskGenerator = new SubtractionGenerator();
+        }
+        else
+        {
+            throw new Exception("Error occured: Task type does not exist in grade one.");
         }
 
-		return task;
+        return taskGenerator.CreateTaskOne(task.Answer);
 	}
-
-    private static void CreateAddition(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-        task.VariableTwo = task.Answer - task.VariableOne;
-        task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-    }
 
     private static void CreateSubtraction(TaskModel task)
     {

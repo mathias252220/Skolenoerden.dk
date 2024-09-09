@@ -1,6 +1,7 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
+using LogicLibrary.TaskGenerator;
 
 namespace LogicLibrary.TreasureHunt;
 
@@ -12,11 +13,12 @@ public class LogicZero : ILogic
 
     public KeyPageModel CreateKeyPage()
 	{
-		KeyPageModel keyPage = new();
 		Random rnd = new();
 		bool unique;
 		int number;
-		AlphabetModel alphabet = new();
+
+        KeyPageModel keyPage = new();
+        AlphabetModel alphabet = new();
 		alphabet.Alphabet = alphabet.CreateAlphabet();
 
 		foreach(char c in alphabet.Alphabet)
@@ -48,35 +50,18 @@ public class LogicZero : ILogic
 
 	public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 	{
-		TaskModel task = new();
-		Random rnd = new();
-
+        ITaskGenerator taskGenerator;
 		foreach (KeyModel key in keyPage.LetterKeys)
 		{
 			if (key.KeyLetter == char.ToUpper(letter))
 			{
-				task.Answer = key.KeyNumber;
+                taskGenerator = new AdditionGenerator();
+                return taskGenerator.CreateTaskZero(key.KeyNumber);
 			}
 		}
 
-		task.TaskType = (TaskTypeEnum)rnd.Next(0, 1);
-
-		switch (task.TaskType)
-		{
-            case TaskTypeEnum.Addition:
-                CreateAddition(task, rnd);
-                break;
-        }
-
-		return task;
+        throw new Exception("An error occured: KeyNumber not found, when creating task");
 	}
-
-    private static void CreateAddition(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-        task.VariableTwo = task.Answer - task.VariableOne;
-        task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-    }
 
     public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
     {

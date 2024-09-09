@@ -1,6 +1,7 @@
 ﻿using LogicLibrary.Modeller;
 using LogicLibrary.Enums;
 using LogicLibrary.Models;
+using LogicLibrary.TaskGenerator;
 
 namespace LogicLibrary.TreasureHunt;
 
@@ -31,7 +32,7 @@ public class LogicThree : ILogic
                 // A non-prime whole number between 1 and 100. Used for multiplication tasks.
 				if (rnd.Next(0, 3) == 0)
 				{
-					number = products[rnd.Next(products.Count)];
+					number = products[rnd.Next(0, products.Count)];
 
 				} else
                 // A whole number between 1 and 1000. Used for addition and subtraction tasks.
@@ -55,16 +56,6 @@ public class LogicThree : ILogic
 		return keyPage;
 	}
 
-	public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
-	{
-		outpost.Tasks.Clear();
-
-		foreach (char letter in outpost.ReturnNameOnlyChars())
-		{
-			outpost.Tasks.Add(CreateTask(letter, keyPage));
-		}
-	}
-
 	public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 	{
 		TaskModel task = new();
@@ -81,6 +72,8 @@ public class LogicThree : ILogic
 		List<int> possibleFactors = MathLogic.GetFactors(Convert.ToInt16(task.Answer));
 		possibleFactors = MathLogic.LimitTwoFactors(possibleFactors, 10, Convert.ToInt16(task.Answer));
 
+        ITaskGenerator taskGenerator;
+
 		if (possibleFactors.Count > 0 && task.Answer <= 100)
 		{
 			task.TaskType = TaskTypeEnum.Multiplication;
@@ -90,42 +83,33 @@ public class LogicThree : ILogic
 			task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
 		}
 
-		switch (task.TaskType)
-		{
-            case TaskTypeEnum.Addition:
-                CreateAddition(task, rnd);
-                break;
-
-            case TaskTypeEnum.Subtraction:
-                CreateSubtraction(task, rnd);
-                break;
-
-            case TaskTypeEnum.Multiplication:
-                CreateMultiplication(task, rnd, possibleFactors);
-                break;
+        if (task.TaskType == TaskTypeEnum.Addition)
+        {
+            taskGenerator = new AdditionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Subtraction)
+        {
+            taskGenerator = new SubtractionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Multiplication)
+        {
+            taskGenerator = new MultiplicationGenerator();
+        }
+        else
+        {
+            throw new Exception("Error occured: Task type does not exist in grade three");
         }
 
-		return task;
+		return taskGenerator.CreateTaskThree(task.Answer);
 	}
 
-    private static void CreateAddition(TaskModel task, Random rnd)
+    public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
     {
-        task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-        task.VariableTwo = task.Answer - task.VariableOne;
-        task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-    }
+        outpost.Tasks.Clear();
 
-    private static void CreateSubtraction(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 1001);
-        task.VariableTwo = task.VariableOne - task.Answer;
-        task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-    }
-
-    private static void CreateMultiplication(TaskModel task, Random rnd, List<int> possibleFactors)
-    {
-        task.VariableOne = possibleFactors[rnd.Next(0, possibleFactors.Count)];
-        task.VariableTwo = task.Answer / task.VariableOne;
-        task.Question = $"{task.VariableOne} · {task.VariableTwo} =";
+        foreach (char letter in outpost.ReturnNameOnlyChars())
+        {
+            outpost.Tasks.Add(CreateTask(letter, keyPage));
+        }
     }
 }

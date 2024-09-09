@@ -1,6 +1,7 @@
 ﻿using LogicLibrary.Modeller;
 using LogicLibrary.Models;
 using LogicLibrary.Enums;
+using LogicLibrary.TaskGenerator;
 
 namespace LogicLibrary.TreasureHunt;
 
@@ -75,7 +76,9 @@ public class LogicFour : ILogic
 		}
 
 		List<int> possibleFactors = MathLogic.GetFactors(Convert.ToInt16(task.Answer));
-		possibleFactors = MathLogic.LimitOneFactor(possibleFactors, 100);
+		possibleFactors = MathLogic.LimitTwoFactors(possibleFactors, 100, (int)task.Answer);
+
+        ITaskGenerator taskGenerator;
 
 		if (task.Answer <= 10)
 		{
@@ -90,55 +93,29 @@ public class LogicFour : ILogic
 			task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
 		}
 
-		switch (task.TaskType)
-		{
-            case TaskTypeEnum.Addition:
-                CreateAddition(task, rnd);
-                break;
-
-            case TaskTypeEnum.Subtraction:
-                CreateSubtraction(task, rnd);
-                break;
-
-            case TaskTypeEnum.Multiplication:
-                CreateMultiplication(task, rnd, possibleFactors);
-                break;
-
-            case TaskTypeEnum.Division:
-                CreateDivision(task, rnd);
-                break;
+        if (task.TaskType == TaskTypeEnum.Addition)
+        {
+            taskGenerator = new AdditionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Subtraction)
+        {
+            taskGenerator = new SubtractionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Multiplication)
+        {
+            taskGenerator = new MultiplicationGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Division)
+        {
+            taskGenerator = new DivisionGenerator();
+        }
+        else
+        {
+            throw new Exception("Error occured: Task type does not exist in grade four.");
         }
 
-		return task;
+		return taskGenerator.CreateTaskFour(task.Answer);
 	}
-
-    private static void CreateAddition(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-        task.VariableTwo = task.Answer - task.VariableOne;
-        task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-    }
-
-    private static void CreateSubtraction(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 1001);
-        task.VariableTwo = task.VariableOne - task.Answer;
-        task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-    }
-
-    private static void CreateMultiplication(TaskModel task, Random rnd, List<int> possibleFactors)
-    {
-        task.VariableOne = possibleFactors[rnd.Next(0, possibleFactors.Count)];
-        task.VariableTwo = task.Answer / task.VariableOne;
-        task.Question = $"{task.VariableOne} · {task.VariableTwo} =";
-    }
-
-    private static void CreateDivision(TaskModel task, Random rnd)
-    {
-        task.VariableOne = rnd.Next(2, 10);
-        task.VariableTwo = task.Answer * task.VariableOne;
-        task.Question = $"{task.VariableTwo} : {task.VariableOne} =";
-    }
 
     public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
     {

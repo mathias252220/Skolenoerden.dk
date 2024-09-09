@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Fractions;
 using LogicLibrary.Models;
 using QuestPDF.Drawing;
 using QuestPDF.Fluent;
@@ -17,6 +19,16 @@ namespace LogicLibrary.QuestPDF;
 public class PDFCreatorElemental : IPDFCreator
 {
     public string taskTypes { get; set; } = "Elemental";
+
+    private static int titleTextSize { get; set; } = 38;
+
+    private static int subtitleTextSize { get; set; } = 12;
+
+    private static int regularTextSize { get; set; } = 14;
+
+    private static int underscoreTextSize { get; set; } = 38;
+
+    private static int snippingTextSize { get; set; } = 12;
 
     public IDocument PrintFullPDF(KeyPageModel keyPage, List<OutpostModel> outposts, List<GroupModel> groups)
     {
@@ -51,7 +63,7 @@ public class PDFCreatorElemental : IPDFCreator
                         {
                             page.Size(PageSizes.A4);
 
-                            page.DefaultTextStyle(x => x.FontSize(14));
+                            page.DefaultTextStyle(x => x.FontSize(regularTextSize));
 
                             page.Content().Column(c =>
                             {
@@ -83,7 +95,7 @@ public class PDFCreatorElemental : IPDFCreator
         {
             page.Size(PageSizes.A4);
             page.Margin(2, Unit.Centimetre);
-            page.DefaultTextStyle(x => x.FontSize(14));
+            page.DefaultTextStyle(x => x.FontSize(regularTextSize));
 
             page.Header()
             .Table(table =>
@@ -92,8 +104,8 @@ public class PDFCreatorElemental : IPDFCreator
                 {
                     columns.RelativeColumn();
                 });
-                table.Cell().Row(1).AlignCenter().Text("Nøgle").SemiBold().FontSize(48);
-                table.Cell().Row(2).AlignCenter().Text($"Gruppe {group.groupNumber}").FontSize(12);
+                table.Cell().Row(1).AlignCenter().Text("Nøgle").SemiBold().FontSize(titleTextSize);
+                table.Cell().Row(2).AlignCenter().Text($"Gruppe {group.groupNumber}").FontSize(subtitleTextSize);
             });
 
             page.Content()
@@ -113,7 +125,7 @@ public class PDFCreatorElemental : IPDFCreator
 
                     for (int j = 0; j < 3; j++)
                     {
-                        table.Cell().Row((uint)i * 2 + 2).Column((uint)j + 1).AlignCenter().Text(keyPage.LetterKeys[i * 3 + j].getString());
+                        table.Cell().Row((uint)i * 2 + 2).Column((uint)j + 1).AlignCenter().Text($"{keyPage.LetterKeys[i * 3 + j].KeyLetter} = {keyPage.LetterKeys[i * 3 + j].KeyNumber}");
                     }
                 }
             });
@@ -134,8 +146,8 @@ public class PDFCreatorElemental : IPDFCreator
 
             pageOne.Header(header =>
             {
-                header.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2].Name).SemiBold().FontSize(48);
-                header.Cell().Row(2).ColumnSpan(5).AlignCenter().PaddingBottom(20).Text($"Gruppe {group.groupNumber}").FontSize(12);
+                header.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2].Name).SemiBold().FontSize(titleTextSize);
+                header.Cell().Row(2).ColumnSpan(5).AlignCenter().PaddingBottom(20).Text($"Gruppe {group.groupNumber}").FontSize(subtitleTextSize);
             });
 
             if (i * 2 != outposts.Count - 1)
@@ -163,13 +175,13 @@ public class PDFCreatorElemental : IPDFCreator
             {
                 pageOne.Footer(footer =>
                 {
-                    footer.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].ReturnNameUnderscored()).FontSize(48);
+                    footer.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].ReturnNameUnderscored()).FontSize(underscoreTextSize);
 
                     var scissorImage = File.ReadAllBytes("wwwroot/Images/ScissorIcon.png");
                     footer.Cell().Row(2).Column(1).AlignLeft().PaddingLeft(10).Height(5, Unit.Millimetre).Image(scissorImage).FitHeight();
                     footer.Cell().Row(2).ColumnSpan(5).AlignCenter()
                     .Text("--------------------------------------------------------------------------------------------------------------------------------")
-                    .FontSize(12);
+                    .FontSize(snippingTextSize);
                 }
                 );
             }
@@ -192,8 +204,8 @@ public class PDFCreatorElemental : IPDFCreator
             {
                 pageTwo.Header(header =>
                 {
-                    header.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].Name).SemiBold().FontSize(48);
-                    header.Cell().Row(2).ColumnSpan(5).AlignCenter().PaddingBottom(20).Text($"Gruppe {group.groupNumber}").FontSize(12);
+                    header.Cell().Row(1).ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 1].Name).SemiBold().FontSize(titleTextSize);
+                    header.Cell().Row(2).ColumnSpan(5).AlignCenter().PaddingBottom(20).Text($"Gruppe {group.groupNumber}").FontSize(subtitleTextSize);
                 });
             }
 
@@ -222,7 +234,7 @@ public class PDFCreatorElemental : IPDFCreator
             {
                 pageTwo.Footer(footer =>
                 {
-                    footer.Cell().ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 2].ReturnNameUnderscored()).FontSize(48);
+                    footer.Cell().ColumnSpan(5).AlignCenter().Text(outposts[i * 2 + 2].ReturnNameUnderscored()).FontSize(underscoreTextSize);
 
                 });
             }
