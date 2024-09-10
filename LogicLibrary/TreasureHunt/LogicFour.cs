@@ -1,14 +1,16 @@
 ﻿using LogicLibrary.Modeller;
 using LogicLibrary.Models;
 using LogicLibrary.Enums;
+using LogicLibrary.TaskGenerator;
 
 namespace LogicLibrary.TreasureHunt;
 
 public class LogicFour : ILogic
 {
 	public string grade { get; set; } = "GradeFour";
+    public string taskTypes { get; set; } = "Elemental";
 
-	public KeyPageModel CreateKeyPage()
+    public KeyPageModel CreateKeyPage()
 	{
 		KeyPageModel keyPage = new();
 		Random rnd = new();
@@ -28,14 +30,17 @@ public class LogicFour : ILogic
 				unique = true;
 				int answerTypeInt = rnd.Next(0, 4);
 
+                // A whole non-prime number between 1 and 1000. Used for multiplication tasks.
 				if (answerTypeInt == 0)
 				{
 					number = products[rnd.Next(products.Count)];
 				}
+                // A whole number between 1 and 10. Used for division tasks.
 				else if (answerTypeInt == 1)
 				{
 					number = rnd.Next(1,11);
 				}
+                // A whole number between 1 and 1000. Used for addition and subtraction tasks.
 				else
 				{
 					number = rnd.Next(1, 1001);
@@ -71,7 +76,9 @@ public class LogicFour : ILogic
 		}
 
 		List<int> possibleFactors = MathLogic.GetFactors(Convert.ToInt16(task.Answer));
-		possibleFactors = MathLogic.LimitOneFactor(possibleFactors, 100);
+		possibleFactors = MathLogic.LimitTwoFactors(possibleFactors, 100, (int)task.Answer);
+
+        ITaskGenerator taskGenerator;
 
 		if (task.Answer <= 10)
 		{
@@ -86,35 +93,30 @@ public class LogicFour : ILogic
 			task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
 		}
 
-		switch (task.TaskType)
-		{
-			case TaskTypeEnum.Addition:
-				task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-				task.VariableTwo = task.Answer - task.VariableOne;
-				task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-				break;
+        if (task.TaskType == TaskTypeEnum.Addition)
+        {
+            taskGenerator = new AdditionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Subtraction)
+        {
+            taskGenerator = new SubtractionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Multiplication)
+        {
+            taskGenerator = new MultiplicationGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Division)
+        {
+            taskGenerator = new DivisionGenerator();
+        }
+        else
+        {
+            throw new Exception("Error occured: Task type does not exist in grade four.");
+        }
 
-			case TaskTypeEnum.Subtraction:
-				task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 1001);
-				task.VariableTwo = task.VariableOne - task.Answer;
-				task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-				break;
-
-			case TaskTypeEnum.Multiplication:
-				task.VariableOne = possibleFactors[rnd.Next(0, possibleFactors.Count)];
-				task.VariableTwo = task.Answer / task.VariableOne;
-				task.Question = $"{task.VariableOne} x {task.VariableTwo} =";
-				break;
-
-			case TaskTypeEnum.Division:
-				task.VariableOne = rnd.Next(2, 10);
-				task.VariableTwo = task.Answer * task.VariableOne;
-				task.Question = $"{task.VariableTwo} : {task.VariableOne} =";
-				break;
-		}
-
-		return task;
+		return taskGenerator.CreateTaskFour(task.Answer);
 	}
+
     public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
     {
 		outpost.Tasks.Clear();

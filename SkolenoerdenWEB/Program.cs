@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddLogicFactory();
+builder.Services.AddPDFCreatorFactory();
 
 var app = builder.Build();
 

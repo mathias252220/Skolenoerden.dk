@@ -1,19 +1,24 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
+using LogicLibrary.TaskGenerator;
 
 namespace LogicLibrary.TreasureHunt;
 
 public class LogicZero : ILogic
 {
 	public string grade { get; set; } = "GradeZero";
-        public KeyPageModel CreateKeyPage()
+
+    public string taskTypes { get; set; } = "Elemental";
+
+    public KeyPageModel CreateKeyPage()
 	{
-		KeyPageModel keyPage = new();
 		Random rnd = new();
 		bool unique;
 		int number;
-		AlphabetModel alphabet = new();
+
+        KeyPageModel keyPage = new();
+        AlphabetModel alphabet = new();
 		alphabet.Alphabet = alphabet.CreateAlphabet();
 
 		foreach(char c in alphabet.Alphabet)
@@ -23,6 +28,7 @@ public class LogicZero : ILogic
 
 			do
 			{
+                // A random whole number between 1 and 40. Used for addition tasks.
 				unique = true;
 				number = rnd.Next(1, 41);
 
@@ -41,39 +47,29 @@ public class LogicZero : ILogic
 
 		return keyPage;
 	}
-	public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
-	{
-		outpost.Tasks.Clear();
 
-		foreach (char letter in outpost.ReturnNameOnlyChars())
-		{
-			outpost.Tasks.Add(CreateTask(letter, keyPage));
-		}
-	}
 	public TaskModel CreateTask(char letter, KeyPageModel keyPage)
 	{
-		TaskModel task = new();
-		Random rnd = new();
-
+        ITaskGenerator taskGenerator;
 		foreach (KeyModel key in keyPage.LetterKeys)
 		{
 			if (key.KeyLetter == char.ToUpper(letter))
 			{
-				task.Answer = key.KeyNumber;
+                taskGenerator = new AdditionGenerator();
+                return taskGenerator.CreateTaskZero(key.KeyNumber);
 			}
 		}
 
-		task.TaskType = (TaskTypeEnum)rnd.Next(0, 1);
-
-		switch (task.TaskType)
-		{
-			case TaskTypeEnum.Addition:
-				task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-				task.VariableTwo = task.Answer - task.VariableOne;
-				task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-				break;
-		}
-
-		return task;
+        throw new Exception("An error occured: KeyNumber not found, when creating task");
 	}
+
+    public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
+    {
+        outpost.Tasks.Clear();
+
+        foreach (char letter in outpost.ReturnNameOnlyChars())
+        {
+            outpost.Tasks.Add(CreateTask(letter, keyPage));
+        }
+    }
 }

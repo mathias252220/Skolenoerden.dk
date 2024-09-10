@@ -1,12 +1,16 @@
 ﻿using LogicLibrary.Enums;
 using LogicLibrary.Modeller;
 using LogicLibrary.Models;
+using LogicLibrary.TaskGenerator;
 
 namespace LogicLibrary.TreasureHunt;
 
 public class LogicTwo : ILogic
 {
     public string grade { get; set; } = "GradeTwo";
+
+    public string taskTypes { get; set; } = "Elemental";
+
     public KeyPageModel CreateKeyPage()
     {
         KeyPageModel keyPage = new();
@@ -23,8 +27,9 @@ public class LogicTwo : ILogic
 
             do
             {
-                unique = true;
+                // A whole number between 1 and 100. Used for Addition and subtraction.
                 number = rnd.Next(1, 101);
+                unique = true;
 
                 foreach (KeyModel entry in keyPage.LetterKeys)
                 {
@@ -41,7 +46,41 @@ public class LogicTwo : ILogic
 
         return keyPage;
     }
-		public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
+
+	public TaskModel CreateTask(char letter, KeyPageModel keyPage)
+	{
+		TaskModel task = new();
+		Random rnd = new();
+
+		foreach (KeyModel key in keyPage.LetterKeys)
+		{
+			if (key.KeyLetter == char.ToUpper(letter))
+			{
+				task.Answer = key.KeyNumber;
+			}
+		}
+
+        ITaskGenerator taskGenerator;
+
+		task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
+
+        if (task.TaskType == TaskTypeEnum.Addition)
+        {
+            taskGenerator = new AdditionGenerator();
+        }
+        else if (task.TaskType == TaskTypeEnum.Subtraction)
+        {
+            taskGenerator = new SubtractionGenerator();
+        }
+        else
+        {
+            throw new Exception("Error occured: Task type does not exist in grade two.");
+        }
+
+        return taskGenerator.CreateTaskTwo(task.Answer);
+	}
+
+    public void PopulateOutpost(OutpostModel outpost, KeyPageModel keyPage)
     {
         outpost.Tasks.Clear();
 
@@ -50,36 +89,4 @@ public class LogicTwo : ILogic
             outpost.Tasks.Add(CreateTask(letter, keyPage));
         }
     }
-		public TaskModel CreateTask(char letter, KeyPageModel keyPage)
-		{
-			TaskModel task = new();
-			Random rnd = new();
-
-			foreach (KeyModel key in keyPage.LetterKeys)
-			{
-				if (key.KeyLetter == char.ToUpper(letter))
-				{
-					task.Answer = key.KeyNumber;
-				}
-			}
-
-			task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
-
-			switch (task.TaskType)
-			{
-				case TaskTypeEnum.Addition:
-					task.VariableOne = rnd.Next(1, Convert.ToInt16(task.Answer));
-					task.VariableTwo = task.Answer - task.VariableOne;
-					task.Question = $"{task.VariableOne} + {task.VariableTwo} =";
-					break;
-
-				case TaskTypeEnum.Subtraction:
-					task.VariableOne = rnd.Next(Convert.ToInt16(task.Answer), 101);
-					task.VariableTwo = task.VariableOne - task.Answer;
-					task.Question = $"{task.VariableOne} - {task.VariableTwo} =";
-					break;
-			}
-
-			return task;
-		}
-	}
+}
