@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace LogicLibrary.TaskGenerator;
 public class TaskPageGenerator
 {
+
     public TaskModel GenerateTask(GradeEnum grade, TaskTypeEnum taskType)
     {
         ITaskGenerator taskGenerator;
