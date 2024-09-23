@@ -20,6 +20,12 @@ a, .btn-link {
     padding-top: 1.1rem;
 }
 
+.page-background {
+    background-image:url("/Images/OpgaveBaggrund.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
 h1:focus {
     outline: none;
 }

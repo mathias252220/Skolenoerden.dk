@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\Images\Newspaper.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\Images\OpgaveBaggrund.png" />
   </ItemGroup>
 
   <ItemGroup>
