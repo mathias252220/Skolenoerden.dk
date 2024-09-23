@@ -8,6 +8,7 @@ namespace LogicLibrary.Enums;
 
 public enum GradeEnum
 {
+    Default,
     GradeZero,
     GradeOne,
     GradeTwo,

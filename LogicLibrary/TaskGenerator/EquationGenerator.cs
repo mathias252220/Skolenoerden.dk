@@ -243,6 +243,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer + task.VariableTwo;
@@ -258,6 +259,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer - task.VariableTwo;
@@ -273,6 +275,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 11);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne * task.Answer + task.VariableTwo;
@@ -288,6 +291,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 11);
         task.VariableThree = task.VariableOne - (task.Answer * task.VariableTwo);
@@ -303,6 +307,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer + task.VariableTwo;
@@ -318,6 +323,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer - task.VariableTwo;
@@ -333,6 +339,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne - task.Answer - task.VariableTwo;
@@ -348,6 +355,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 51);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne - task.Answer + task.VariableTwo;
@@ -363,6 +371,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 11);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne * (task.Answer + task.VariableTwo);
@@ -378,6 +387,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 11);
         task.VariableTwo = rnd.Next(1, 51);
         task.VariableThree = task.VariableOne * (task.Answer - task.VariableTwo);
@@ -393,6 +403,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableOne = rnd.Next(1, 11);
         task.VariableTwo = rnd.Next(1, 11) * task.Answer;
         task.VariableThree = task.VariableOne * (task.Answer + task.VariableTwo) / task.Answer;
@@ -409,6 +420,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableThree = rnd.Next(1, 11);
         task.VariableFour = rnd.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableThree * (int)task.VariableFour; i++)
@@ -434,6 +446,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableTwo = rnd.Next(1, 11);
         task.VariableThree = rnd.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableTwo * (int)task.VariableThree; i++)
@@ -459,6 +472,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableTwo = rnd.Next(1, 11);
         task.VariableThree = rnd.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableTwo * (int)task.VariableThree; i++)
@@ -484,6 +498,7 @@ public class EquationGenerator : ITaskGenerator
         TaskModel task = new();
 
         task.Answer = taskAnswer;
+        task.TaskType = Enums.TaskTypeEnum.Equation;
         task.VariableThree = rnd.Next(1, 11);
         task.VariableFour = rnd.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableThree * (int)task.VariableFour; i++)

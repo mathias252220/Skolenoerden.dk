@@ -148,13 +148,15 @@
 
 			<div class="row">
 				<div class="col-12">
-					<button style="font-size: 1vw" class="btn btn-primary" type="submit">Generer skattejagt</button>
+					
 				</div>
 			</div>
 		</EditForm>	
 	</div>
 
-	<div class="col-3"/>
+	<div class="col-3">
+		<button style="font-size: 1vw" class="btn btn-primary" type="submit">Generer posteløb</button>
+	</div>
 </div>
 
 
@@ -226,10 +228,10 @@
 
 		pdfCreator = pdfCreatorFactory.Create(logic.taskTypes);
 
-		var skattejagt = pdfCreator.PrintFullPDF(keyPage, outposts, groups);
+		var posteloeb = pdfCreator.PrintFullPDF(keyPage, outposts, groups);
 
-		byte[] data = skattejagt.GeneratePdf();
+		byte[] data = posteloeb.GeneratePdf();
 
-		await JS.InvokeVoidAsync("saveByteArray", "Skattejagt.pdf", data);
+		await JS.InvokeVoidAsync("saveByteArray", "Posteloeb.pdf", data);
 	}
 }

@@ -9,6 +9,24 @@ using System.Threading.Tasks;
 namespace LogicLibrary.TaskGenerator;
 public class TaskPageGenerator
 {
+    public List<TaskGroupModel> CreateTaskPage(List<TaskGroupModel> input)
+    {
+        List<TaskGroupModel> taskPage = new();
+
+        foreach(TaskGroupModel taskGroup in input)
+        {
+            TaskGroupModel tempTaskGroup = new();
+
+            for (int i = 0; i < 3; i++)
+            {
+                tempTaskGroup.Tasks.Add(GenerateTask(taskGroup.TasksGrade, taskGroup.TasksType));
+            }
+            
+            taskPage.Add(tempTaskGroup);
+        }
+
+        return taskPage;
+    }
 
     public TaskModel GenerateTask(GradeEnum grade, TaskTypeEnum taskType)
     {

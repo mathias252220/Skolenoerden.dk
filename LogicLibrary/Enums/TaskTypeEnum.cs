@@ -8,6 +8,7 @@ namespace LogicLibrary.Enums;
 
 public enum TaskTypeEnum
 {
+    Default,
     Addition,
     Subtraction,
     Multiplication,

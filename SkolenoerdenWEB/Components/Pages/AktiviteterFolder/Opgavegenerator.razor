@@ -1,4 +1,5 @@
-﻿@* @page "/Aktiviteter/Opgavegenerator"
+﻿@page "/Aktiviteter/Opgavegenerator"
+@using LogicLibrary.TaskGenerator
 @inject IJSRuntime JS
 @inject IPDFCreatorFactory pdfCreatorFactory
 
@@ -8,7 +9,7 @@
 
 <div class="row">
 	<div class="col-12">
-		<h1 class="page-title">Generér lynhurtigt et sæt færdighedsopgaver</h1>
+		<h1 class="page-title">Opgavegenerator</h1>
 	</div>
 </div>
 
@@ -25,272 +26,89 @@
 <div class="row">
 	<div class="col-3" />
 
-	<div class="col-6">
-		<EditForm class="content" method="post" Model="TaskPageModel">
+	<div class="col-6 page-background">
+
+		<br/> <br/> <br/> <br/> <br/>
+
+		<EditForm class="content" method="post" Model="taskPage" OnValidSubmit="PrintPDF">
 			<ObjectGraphDataAnnotationsValidator />
 	
-			<div class="row" style="align-items:center">
-				<div class="col-2"/>
-		
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-						<option selected value="">Vælg opgavetype</option>
-						<option value="Addition">Addition</option>
-						<option value="Subtraction">Subtraktion</option>
-						<option value="Multiplication">Multiplikation</option>
-						<option value="Division">Division</option>
-						<option value="Fraction">Brøker</option>
-						<option value="Equation">Ligninger</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
-
-					<div class="col-2">
-						<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-							<option selected value="">Vælg opgavetype</option>
-							<option value="Addition">Addition</option>
-							<option value="Subtraction">Subtraktion</option>
-							<option value="Multiplication">Multiplikation</option>
-							<option value="Division">Division</option>
-							<option value="Fraction">Brøker</option>
-							<option value="Equation">Ligninger</option>
-						</select>
-					</div>
-
-					<div class="col-2">
-						<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-							<option selected value="">Vælg klassetrin</option>
-							<option value="GradeZero">0. klasse</option>
-							<option value="GradeOne">1. klasse</option>
-							<option value="GradeTwo">2. klasse</option>
-							<option value="GradeThree">3. klasse</option>
-							<option value="GradeFour">4. klasse</option>
-							<option value="GradeFive">5. klasse</option>
-							<option value="GradeSix">6. klasse</option>
-							<option value="GradeSeven">7. klasse</option>
-							<option value="GradeEight">8. klasse</option>
-							<option value="GradeNine">9. klasse</option>
-						</select>
-					</div>
 			
-				<div class="col-2" />
-			</div>
+			@for(int i = 0; i < 5; i++)
+			{
+				var localVariableI = i;
+				<div class="row">
 
-			<div class="row" style="align-items:center">
-				<div class="col-2" />
+					@for(int j = 0; j < 2; j++)
+					{
+						var localVariableJ = j;
+						<div class="col-5">
+							<select class="form-select" style="font-size: 1vw" @bind="taskPage[localVariableI*2+localVariableJ].TasksType">
 
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-						<option selected value="">Vælg opgavetype</option>
-						<option value="Addition">Addition</option>
-						<option value="Subtraction">Subtraktion</option>
-						<option value="Multiplication">Multiplikation</option>
-						<option value="Division">Division</option>
-						<option value="Fraction">Brøker</option>
-						<option value="Equation">Ligninger</option>
-					</select>
+								@foreach (TaskTypeEnum taskType in Enum.GetValues(typeof(TaskTypeEnum)))
+								{
+									<option value="@taskType">@TaskGroupModel.GetTaskTypeString(taskType)</option>
+								}
+
+							</select>
+
+							<select class="form-select" style="font-size: 1vw" @bind="taskPage[localVariableI*2+localVariableJ].TasksGrade">
+
+								<option value="@GradeEnum.Default">Vælg klassetrin</option>
+								@foreach (GradeEnum grade in TaskGroupModel.GetAvailableGrades(taskPage[localVariableI * 2 + localVariableJ].TasksType))
+								{
+									<option value="@grade">@TaskGroupModel.GetGradeString(grade)</option>
+								}
+								
+							</select>
+						</div>
+						<div class="col-1"/>
+					}
+
 				</div>
+				<br/> <br/> <br/>
+			}
 
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
+			
 
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-						<option selected value="">Vælg opgavetype</option>
-						<option value="Addition">Addition</option>
-						<option value="Subtraction">Subtraktion</option>
-						<option value="Multiplication">Multiplikation</option>
-						<option value="Division">Division</option>
-						<option value="Fraction">Brøker</option>
-						<option value="Equation">Ligninger</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
-
-				<div class="col-2" />
+		</EditForm>
 	</div>
 
-			<div class="row" style="align-items:center">
-				<div class="col-2" />
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-						<option selected value="">Vælg opgavetype</option>
-						<option value="Addition">Addition</option>
-						<option value="Subtraction">Subtraktion</option>
-						<option value="Multiplication">Multiplikation</option>
-						<option value="Division">Division</option>
-						<option value="Fraction">Brøker</option>
-						<option value="Equation">Ligninger</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-						<option selected value="">Vælg opgavetype</option>
-						<option value="Addition">Addition</option>
-						<option value="Subtraction">Subtraktion</option>
-						<option value="Multiplication">Multiplikation</option>
-						<option value="Division">Division</option>
-						<option value="Fraction">Brøker</option>
-						<option value="Equation">Ligninger</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
-
-				<div class="col-2" />
-			</div>
-
-			<div class="row" style="align-items:center">
-				<div class="col-2" />
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-						<option selected value="">Vælg opgavetype</option>
-						<option value="Addition">Addition</option>
-						<option value="Subtraction">Subtraktion</option>
-						<option value="Multiplication">Multiplikation</option>
-						<option value="Division">Division</option>
-						<option value="Fraction">Brøker</option>
-						<option value="Equation">Ligninger</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="taskInput" required>
-						<option selected value="">Vælg opgavetype</option>
-						<option value="Addition">Addition</option>
-						<option value="Subtraction">Subtraktion</option>
-						<option value="Multiplication">Multiplikation</option>
-						<option value="Division">Division</option>
-						<option value="Fraction">Brøker</option>
-						<option value="Equation">Ligninger</option>
-					</select>
-				</div>
-
-				<div class="col-2">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
-
-				<div class="col-2" />
-			</div>
-
-	</EditForm>
+	<div class="col-3">
+		<button style="font-size: 1vw" class="btn btn-primary" type="submit">Generer opgavesæt</button>
 	</div>
-	<div class="col-3" />
 </div>
 
 
-
-
 @code {
-	string? gradeInput;
-	string? taskInput
+	List<TaskGroupModel> taskPage = new();
+
+
+	private void AddTaskGroups()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			TaskGroupModel tempTaskGroup = new();
+			taskPage.Add(tempTaskGroup);
+		}
+	}
 
 	private async Task PrintPDF()
 	{
-		TaskPageModel taskPage = 
+		TaskPageGenerator generator = new();
+		taskPage = generator.CreateTaskPage(taskPage);
+
+		PDFCreatorTaskPage pdfCreator = new();
+
+		var opgaveSaet = pdfCreator.CreateTaskPage(taskPage);
+
+		byte[] data = opgaveSaet.GeneratePdf();
+
+		await JS.InvokeVoidAsync("saveByteArray", "OpgaveSaet.pdf", data);
 	}
-} *@
+
+	protected override void OnInitialized()
+	{
+		AddTaskGroups();
+	}
+}

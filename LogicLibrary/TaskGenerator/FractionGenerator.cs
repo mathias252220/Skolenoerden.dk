@@ -160,6 +160,7 @@ public class FractionGenerator : ITaskGenerator
         } while (variableOne >= answer);
 
         task.Answer = (double)answer;
+        task.TaskType = Enums.TaskTypeEnum.Fraction;
         task.VariableOne = (double)variableOne;
         variableTwo = answer - variableOne;
         task.VariableTwo = (double)variableTwo;
@@ -181,6 +182,7 @@ public class FractionGenerator : ITaskGenerator
         } while (variableOne <= answer);
 
         task.Answer = (double)answer;
+        task.TaskType = Enums.TaskTypeEnum.Fraction;
         task.VariableOne = (double)variableOne;
         variableTwo = variableOne - answer;
         task.VariableTwo = (double)variableTwo;
@@ -197,6 +199,7 @@ public class FractionGenerator : ITaskGenerator
         Fraction variableTwo;
 
         task.Answer = (double)answer;
+        task.TaskType = Enums.TaskTypeEnum.Fraction;
         variableOne = new Fraction(rnd.Next(1, maxDivisor + 1), rnd.Next(1, maxDivisor + 1));
         task.VariableOne = (double)variableOne;
         variableTwo = answer / variableOne;
@@ -214,6 +217,7 @@ public class FractionGenerator : ITaskGenerator
         Fraction variableTwo;
 
         task.Answer = (double)answer;
+        task.TaskType = Enums.TaskTypeEnum.Fraction;
         variableOne = new Fraction(rnd.Next(1, maxDivisor + 1), rnd.Next(1, maxDivisor + 1));
         task.VariableOne = (double)variableOne;
         variableTwo = variableOne / answer;
