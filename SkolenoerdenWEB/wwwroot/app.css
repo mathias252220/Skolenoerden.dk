@@ -26,6 +26,10 @@ a, .btn-link {
     background-size: 100% 100%;
 }
 
+.validation-error {
+    font-size: 0.25em;
+}
+
 h1:focus {
     outline: none;
 }
