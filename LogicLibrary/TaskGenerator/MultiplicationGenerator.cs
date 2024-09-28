@@ -1,4 +1,5 @@
-﻿using LogicLibrary.Models;
+﻿using LogicLibrary.Enums;
+using LogicLibrary.Models;
 using LogicLibrary.TreasureHunt;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,7 @@ public class MultiplicationGenerator : ITaskGenerator
         double taskAnswer = products[rnd.Next(0, products.Count)];
 
         TaskModel task = CreateMultiplication(taskAnswer, 10);
+        task.Grade = GradeEnum.GradeThree;
 
         return task;
     }
@@ -56,6 +58,7 @@ public class MultiplicationGenerator : ITaskGenerator
     public TaskModel CreateTaskThree(double taskAnswer)
     {
         TaskModel task = CreateMultiplication(taskAnswer, 10);
+        task.Grade = GradeEnum.GradeThree;
 
         return task;
     }
@@ -69,6 +72,7 @@ public class MultiplicationGenerator : ITaskGenerator
         double taskAnswer = products[rnd.Next(products.Count)];
 
         TaskModel task = CreateMultiplication(taskAnswer, 100);
+        task.Grade = GradeEnum.GradeFour;
 
         return task;
     }
@@ -76,6 +80,7 @@ public class MultiplicationGenerator : ITaskGenerator
     public TaskModel CreateTaskFour(double taskAnswer)
     {
         TaskModel task = CreateMultiplication(taskAnswer, 100);
+        task.Grade = GradeEnum.GradeFour;
 
         return task;
     }
@@ -89,6 +94,7 @@ public class MultiplicationGenerator : ITaskGenerator
         double taskAnswer = products[rnd.Next(products.Count)];
 
         TaskModel task = CreateMultiplication(taskAnswer, 50);
+        task.Grade = GradeEnum.GradeFive;
 
         return task;
     }
@@ -96,6 +102,7 @@ public class MultiplicationGenerator : ITaskGenerator
     public TaskModel CreateTaskFive(double taskAnswer)
     {
         TaskModel task = CreateMultiplication(taskAnswer, 50);
+        task.Grade = GradeEnum.GradeFive;
 
         return task;
     }
@@ -109,6 +116,7 @@ public class MultiplicationGenerator : ITaskGenerator
         double taskAnswer = products[rnd.Next(products.Count)];
 
         TaskModel task = CreateMultiplication(taskAnswer, 100);
+        task.Grade = GradeEnum.GradeSix;
 
         return task;
     }
@@ -116,6 +124,7 @@ public class MultiplicationGenerator : ITaskGenerator
     public TaskModel CreateTaskSix(double taskAnswer)
     {
         TaskModel task = CreateMultiplication(taskAnswer, 100);
+        task.Grade = GradeEnum.GradeSix;
 
         return task;
     }
@@ -158,7 +167,7 @@ public class MultiplicationGenerator : ITaskGenerator
         List<int> possibleFactors = MathLogic.GetFactors(Convert.ToInt16(taskAnswer));
         possibleFactors = MathLogic.LimitTwoFactors(possibleFactors, maxFactorValue, (int)taskAnswer);
 
-        task.TaskType = Enums.TaskTypeEnum.Multiplication;
+        task.TaskType = TaskTypeEnum.Multiplication;
         task.Answer = taskAnswer;
         Console.WriteLine(task.Answer);
         task.VariableOne = Convert.ToDouble(possibleFactors[rnd.Next(0, possibleFactors.Count)]);
