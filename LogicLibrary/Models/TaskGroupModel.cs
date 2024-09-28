@@ -1,8 +1,6 @@
 ﻿using LogicLibrary.Enums;
-using LogicLibrary.Validators;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +9,7 @@ namespace LogicLibrary.Models;
 public class TaskGroupModel
 {
     public List<TaskModel> Tasks { get; set; } = new();
-
-    [EnumNotZero(ErrorMessage = "Du mangler at vælge en opgavetype")]
     public TaskTypeEnum TasksType { get; set; }
-    [EnumNotZero(ErrorMessage = "Du mangler at vælge et klassetrin")]
     public GradeEnum TasksGrade { get; set; }
 
     public static List<GradeEnum> GetAvailableGrades(TaskTypeEnum taskType)

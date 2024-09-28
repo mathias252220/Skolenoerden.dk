@@ -56,7 +56,7 @@
 										}
 
 									</select>
-								
+
 									<select class="form-select" style="font-size: 1vw" @bind="taskPage[localVariableI*2+localVariableJ].TasksGrade">
 
 										<option value="@GradeEnum.Default">Vælg klassetrin</option>
@@ -66,10 +66,6 @@
 										}
 								
 									</select>
-										<div style="font-size: 0.8em">
-										<ValidationMessage For="() => taskPage[localVariableI*2+localVariableJ].TasksType" />
-										<ValidationMessage For="() => taskPage[localVariableI*2+localVariableJ].TasksGrade" />
-										</div>
 								</div>
 
 								<div class="col-1"/>
