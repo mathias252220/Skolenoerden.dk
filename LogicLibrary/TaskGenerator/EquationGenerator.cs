@@ -1,4 +1,5 @@
-﻿using LogicLibrary.Models;
+﻿using LogicLibrary.Enums;
+using LogicLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,15 @@ using System.Threading.Tasks;
 namespace LogicLibrary.TaskGenerator;
 public class EquationGenerator : ITaskGenerator
 {
+    private readonly Random rnd;
+
+    private static Random random = new();
+
+    public EquationGenerator(Random rnd = default)
+    {
+        this.rnd = rnd ?? new Random();
+    }
+
     public TaskModel CreateTaskZero()
     {
         throw new Exception(errorMessage);
@@ -80,50 +90,63 @@ public class EquationGenerator : ITaskGenerator
 
     public TaskModel CreateTaskSeven()
     {
-        Random rnd = new();
-
         //Answer is a whole number between 1 and 50.
-        double answer = rnd.Next(1, 51);
+        double answer = random.Next(1, 51);
 
-        return CreateEquation(7, answer);
+        TaskModel task = CreateEquation(7, answer);
+        task.Grade = GradeEnum.GradeSeven;
+
+        return task;
     }
 
     public TaskModel CreateTaskSeven(double answer)
     {
-        return CreateEquation(7, answer);
+        TaskModel task = CreateEquation(7, answer);
+        task.Grade = GradeEnum.GradeSeven;
+
+        return task;
+        
     }
 
     public TaskModel CreateTaskEight()
     {
-        Random rnd = new();
-
         //Answer is a whole number between 1 and 100
-        double answer = rnd.Next(1, 100);
+        double answer = random.Next(1, 100);
 
-        return CreateEquation(8, answer);
+        TaskModel task = CreateEquation(8, answer);
+        task.Grade = GradeEnum.GradeEight;
+
+        return task;
     }
 
     public TaskModel CreateTaskEight(double answer)
     {
-        return CreateEquation(8, answer);
+        TaskModel task = CreateEquation(8, answer);
+        task.Grade = GradeEnum.GradeEight;
+
+        return task;
     }
 
     public TaskModel CreateTaskNine()
     {
-        Random rnd = new();
-
         //Answer is a whole number between 1 and 20
-        double answer = rnd.Next(1, 20);
+        double answer = random.Next(1, 20);
 
-        return CreateEquation(9, answer);
+        TaskModel task = CreateEquation(9, answer);
+        task.Grade = GradeEnum.GradeNine;
+
+        return task;
     }
 
     public TaskModel CreateTaskNine(double answer)
     {
-        return CreateEquation(9, answer);
+        TaskModel task = CreateEquation(9, answer);
+        task.Grade = GradeEnum.GradeNine;
+
+        return task;
     }
 
-    private static TaskModel CreateEquation(int grade, double taskAnswer)
+    private TaskModel CreateEquation(int grade, double taskAnswer)
     {
         if (grade == 7)
         {
@@ -143,9 +166,8 @@ public class EquationGenerator : ITaskGenerator
         }
     }
 
-    private static TaskModel CreateEquationGradeSeven(double taskAnswer)
+    private TaskModel CreateEquationGradeSeven(double taskAnswer)
     {
-        Random rnd = new();
         int equationTypeInt = rnd.Next(0, 4);
 
         if (equationTypeInt == 0)
@@ -170,9 +192,8 @@ public class EquationGenerator : ITaskGenerator
         }
     }
 
-    private static TaskModel CreateEquationGradeEight(double taskAnswer)
+    private TaskModel CreateEquationGradeEight(double taskAnswer)
     {
-        Random rnd = new();
         int equationTypeInt = rnd.Next(4, 10);
 
         if (equationTypeInt == 4)
@@ -205,9 +226,8 @@ public class EquationGenerator : ITaskGenerator
         }
     }
 
-    private static TaskModel CreateEquationGradeNine(double taskAnswer)
+    private TaskModel CreateEquationGradeNine(double taskAnswer)
     {
-        Random rnd = new();
         int equationTypeInt = rnd.Next(10, 15);
 
         if (equationTypeInt == 10)
@@ -237,15 +257,14 @@ public class EquationGenerator : ITaskGenerator
     }
 
     //Equation of type a + x + b = c
-    private static TaskModel CreateEquationType0(double taskAnswer)
+    private TaskModel CreateEquationType0(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 51);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer + task.VariableTwo;
         task.Question = $"{task.VariableOne} + x + {task.VariableTwo} = {task.VariableThree}";
 
@@ -255,13 +274,12 @@ public class EquationGenerator : ITaskGenerator
     //Equation of type a + x - b = c
     private static TaskModel CreateEquationType1(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 51);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer - task.VariableTwo;
         task.Question = $"{task.VariableOne} + x - {task.VariableTwo} = {task.VariableThree}";
 
@@ -271,29 +289,27 @@ public class EquationGenerator : ITaskGenerator
     //Equation of type a * x + b = c
     private static TaskModel CreateEquationType2(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 11);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 11);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne * task.Answer + task.VariableTwo;
         task.Question = $"{task.VariableOne}x + {task.VariableTwo} = {task.VariableThree}";
 
         return task;
     }
 
-    //Equation of type a - b * x b = c
+    //Equation of type a - b * x = c
     private static TaskModel CreateEquationType3(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 11);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 51);
+        task.VariableTwo = random.Next(1, 11);
         task.VariableThree = task.VariableOne - (task.Answer * task.VariableTwo);
         task.Question = $"{task.VariableOne} - {task.VariableTwo}x = {task.VariableThree}";
 
@@ -303,13 +319,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a + (x + b) = c
     private static TaskModel CreateEquationType4(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 51);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer + task.VariableTwo;
         task.Question = $"{task.VariableOne} + (x + {task.VariableTwo}) = {task.VariableThree}";
 
@@ -319,13 +334,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a + (x - b) = c
     private static TaskModel CreateEquationType5(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 51);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne + task.Answer - task.VariableTwo;
         task.Question = $"{task.VariableOne} + (x - {task.VariableTwo}) = {task.VariableThree}";
 
@@ -335,13 +349,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a - (x + b) = c
     private static TaskModel CreateEquationType6(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 51);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne - task.Answer - task.VariableTwo;
         task.Question = $"{task.VariableOne} - (x + {task.VariableTwo}) = {task.VariableThree}";
 
@@ -351,13 +364,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a - (x - b) = c
     private static TaskModel CreateEquationType7(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 51);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 51);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne - task.Answer + task.VariableTwo;
         task.Question = $"{task.VariableOne} - (x - {task.VariableTwo}) = {task.VariableThree}";
 
@@ -367,13 +379,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a * (x + b) = c
     private static TaskModel CreateEquationType8(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 11);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 11);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne * (task.Answer + task.VariableTwo);
         task.Question = $"{task.VariableOne}(x + {task.VariableTwo}) = {task.VariableThree}";
 
@@ -383,13 +394,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a * (x - b) = c
     private static TaskModel CreateEquationType9(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 11);
-        task.VariableTwo = rnd.Next(1, 51);
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 11);
+        task.VariableTwo = random.Next(1, 51);
         task.VariableThree = task.VariableOne * (task.Answer - task.VariableTwo);
         task.Question = $"{task.VariableOne}(x - {task.VariableTwo}) = {task.VariableThree}";
 
@@ -399,13 +409,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a * (x + b) = c * x
     private static TaskModel CreateEquationType10(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableOne = rnd.Next(1, 11);
-        task.VariableTwo = rnd.Next(1, 11) * task.Answer;
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableOne = random.Next(1, 11);
+        task.VariableTwo = random.Next(1, 11) * task.Answer;
         task.VariableThree = task.VariableOne * (task.Answer + task.VariableTwo) / task.Answer;
 
         task.Question = $"{task.VariableOne}(x + {task.VariableTwo}) = {task.VariableThree}x";
@@ -416,13 +425,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a + b * x = c * (x + d)
     private static TaskModel CreateEquationType11(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableThree = rnd.Next(1, 11);
-        task.VariableFour = rnd.Next(1, 11) * task.Answer;
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableThree = random.Next(1, 11);
+        task.VariableFour = random.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableThree * (int)task.VariableFour; i++)
         {
             task.VariableOne = task.VariableThree * task.VariableFour / i;
@@ -442,13 +450,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a + b * (x - c) = d * x
     private static TaskModel CreateEquationType12(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableTwo = rnd.Next(1, 11);
-        task.VariableThree = rnd.Next(1, 11) * task.Answer;
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableTwo = random.Next(1, 11);
+        task.VariableThree = random.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableTwo * (int)task.VariableThree; i++)
         {
             task.VariableOne = task.VariableTwo * task.VariableThree / i;
@@ -468,13 +475,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a - b * (x + c) = d * x
     private static TaskModel CreateEquationType13(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableTwo = rnd.Next(1, 11);
-        task.VariableThree = rnd.Next(1, 11) * task.Answer;
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableTwo = random.Next(1, 11);
+        task.VariableThree = random.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableTwo * (int)task.VariableThree; i++)
         {
             task.VariableOne = task.VariableTwo * task.VariableThree / i;
@@ -494,13 +500,12 @@ public class EquationGenerator : ITaskGenerator
     // Equation of type a * x = b - c * (x - d)
     private static TaskModel CreateEquationType14(double taskAnswer)
     {
-        Random rnd = new();
         TaskModel task = new();
 
         task.Answer = taskAnswer;
-        task.TaskType = Enums.TaskTypeEnum.Equation;
-        task.VariableThree = rnd.Next(1, 11);
-        task.VariableFour = rnd.Next(1, 11) * task.Answer;
+        task.TaskType = TaskTypeEnum.Equation;
+        task.VariableThree = random.Next(1, 11);
+        task.VariableFour = random.Next(1, 11) * task.Answer;
         for (int i = 2; i <= (int)task.VariableThree * (int)task.VariableFour; i++)
         {
             task.VariableTwo = task.VariableThree * task.VariableFour / i;
