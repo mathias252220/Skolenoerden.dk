@@ -5,10 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fractions;
+using LogicLibrary.Enums;
 
 namespace LogicLibrary.TaskGenerator;
 public class FractionGenerator : ITaskGenerator
 {
+    private readonly Random rnd;
+
+    private static Random random = new();
+
+    public FractionGenerator(Random rnd = default)
+    {
+        this.rnd = rnd ?? new Random();
+    }
+
     public TaskModel CreateTaskZero()
     {
         throw new Exception(errorMessage);
@@ -81,46 +91,57 @@ public class FractionGenerator : ITaskGenerator
 
     public TaskModel CreateTaskSeven()
     {
-        Random rnd = new();
-
         //Answer is a reduced fraction with numerator and denominator between 1 and 10
-        Fraction answer = new Fraction(rnd.Next(1, 11), rnd.Next(1, 11));
+        Fraction answer = new Fraction(random.Next(1, 11), random.Next(1, 11));
 
-        return CreateFraction(answer, rnd.Next(0, 4), 10);
+        TaskModel task = CreateFraction(answer, rnd.Next(0, 4), 10);
+        task.Grade = GradeEnum.GradeSeven;
+
+        return task;
     }
 
     public TaskModel CreateTaskSeven(double taskAnswer)
     {
-        Random rnd = new();
+        TaskModel task = CreateFraction(Fraction.FromDoubleRounded(taskAnswer), rnd.Next(0, 4), 10);
+        task.Grade = GradeEnum.GradeSeven;
 
-        return CreateFraction(Fraction.FromDoubleRounded(taskAnswer), rnd.Next(0, 4), 10);
+        return task;
     }
 
     public TaskModel CreateTaskEight()
     {
-        return CreateTaskSeven();
+        TaskModel task = CreateTaskSeven();
+        task.Grade = GradeEnum.GradeEight;
+
+        return task;
     }
 
     public TaskModel CreateTaskEight(double taskAnswer)
     {
-        return CreateTaskSeven(taskAnswer);
+        TaskModel task = CreateTaskSeven(taskAnswer);
+        task.Grade = GradeEnum.GradeEight;
+
+        return task;
     }
 
     public TaskModel CreateTaskNine()
     {
-        Random rnd = new();
-
         //Answer is a reduced fraction with numerator and denominator between 1 and 20.
-        Fraction fraction = new Fraction(rnd.Next(1, 21), rnd.Next(1, 21));
+        Fraction fraction = new Fraction(random.Next(1, 21), random.Next(1, 21));
 
-        return CreateFraction(fraction, rnd.Next(0, 4), 20);
+        TaskModel task = CreateFraction(fraction, rnd.Next(0, 4), 20);
+
+        task.Grade = GradeEnum.GradeNine;
+
+        return task;
     }
 
     public TaskModel CreateTaskNine(double taskAnswer)
     {
-        Random rnd = new();
+        TaskModel task = CreateFraction(Fraction.FromDoubleRounded(taskAnswer), rnd.Next(0, 4), 20);
+        task.Grade = GradeEnum.GradeNine;
 
-        return CreateFraction(Fraction.FromDoubleRounded(taskAnswer), rnd.Next(0, 4), 20);
+        return task;
     }
 
     private static TaskModel CreateFraction(Fraction taskAnswer, int fractionType, int maxDivisor)
@@ -149,14 +170,13 @@ public class FractionGenerator : ITaskGenerator
 
     private static TaskModel CreateFractionType0(int maxDivisor, Fraction answer)
     {
-        Random rnd = new();
         TaskModel task = new();
         Fraction variableOne;
         Fraction variableTwo;
 
         do
         {
-            variableOne = new Fraction(rnd.Next(1, maxDivisor + 1), rnd.Next(1, maxDivisor + 2));
+            variableOne = new Fraction(random.Next(1, maxDivisor + 1), random.Next(1, maxDivisor + 2));
         } while (variableOne >= answer);
 
         task.Answer = (double)answer;
@@ -171,14 +191,14 @@ public class FractionGenerator : ITaskGenerator
 
     private static TaskModel CreateFractionType1(int maxDivisor, Fraction answer)
     {
-        Random rnd = new();
+        Random random = new();
         TaskModel task = new();
         Fraction variableOne;
         Fraction variableTwo;
 
         do
         {
-            variableOne = new Fraction(rnd.Next(1, maxDivisor + 2), rnd.Next(1, maxDivisor + 1));
+            variableOne = new Fraction(random.Next(1, maxDivisor + 2), random.Next(1, maxDivisor + 1));
         } while (variableOne <= answer);
 
         task.Answer = (double)answer;
@@ -193,14 +213,14 @@ public class FractionGenerator : ITaskGenerator
 
     private static TaskModel CreateFractionType2(int maxDivisor, Fraction answer)
     {
-        Random rnd = new();
+        Random random = new();
         TaskModel task = new();
         Fraction variableOne;
         Fraction variableTwo;
 
         task.Answer = (double)answer;
         task.TaskType = Enums.TaskTypeEnum.Fraction;
-        variableOne = new Fraction(rnd.Next(1, maxDivisor + 1), rnd.Next(1, maxDivisor + 1));
+        variableOne = new Fraction(random.Next(1, maxDivisor + 1), random.Next(1, maxDivisor + 1));
         task.VariableOne = (double)variableOne;
         variableTwo = answer / variableOne;
         task.VariableTwo = (double)variableTwo;
@@ -211,14 +231,14 @@ public class FractionGenerator : ITaskGenerator
 
     private static TaskModel CreateFractionType3(int maxDivisor, Fraction answer)
     {
-        Random rnd = new();
+        Random random = new();
         TaskModel task = new();
         Fraction variableOne;
         Fraction variableTwo;
 
         task.Answer = (double)answer;
         task.TaskType = Enums.TaskTypeEnum.Fraction;
-        variableOne = new Fraction(rnd.Next(1, maxDivisor + 1), rnd.Next(1, maxDivisor + 1));
+        variableOne = new Fraction(random.Next(1, maxDivisor + 1), random.Next(1, maxDivisor + 1));
         task.VariableOne = (double)variableOne;
         variableTwo = variableOne / answer;
         task.VariableTwo = (double)variableTwo;

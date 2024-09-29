@@ -86,11 +86,11 @@ public class LogicFour : ILogic
 		}
 		else if (possibleFactors.Count > 0 && task.Answer <= 1000)
 		{
-			task.TaskType = (TaskTypeEnum)rnd.Next(0, 3);
+			task.TaskType = (TaskTypeEnum)rnd.Next(1, 4);
 		}
 		else
 		{
-			task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
+			task.TaskType = (TaskTypeEnum)rnd.Next(1, 3);
 		}
 
         if (task.TaskType == TaskTypeEnum.Addition)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml;
 using System.Numerics;
+using LogicLibrary.Enums;
 
 namespace LogicLibrary.TaskGenerator;
 public class AdditionGenerator : ITaskGenerator
@@ -19,14 +20,15 @@ public class AdditionGenerator : ITaskGenerator
         double taskAnswer = rnd.Next(1, 41);
 
         TaskModel task = CreateAddition(taskAnswer, 100, 0);
+        task.Grade = GradeEnum.GradeZero;
 
         return task;
     }
 
     public TaskModel CreateTaskZero(double taskAnswer)
     {
-
         TaskModel task = CreateAddition(taskAnswer, 100, 0);
+        task.Grade = GradeEnum.GradeZero;
 
         return task;
     }
@@ -39,6 +41,7 @@ public class AdditionGenerator : ITaskGenerator
         double taskAnswer = rnd.Next(1, 101);
 
         TaskModel task = CreateAddition(taskAnswer, 100, 0);
+        task.Grade = GradeEnum.GradeOne;
 
         return task;
     }
@@ -46,18 +49,25 @@ public class AdditionGenerator : ITaskGenerator
     public TaskModel CreateTaskOne(double taskAnswer)
     {
         TaskModel task = CreateAddition(taskAnswer, 100, 0);
+        task.Grade = GradeEnum.GradeOne;
 
         return task;
     }
 
     public TaskModel CreateTaskTwo()
     {
-        return CreateTaskOne();
+        TaskModel task = CreateTaskOne();
+        task.Grade = GradeEnum.GradeTwo;
+
+        return task;
     }
 
     public TaskModel CreateTaskTwo(double taskAnswer)
     {
-        return CreateTaskOne(taskAnswer);
+        TaskModel task = CreateTaskOne(taskAnswer);
+        task.Grade = GradeEnum.GradeTwo;
+
+        return task;
     }
 
     public TaskModel CreateTaskThree()
@@ -68,6 +78,7 @@ public class AdditionGenerator : ITaskGenerator
         double taskAnswer = rnd.Next(1, 1001);
 
         TaskModel task = CreateAddition(taskAnswer, 1000, 0);
+        task.Grade = GradeEnum.GradeThree;
 
         return task;
     }
@@ -75,18 +86,25 @@ public class AdditionGenerator : ITaskGenerator
     public TaskModel CreateTaskThree(double taskAnswer)
     {
         TaskModel task = CreateAddition(taskAnswer, 1000, 0);
+        task.Grade = GradeEnum.GradeThree;
 
         return task;
     }
 
     public TaskModel CreateTaskFour()
     {
-        return CreateTaskThree();
+        TaskModel task = CreateTaskThree();
+        task.Grade = GradeEnum.GradeFour;
+
+        return task;
     }
 
     public TaskModel CreateTaskFour(double taskAnswer)
     {
-        return CreateTaskThree(taskAnswer);
+        TaskModel task = CreateTaskThree(taskAnswer);
+        task.Grade = GradeEnum.GradeFour;
+
+        return task;
     }
 
     public TaskModel CreateTaskFive()
@@ -102,6 +120,7 @@ public class AdditionGenerator : ITaskGenerator
         while (taskAnswer < 10);
 
         TaskModel task = CreateAddition(taskAnswer, 100, 2);
+        task.Grade = GradeEnum.GradeFive;
 
         return task;
     }
@@ -109,6 +128,7 @@ public class AdditionGenerator : ITaskGenerator
     public TaskModel CreateTaskFive(double taskAnswer)
     {
         TaskModel task = CreateAddition(taskAnswer, 100, 2);
+        task.Grade = GradeEnum.GradeFive;
 
         return task;
     }
@@ -125,6 +145,7 @@ public class AdditionGenerator : ITaskGenerator
         } while (taskAnswer < 100);
 
         TaskModel task = CreateAddition(taskAnswer, 1000, 2);
+        task.Grade = GradeEnum.GradeSix;
 
         return task;
     }
@@ -132,6 +153,7 @@ public class AdditionGenerator : ITaskGenerator
     public TaskModel CreateTaskSix(double taskAnswer)
     {
         TaskModel task = CreateAddition(taskAnswer, 1000, 2);
+        task.Grade = GradeEnum.GradeSix;
 
         return task;
     }

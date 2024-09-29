@@ -62,7 +62,7 @@ public class LogicTwo : ILogic
 
         ITaskGenerator taskGenerator;
 
-		task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
+		task.TaskType = (TaskTypeEnum)rnd.Next(1, 3);
 
         if (task.TaskType == TaskTypeEnum.Addition)
         {
