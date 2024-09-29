@@ -67,7 +67,7 @@ public class LogicOne : ILogic
 			}
 		}
 
-		task.TaskType = (TaskTypeEnum)rnd.Next(1, 3);
+		task.TaskType = (TaskTypeEnum)rnd.Next(0, 2);
         ITaskGenerator taskGenerator;
 
         if (task.TaskType == TaskTypeEnum.Addition)
