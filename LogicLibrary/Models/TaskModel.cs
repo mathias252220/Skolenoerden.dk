@@ -16,5 +16,4 @@ public class TaskModel
     public double VariableFour { get; set; } = 0;
     public string Question { get; set; }
     public TaskTypeEnum TaskType { get; set; }
-    public GradeEnum Grade { get; set; }
 }

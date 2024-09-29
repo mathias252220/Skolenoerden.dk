@@ -1,5 +1,4 @@
-﻿using LogicLibrary.Enums;
-using LogicLibrary.Models;
+﻿using LogicLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +56,6 @@ public class DivisionGenerator : ITaskGenerator
         double taskAnswer = rnd.Next(1, 11);
 
         TaskModel task = CreateDivision(taskAnswer, 10);
-        task.Grade = GradeEnum.GradeFour;
 
         return task;
     }
@@ -65,7 +63,6 @@ public class DivisionGenerator : ITaskGenerator
     public TaskModel CreateTaskFour(double taskAnswer)
     {
         TaskModel task = CreateDivision(taskAnswer, 10);
-        task.Grade = GradeEnum.GradeFour;
 
         return task;
     }
@@ -78,7 +75,6 @@ public class DivisionGenerator : ITaskGenerator
         double taskAnswer = rnd.Next(10, 101);
 
         TaskModel task = CreateDivision(taskAnswer, 10);
-        task.Grade = GradeEnum.GradeFive;
 
         return task;
     }
@@ -86,7 +82,6 @@ public class DivisionGenerator : ITaskGenerator
     public TaskModel CreateTaskFive(double taskAnswer)
     {
         TaskModel task = CreateDivision(taskAnswer, 10);
-        task.Grade = GradeEnum.GradeFive;
 
         return task;
     }
@@ -99,7 +94,6 @@ public class DivisionGenerator : ITaskGenerator
         double taskAnswer = rnd.Next(50, 251);
 
         TaskModel task = CreateDivision(taskAnswer, 10);
-        task.Grade = GradeEnum.GradeSix;
 
         return task;
     }
@@ -107,7 +101,6 @@ public class DivisionGenerator : ITaskGenerator
     public TaskModel CreateTaskSix(double taskAnswer)
     {
         TaskModel task = CreateDivision(taskAnswer, 10);
-        task.Grade = GradeEnum.GradeSix;
 
         return task;
     }
