@@ -21,7 +21,13 @@ a, .btn-link {
 }
 
 .page-background {
-    background-image:url("/Images/OpgaveBaggrund.png");
+    background-image:url("/Images/SkolenoerdenBaggrund.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.opgavegenerator-background {
+    background-image: url("/Images/OpgaveBaggrund.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }

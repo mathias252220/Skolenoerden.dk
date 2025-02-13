@@ -1,9 +1,11 @@
 .page {
     font-family: ComicSans;
-    background-color: #00CBDF;
+    color: black;
+    background: url("/Images/SkolenoerdenBaggrund.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
+    background-attachment: fixed;
 }
 
 @font-face {
@@ -11,15 +13,10 @@
     src: url(/Fonts/ComicSans.ttf);
 }
 
-.top-row {
-    background: rgba(0, 150, 255, 1);
-}
-
 .top-item {
     font-size: 1.5vw;
-    color: black;
-    align-items: center;
-    justify-content: center;
+    color: white;
+    text-align: center;
 } 
 
 .top-item ::deep .nav-link {
@@ -28,7 +25,11 @@
 
 .content {
     font-size: 1vw;
+    padding: 5vw;
+    background: rgb(255, 255, 255, 0.90);
+    min-height: 100vh;
 }
+
     .content ::deep .page-title{
         font-size: 3vw;
         text-align: center;
@@ -54,16 +55,19 @@
     .content ::deep .card-title {
         font-size: 1.5vw;
         text-align: center;
-        padding-bottom: 0.5vw
+        padding-bottom: 0.5vw;
+        color: white;
     }
 
     .content ::deep .card-text {
         font-size: 0.75vw;
+        color: white;
     }
 
     .content ::deep .card-date {
         font-size: 0.50vw;
         text-align: right;
+        color: white;
     }
 
     .content ::deep .image {
@@ -73,11 +77,12 @@
     .content ::deep .card {
         width: 95%;
         height: 25vw;
+        background: linear-gradient(45deg, oklab(33.7% -0.048 0.039), oklab(21.7% -0.054 0.043))
     }
 
     .content ::deep .card-img-top {
         height: 50%;
-        width: fit-content;
+        object-fit: contain;
         Display: block;
-        Margin: auto;
+        padding: 0.5vw;
     }
