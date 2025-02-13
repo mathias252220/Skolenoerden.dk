@@ -1,69 +1,40 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page col-12">
-
-    <div class="top-row fixed-top">
-
-        <div class="row">
-
-            <div class="col-1"/>
-
-            <div class="top-item col-2">
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="/Nyheder">
-                        <span>Nyheder</span>
-                    </NavLink>
-                </div>
-            </div>
-
-            <div class="top-item col-2">
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="/Aktiviteter">
-                        <span>Aktiviteter</span>
-                    </NavLink>
-                </div>
-            </div>
-
-            <div class="top-item col-3">
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="/SkolenoerdenAnbefaler">
-                        <span>Skolenørden Anbefaler</span>
-                    </NavLink>
-                </div>
-            </div>
-
-            <div class="top-item col-2">
-                <NavLink class="nav-link" href="/OmSkolenoerden">
-                    <span>Om Skolenørden</span>
-                </NavLink>
-            </div>
-
-            <div class="top-item col-2">
-                <NavLink class="nav-link" href="/Kontakt">
-                    <span>Kontakt</span>
-                </NavLink>
-            </div>
-
-            <div class="col-1"/>
-        </div>
-            
-
-    </div>
-    
     <div class="row">
         
-        <div class="col-1"/>
+        <div class="col-2"/>
 
-        <div class="col-10">
+        <div class="col-8">
+            <div class="row">
+                <div class="col-lg-1 "/>
+                <div class="col-lg-10 ">
+                    <nav id="navbar" class="navbar navbar-expand-lg mt-5">
+                        <div class="container-fluid d-flex flex-row justify-content-center">
+                            <div id="navbarNav">
+                                <ul class="fs-5 navbar-nav">
+                                    <li class="nav-item px-4">
+                                        <a href="/" class="top-item">Forside</a>
+                                    </li>
+                                    <li class="nav-item px-4">
+                                        <a href="/omskolenoerden" class="top-item">Om Skolenørden</a>
+                                    </li>
+                                    <li class="nav-item px-4">
+                                        <a href="/kontakt" class="top-item">Kontakt</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
 
+                    
+            </div>
             <div class="content col-12">
                 @Body
             </div>
-
         </div>
-
-        <div class="col-1"/>
-
-    </div>
-
+            
+        </div>
+    <div class="col-2"/>
 </div>
