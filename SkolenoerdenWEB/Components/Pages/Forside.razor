@@ -1,83 +1,65 @@
 ﻿@page "/"
 
-<PageTitle>Forside</PageTitle>
+<PageTitle>Skolenørden</PageTitle>
 
-<div class="row">
-    <div class="col-12">
-        <h1 class="page-title">Velkommen til Skolenørden!</h1>
-    </div>
-</div>
+<section class="padding-block-100">
+    <h2 class="page-title">Forside</h2>
+</section>
 
-<br>
+<section class="padding-block-500">
+    <div class="container">
+        <div class="grid-even-colums">
+            <a class="card" href="/nyheder">
+                <div class="card-header"/>
+                <img class="card-image" src="/Images/Forside/Newspaper.png" />
+                <div class="card-body">
+                    <h3 class="card-title">Nyheder</h3>
+                    <p class="card-text">De seneste opdateringer på Skolenørden.dk!</p>
+                </div>
+            </a>
 
-<div class="row">
-
-    <div class="col-md-4 col-6 py-3">
-        <div class="card">
-            <img class="card-img-top" src="/Images/Forside/Newspaper.png"/>
-            <div class="card-body">
-                <h3 class="card-title">Nyheder</h3>
-                <p class="card-text">De seneste opdateringer på Skolenørden.dk!</p>
-                <a href="/Nyheder" class="stretched-link"/>
-            </div>
+            <a class="card" href="/aktiviteter/posteloeb">
+                <div class="card-header"/>
+                <img class="card-image" src="/Images/Forside/Skattejagt.png" />
+                <div class="card-body">
+                    <h3 class="card-title">Posteløb</h3>
+                    <p class="card-text">Lav nemt og hurtigt et posteløb! 0. til 9. klasse!</p>
+                </div>
+            </a>
+            <a class="card" href="/aktiviteter/opgavegenerator">
+                <div class="card-header" />
+                <img class="card-image" src="/Images/Forside/Opgave.png" />
+                <div class="card-body">
+                    <h3 class="card-title">Opgavegenerator</h3>
+                    <p class="card-text">Lav nemt et skræddersyet sæt opgaver</p>
+                </div>
+            </a>
+            <a class="card" href="/aktiviteter/sortskaegsdagbog">
+                <div class="card-header" />
+                <img class="card-image" src="/Images/Forside/Dagbog.png" />
+                <div class="card-body">
+                    <h3 class="card-title">Sortskægs Dagbog</h3>
+                    <p class="card-text">Prøv et escape room i papirform! Anbefalet fra 6. klasse og opefter</p>
+                </div>
+            </a>
+            <a class="card" href="/aktiviteter/100gangestykker">
+                <div class="card-header" />
+                <img class="card-image" src="/Images/Forside/100Gangestykker.png" />
+                <div class="card-body">
+                    <h3 class="card-title">100 Gangestykker</h3>
+                    <p class="card-text">Sjov aktivitet til tabeltræning!</p>
+                </div>
+            </a>
+            <a class="card" href="/skolenoerdenanbefaler">
+                <div class="card-header" />
+                <img class="card-image" src="/Images/Forside/ThumbsUp.png" />
+                <div class="card-body">
+                    <h3 class="card-title">Skolenørden Anbefaler</h3>
+                    <p class="card-text">Find links til eksterne sider med et par kommentarer fra Skolenørden</p>
+                </div>
+            </a>
         </div>
     </div>
-
-    <div class="col-md-4 col-6 py-3">
-        <div class="card">
-            <img class="card-img-top" src="/Images/Forside/Skattejagt.png" />
-            <div class="card-body">
-                <h3 class="card-title">Posteløbsgenerator</h3>
-                <p class="card-text">Lav nemt og hurtigt et posteløb! 0. til 9. klasse!</p>
-                <a href="/Aktiviteter/Posteloeb" class="stretched-link" />
-            </div>
-        </div>
-    </div
-
-    <div class="col-md-4 col-6 py-3">
-        <div class="card">
-            <img class="card-img-top" src="/Images/Forside/Opgave.png" />
-            <div class="card-body">
-                <h3 class="card-title">Opgavegenerator</h3>
-                <p class="card-text">Lav nemt et skræddersyet sæt opgaver</p>
-                <a href="/Aktiviteter/Opgavegenerator" class="stretched-link" />
-            </div>
-        </div>
-    </div
-
-    <div class="col-md-4 col-6 py-3">
-        <div class="card">
-            <img class="card-img-top" src="/Images/Forside/Dagbog.png" />
-            <div class="card-body">
-                <h3 class="card-title">Sortskægs Dagbog</h3>
-                <p class="card-text">Prøv et escape room i papirform! Anbefalet fra 6. klasse og opefter</p>
-                <a href="/Aktiviteter/SortskaegsDagbog" class="stretched-link" />
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 col-6 py-3">
-        <div class="card">
-            <img class="card-img-top" src="/Images/Forside/100Gangestykker.png" />
-            <div class="card-body">
-                <h3 class="card-title">100 Gangestykker</h3>
-                <p class="card-text">Sjov aktivitet til tabeltræning!</p>
-                <a href="/Aktiviteter/100Gangestykker" class="stretched-link" />
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 col-6 py-3">
-        <div class="card">
-            <img class="card-img-top" src="/Images/Forside/ThumbsUp.png" />
-            <div class="card-body">
-                <h3 class="card-title">Skolenørden Anbefaler</h3>
-                <p class="card-text">Find links til eksterne sider med et par kommentarer fra Skolenørden</p>
-                <a href="/SkolenoerdenAnbefaler" class="stretched-link" />
-            </div>
-        </div>
-    </div>
-
-</div>
+</section>
 
 

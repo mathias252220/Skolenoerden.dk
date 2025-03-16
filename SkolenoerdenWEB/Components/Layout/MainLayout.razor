@@ -1,43 +1,24 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page col-12">
-    <div class="row">
-        
-        <div class="col-2"/>
+<header class="primary-header">
+    <NavMenu />
+</header>
 
-        <div class="col-8">
-            <div class="row">
-                <div class="col-lg-1 "/>
-                <div class="col-lg-10 ">
-                    <nav id="navbar" class="navbar navbar-expand-lg mt-5">
-                        <div class="container-fluid d-flex flex-row justify-content-center">
-                            <div id="navbarNav">
-                                <ul class="fs-5 navbar-nav">
-                                    <li class="nav-item px-4">
-                                        <a href="/" class="top-item">Forside</a>
-                                    </li>
-                                    <li class="nav-item px-4">
-                                        <a href="/aktiviteter" class="top-item">Aktiviteter</a>
-                                    </li>
-                                    <li class="nav-item px-4">
-                                        <a href="/omskolenoerden" class="top-item">Om Skolenørden</a>
-                                    </li>
-                                    <li class="nav-item px-4">
-                                        <a href="/kontakt" class="top-item">Kontakt</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
+<main>  
+    <div class="page">
+        <div class="banner">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -18.672 494.813 110" width="60%">
+                <defs>
+                    <path id="path-0" d="M 10 100 C 124.218 16.704 355.937 14.921 450 100"></path>
+                </defs>
+                <text class="banner-title"><textPath startOffset="52%" text-anchor="middle" href="#path-0">Skolenørden</textPath></text>
+            </svg>
+        </div>
+        @Body
+    </div>
+</main>
 
-                    
-            </div>
-            <div class="content col-12">
-                @Body
-            </div>
-        </div>
-            
-        </div>
-    <div class="col-2"/>
-</div>
+<footer class="footer">
+    <FooterMenu />
+</footer>
+
