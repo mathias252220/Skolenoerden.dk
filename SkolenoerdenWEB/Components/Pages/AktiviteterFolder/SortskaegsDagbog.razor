@@ -4,53 +4,44 @@
 
 <PageTitle>Sortskægs Dagbog</PageTitle>
 
-<div class="row">
-    <div class="col-12">
-        <h1 class="page-title">Sortskægs Dagbog</h1>
-    </div>
-</div>
+<section class="padding-block-100">
+    <h2 class="page-title">Aktiviteter</h2>
+</section>
 
-<br>
-<br>
-<br>
-
-<div class="row">
-    <div class="col-2" />
-
-    <div class="col-6">
-        <p>Kaptajn Sortskæg har efterladt sig sin dagbog, og det er nu op til dig at løse dens gåder og 
-            finde Sortskægs gemte skat!</p>
+<div class="article">
+    <h2 class="article-title">Sortskægs Dagbog</h2>
+    <div class="article-text">
+        <div class="article-image">
+            <img class="image" src="/Images/Forside/Dagbog.png" />
+        </div>
+        <p>
+            Kaptajn Sortskæg har efterladt sig sin dagbog, og det er nu op til dig at løse dens gåder og
+            finde Sortskægs gemte skat!
+        </p>
         <p>Klip, fold og tegn dig igennem alle gåderne!</p>
-        <p><b>Indhold:</b></p>
+        <br />
+        <p>Indhold:</p>
         <p>I denne aktivitet skal du bruge:</p>
         <p>- En "Dagbog" til hver elevgruppe (enkelsidet print)</p>
         <p>- En "Kopper" til hver elevgruppe</p>
         <p>- Et sæt "Rigtig/Forkert" til klassen (dobbelsidet print, klippet ud)</p>
         <p>- Papir, blyant og saks til hver elevgruppe</p>
+        <br />
+        <div class="generator-split-box">
+            <div class="article-button">
+                <div @onclick="DownloadDagbog">Dagbog</div>
+            </div>
 
-        <br>
+            <div class="article-button">
+                <div @onclick="DownloadKopper">Kopper</div>
+            </div>
 
-        <div class="row">
-            <div class="col-2">
-                <button class="btn btn-primary" @onclick="DownloadDagbog">Dagbog</button>
-            </div>
-            <div class="col-2">
-                <button class="btn btn-primary" @onclick="DownloadKopper">Kopper</button>
-            </div>
-            <div class="col-3">
-                <button class="btn btn-primary" @onclick="DownloadRigtigForkert">Rigtig/Forkert</button>
-            </div>
-            <div class="col-3">
-                <a class="btn btn-primary" href="/Vejledninger/SortskaegsDagbog">Vejledning</a>
+            <div class="article-button">
+                <div @onclick="DownloadRigtigForkert">Rigtig/Forkert</div>
             </div>
         </div>
-
-        <br>
-    </div>
-
-    <div class="col-4">
-        <div class="card">
-            <img class="image" src="/Images/Forside/Dagbog.png" />
+        <div class="article-button">
+            <a href="/Vejledninger/SortskaegsDagbog">Vejledning</a>
         </div>
     </div>
 </div>

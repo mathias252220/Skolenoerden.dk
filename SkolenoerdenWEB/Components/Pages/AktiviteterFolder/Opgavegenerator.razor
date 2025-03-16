@@ -5,123 +5,93 @@
 
 <PageTitle>Opgavegenerator</PageTitle>
 
-<div class="row">
-	<div class="col-12">
-		<h1 class="page-title">Opgavegenerator</h1>
-	</div>
-</div>
+<section class="padding-block-100">
+    <h2 class="page-title">Aktiviteter</h2>
+</section>
 
-<br><br><br>
+<EditForm method="post" Model="taskPage" OnValidSubmit="PrintPDF">
+    <ObjectGraphDataAnnotationsValidator />
 
-<div class="row">
-	<div class="col-12">
-		<a class="btn btn-primary vejledning" target="_blank" href="/Vejledninger/Opgavegenerator">Vejledning</a>
-	</div>
-</div>
+    <div class="article">
+        <h2 class="article-title">Opgavegenerator</h2>
+        <div class="article-button align-self-center">
+            <a href="/Vejledninger/Opgavegenerator">Vejledning</a>
+        </div>
 
-<br>
+        <div class="generator-background">
+            <h2 class="article-title headline">Skolenørdens opgaver</h2>
 
-<div class="row">
-	<div class="col-12">
+            @for (int i = 0; i < 5; i++)
+            {
+                var localVariableI = i;
 
-		<EditForm class="content" method="post" Model="taskPage" OnValidSubmit="PrintPDF">
-			<ObjectGraphDataAnnotationsValidator />
+                @for (int j = 0; j < 2; j++)
+                {
+                    var localVariableJ = j;
+                    string localClassName = $"opgave-{i * 2 + j}";
+                    <div class=@localClassName>
+                        <select class="select generator-select" @bind="taskPage[localVariableI*2+localVariableJ].TasksType">
 
-			<div class="row">
-			
-				<div class="col-3" />
+                            @foreach (TaskTypeEnum taskType in Enum.GetValues(typeof(TaskTypeEnum)))
+                            {
+                                <option value="@taskType">@TaskGroupModel.GetTaskTypeString(taskType)</option>
+                            }
 
-				<div class="col-6 opgavegenerator-background">
+                        </select>
 
-					<br /> <br /> <br /> <br /> <br />
+                        <select class="select generator-select" @bind="taskPage[localVariableI*2+localVariableJ].TasksGrade">
 
-					@for(int i = 0; i < 5; i++)
-					{
-						var localVariableI = i;
+                            <option value="@GradeEnum.Default">Vælg klassetrin</option>
+                            @foreach (GradeEnum grade in TaskGroupModel.GetAvailableGrades(taskPage[localVariableI * 2 + localVariableJ].TasksType))
+                            {
+                                <option value="@grade">@TaskGroupModel.GetGradeString(grade)</option>
+                            }
 
-						<div class="row">
+                        </select>
+                        <div>
+                            <ValidationMessage For="() => taskPage[localVariableI*2+localVariableJ].TasksType" />
+                            <ValidationMessage For="() => taskPage[localVariableI*2+localVariableJ].TasksGrade" />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
 
-							@for(int j = 0; j < 2; j++)
-							{
-								var localVariableJ = j;
+        <button class="article-button align-self-center" type="submit">Generer opgavesæt</button>
 
-								<div class="col-5">
-									<select class="form-select" style="font-size: 1vw" @bind="taskPage[localVariableI*2+localVariableJ].TasksType">
-
-										@foreach (TaskTypeEnum taskType in Enum.GetValues(typeof(TaskTypeEnum)))
-										{
-											<option value="@taskType">@TaskGroupModel.GetTaskTypeString(taskType)</option>
-										}
-
-									</select>
-								
-									<select class="form-select" style="font-size: 1vw" @bind="taskPage[localVariableI*2+localVariableJ].TasksGrade">
-
-										<option value="@GradeEnum.Default">Vælg klassetrin</option>
-										@foreach (GradeEnum grade in TaskGroupModel.GetAvailableGrades(taskPage[localVariableI * 2 + localVariableJ].TasksType))
-										{
-											<option value="@grade">@TaskGroupModel.GetGradeString(grade)</option>
-										}
-								
-									</select>
-										<div style="font-size: 0.8em">
-										<ValidationMessage For="() => taskPage[localVariableI*2+localVariableJ].TasksType" />
-										<ValidationMessage For="() => taskPage[localVariableI*2+localVariableJ].TasksGrade" />
-										</div>
-								</div>
-
-								<div class="col-1"/>
-							}
-
-						</div>
-						<br/> <br/> <br/>
-					}
-
-				</div>
-
-				<div class="col-3">
-					<button style="font-size: 1vw" class="btn btn-primary" type="submit">Generer opgavesæt</button>
-				</div>
-
-			</div>
-			
-
-		</EditForm>
-
-	</div>
-	
-</div>
+    </div>
+</EditForm>
 
 
 @code {
-	List<TaskGroupModel> taskPage = new();
+    List<TaskGroupModel> taskPage = new();
 
 
-	private void AddTaskGroups()
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			TaskGroupModel tempTaskGroup = new();
-			taskPage.Add(tempTaskGroup);
-		}
-	}
+    private void AddTaskGroups()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            TaskGroupModel tempTaskGroup = new();
+            taskPage.Add(tempTaskGroup);
+        }
+    }
 
-	private async Task PrintPDF()
-	{
-		TaskPageGenerator generator = new();
-		taskPage = generator.CreateTaskPage(taskPage);
+    private async Task PrintPDF()
+    {
+        TaskPageGenerator generator = new();
+        taskPage = generator.CreateTaskPage(taskPage);
 
-		PDFCreatorTaskPage pdfCreator = new();
+        PDFCreatorTaskPage pdfCreator = new();
 
-		var opgaveSaet = pdfCreator.CreateTaskPage(taskPage);
+        var opgaveSaet = pdfCreator.CreateTaskPage(taskPage);
 
-		byte[] data = opgaveSaet.GeneratePdf();
+        byte[] data = opgaveSaet.GeneratePdf();
 
-		await JS.InvokeVoidAsync("saveByteArray", "OpgaveSaet.pdf", data);
-	}
+        await JS.InvokeVoidAsync("saveByteArray", "OpgaveSaet.pdf", data);
+    }
 
-	protected override void OnInitialized()
-	{
-		AddTaskGroups();
-	}
+    protected override void OnInitialized()
+    {
+        AddTaskGroups();
+    }
 }

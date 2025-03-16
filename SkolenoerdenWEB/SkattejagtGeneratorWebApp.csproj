@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\Ressourcer\SortskaegsDagbog\Dagbog.pdf" />
+    <None Include="wwwroot\StyleSheet.css" />
   </ItemGroup>
 
 </Project>

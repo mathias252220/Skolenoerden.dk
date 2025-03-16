@@ -5,228 +5,190 @@
 
 <PageTitle>Skattejagt</PageTitle>
 
-<div class="row">
-	<div class="col-12">
-		<h1 class="page-title">Lav dit eget posteløb på ingen tid!</h1>
-	</div>
+<section class="padding-block-100">
+    <h2 class="page-title">Aktiviteter</h2>
+</section>
+
+<div class="article">
+    <h2 class="article-title">Posteløbsgenerator</h2>
+
+    <div class="article-button align-self-center">
+        <a href="/Vejledninger/Posteloeb">Vejledning</a>
+    </div>
+
+    <div class="generator-split-box">
+        <div class="generator-box">
+            <p role="status">Antal grupper: @groups.Count</p>
+
+            <div class="generator-split-box">
+                <div class="article-button" @onclick="AddGroup">+</div>
+
+                <div class="article-button" @onclick="SubtractGroup">-</div>
+            </div>
+        </div>
+
+        <div class="generator-box">
+            <p role="status">Antal poster: @outposts.Count</p>
+
+            <div class="generator-split-box">
+                <div class="article-button" @onclick="AddOutpost">+</div>
+
+                <div class="article-button" @onclick="SubtractOutpost">-</div>
+            </div>
+        </div>
+    </div>
+
+    <EditForm method="post" Model="outposts" OnValidSubmit="PrintPDF">
+        <ObjectGraphDataAnnotationsValidator />
+        <div class="generator-box">
+            <select class="select generator-select" @bind="gradeInput" required>
+                <option selected value="">Vælg klassetrin</option>
+                <option value="GradeZero">0. klasse</option>
+                <option value="GradeOne">1. klasse</option>
+                <option value="GradeTwo">2. klasse</option>
+                <option value="GradeThree">3. klasse</option>
+                <option value="GradeFour">4. klasse</option>
+                <option value="GradeFive">5. klasse</option>
+                <option value="GradeSix">6. klasse</option>
+                <option value="GradeSeven">7. klasse</option>
+                <option value="GradeEight">8. klasse</option>
+                <option value="GradeNine">9. klasse</option>
+            </select>
+        </div>
+
+        <div class="generator-split-box">
+            <div class="generator-box">
+                @foreach (OutpostModel outpost in outposts)
+                {
+                    @if (outposts.IndexOf(outpost) == 0)
+                    {
+                        <div class="generator-box">
+                            <p>Startpost (Fælles mødested)</p>
+                            <InputText class="input generator-input" @bind-Value="outpost.Name" placeholder="Navn på post" />
+                            <ValidationMessage For="() => outpost.Name" />
+                        </div>
+                    }
+                    else if (outposts.IndexOf(outpost) < 5 && outposts.IndexOf(outpost) != outposts.Count - 1)
+                    {
+                        <div class="generator-box">
+                            <p>Post @(outposts.IndexOf(outpost) + 1)</p>
+                            <InputText class="input generator-input" @bind-Value="outpost.Name" placeholder="Navn på post" />
+                            <ValidationMessage For="() => outpost.Name" />
+                        </div>
+                    }
+                    else if (outposts.IndexOf(outpost) < 5 && outposts.IndexOf(outpost) == outposts.Count - 1)
+                    {
+                        <div class="generator-box">
+                            <p>Sidste post (Fælles mødested)</p>
+                            <InputText class="input generator-input" @bind-Value="outpost.Name" placeholder="Navn på post" />
+                            <ValidationMessage For="() => outpost.Name" />
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="generator-box">
+                @foreach (OutpostModel outpost in outposts)
+                {
+                    @if (outposts.IndexOf(outpost) >= 5 && outposts.IndexOf(outpost) != outposts.Count - 1)
+                    {
+                        <div class="generator-box">
+                            <p>Post @(outposts.IndexOf(outpost) + 1)</p>
+                            <InputText class="input generator-input" @bind-Value="outpost.Name" placeholder="Navn på post" />
+                            <ValidationMessage For="() => outpost.Name" />
+                        </div>
+                    }
+                    else if (outposts.IndexOf(outpost) >= 5 && outposts.IndexOf(outpost) == outposts.Count - 1)
+                    {
+                        <div class="generator-box">
+                            <p>Sidste post</p>
+                            <InputText class="input generator-input" @bind-Value="outpost.Name" placeholder="Navn på post" />
+                            <ValidationMessage For="() => outpost.Name" />
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="generator-box">
+            <button class="article-button align-self-center" type="submit">Generer posteløb</button>
+        </div>
+    </EditForm>
+
 </div>
-
-<br><br><br>
-
-<div class="row">
-	<div class="col-12">
-		<a class="btn btn-primary vejledning" target="_blank" href="/Vejledninger/Posteloeb">Vejledning</a>
-	</div>
-</div>
-
-<br>
-
-<div class="row">
-	<div class="col-3"/>
-
-	<div class="col-6">
-		<div class="row">
-			<div class="col-4">
-				<label role="status">Antal grupper: @groups.Count</label>
-			</div>
-			<div class="col-2">
-				<button class="btn btn-primary" @onclick="AddGroup">+</button>
-			</div>
-			<div class="col-2">
-				<button class="btn btn-primary" @onclick="SubtractGroup">-</button>
-			</div>
-			<div class="col-4"/>
-		</div>
-	</div>
-
-	<div class="col-3"/>
-</div>
-
-<br>
-
-<div class="row">
-	<div class="col-3"/>
-
-	<div class="col-6">
-		<div class="row" style="align-items:center">
-			<div class="col-4">
-				<label  role="status">Antal poster: @outposts.Count</label>
-			</div>
-			<div class="col-2">
-				<button class="btn btn-primary" @onclick="AddOutpost">+</button>
-			</div>
-			<div class="col-2">
-				<button class="btn btn-primary" @onclick="SubtractOutpost">-</button>
-			</div>
-			<div class="col-4" />
-		</div>
-	</div>
-
-	<div class="col-3"/>
-</div>
-
-<br>
-
-<EditForm class="content" method="post" Model="outposts" OnValidSubmit="PrintPDF">
-	<ObjectGraphDataAnnotationsValidator />
-
-	<div class="row">
-		<div class="col-3"/>
-
-		<div class="col-6">
-		
-			<div class="row">
-				<div class="col-4">
-					<select class="form-select" style="font-size: 1vw" @bind="gradeInput" required>
-						<option selected value="">Vælg klassetrin</option>
-						<option value="GradeZero">0. klasse</option>
-						<option value="GradeOne">1. klasse</option>
-						<option value="GradeTwo">2. klasse</option>
-						<option value="GradeThree">3. klasse</option>
-						<option value="GradeFour">4. klasse</option>
-						<option value="GradeFive">5. klasse</option>
-						<option value="GradeSix">6. klasse</option>
-						<option value="GradeSeven">7. klasse</option>
-						<option value="GradeEight">8. klasse</option>
-						<option value="GradeNine">9. klasse</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="row">
-
-				<div class="col-6">
-					@foreach (OutpostModel outpost in outposts)
-					{
-						@if (outposts.IndexOf(outpost) == 0)
-						{
-							<br>
-							<p>Startpost (Fælles mødested)</p>
-							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
-							<ValidationMessage For="() => outpost.Name" />
-						}
-						else if (outposts.IndexOf(outpost) < 5 && outposts.IndexOf(outpost) != outposts.Count - 1)
-							{
-								<br>
-								<p>Post @(outposts.IndexOf(outpost) + 1)</p>
-								<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
-							<ValidationMessage For="() => outpost.Name" />
-						}
-						else if (outposts.IndexOf(outpost) < 5 && outposts.IndexOf(outpost) == outposts.Count - 1)
-						{
-							<br>
-							<p>Sidste post (Fælles mødested)</p>
-							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
-							<ValidationMessage For="() => outpost.Name" />
-						}
-					}
-				</div>
-
-				<div class="col-6">
-					@foreach (OutpostModel outpost in outposts)
-					{
-						@if (outposts.IndexOf(outpost) >= 5 && outposts.IndexOf(outpost) != outposts.Count - 1)
-						{
-							<br>
-							<p>Post @(outposts.IndexOf(outpost) + 1)</p>
-							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
-							<ValidationMessage For="() => outpost.Name" />
-						}
-						else if (outposts.IndexOf(outpost) >= 5 && outposts.IndexOf(outpost) == outposts.Count - 1)
-						{
-							<br>
-							<p>Sidste post</p>
-							<InputText style="font-size: 1vw" @bind-Value="outpost.Name" placeholder="Navn på post" class="form-control" />
-							<ValidationMessage For="() => outpost.Name" />
-						}
-					}
-				</div>
-			</div>
-
-			<br>
-
-		</div>
-
-		<div class="col-3">
-			<button style="font-size: 1vw" class="btn btn-primary" type="submit">Generer posteløb</button>
-		</div>
-	</div>
-
-</EditForm>
-
 
 
 @code {
-	List<OutpostModel> outposts = new List<OutpostModel>
-	{
-		new OutpostModel{},
-		new OutpostModel{}
-	};
+    List<OutpostModel> outposts = new List<OutpostModel>
+    {
+        new OutpostModel{},
+        new OutpostModel{}
+    };
 
-	List<GroupModel> groups = new List<GroupModel>
-	{
-		new GroupModel{}
-	};
+    List<GroupModel> groups = new List<GroupModel>
+    {
+        new GroupModel{}
+    };
 
-	string? gradeInput;
+    string? gradeInput;
 
-	ILogic? logic;
-	IPDFCreator? pdfCreator;
+    ILogic? logic;
+    IPDFCreator? pdfCreator;
 
-	private void AddOutpost()
-	{
-		if (outposts.Count < 10)
-		{
-			outposts.Insert(outposts.Count-1,new OutpostModel{});
-		}
-	}
+    private void AddOutpost()
+    {
+        if (outposts.Count < 10)
+        {
+            outposts.Insert(outposts.Count - 1, new OutpostModel { });
+        }
+    }
 
-	private void AddGroup()
-	{
-		if (groups.Count < 10)
-		{
-			groups.Add(new GroupModel{});
-		}
-	}
+    private void AddGroup()
+    {
+        if (groups.Count < 10)
+        {
+            groups.Add(new GroupModel { });
+        }
+    }
 
-	private void SubtractOutpost()
-	{
-		if (outposts.Count > 2)
-		{
-			outposts.RemoveAt(outposts.Count - 2);
-		}
-	}
+    private void SubtractOutpost()
+    {
+        if (outposts.Count > 2)
+        {
+            outposts.RemoveAt(outposts.Count - 2);
+        }
+    }
 
-	private void SubtractGroup()
-	{
-		if (groups.Count > 1)
-		{
-			groups.RemoveAt(groups.Count - 1);
-		}
-	}
+    private void SubtractGroup()
+    {
+        if (groups.Count > 1)
+        {
+            groups.RemoveAt(groups.Count - 1);
+        }
+    }
 
-	private async Task PrintPDF()
-	{
-		logic = logicFactory.Create(gradeInput);
-		KeyPageModel keyPage = logic.CreateKeyPage();
+    private async Task PrintPDF()
+    {
+        logic = logicFactory.Create(gradeInput);
+        KeyPageModel keyPage = logic.CreateKeyPage();
 
-		foreach (OutpostModel outpost in outposts)
-		{
-			logic.PopulateOutpost(outpost, keyPage);
-		}
+        foreach (OutpostModel outpost in outposts)
+        {
+            logic.PopulateOutpost(outpost, keyPage);
+        }
 
-		foreach (GroupModel group in groups)
-		{
-			group.groupNumber = groups.IndexOf(group) + 1;
-			group.firstOutpost = group.groupNumber;
-		}
+        foreach (GroupModel group in groups)
+        {
+            group.groupNumber = groups.IndexOf(group) + 1;
+            group.firstOutpost = group.groupNumber;
+        }
 
-		pdfCreator = pdfCreatorFactory.Create(logic.taskTypes);
+        pdfCreator = pdfCreatorFactory.Create(logic.taskTypes);
 
-		var posteloeb = pdfCreator.PrintFullPDF(keyPage, outposts, groups);
+        var posteloeb = pdfCreator.PrintFullPDF(keyPage, outposts, groups);
 
-		byte[] data = posteloeb.GeneratePdf();
+        byte[] data = posteloeb.GeneratePdf();
 
-		await JS.InvokeVoidAsync("saveByteArray", "Posteloeb.pdf", data);
-	}
+        await JS.InvokeVoidAsync("saveByteArray", "Posteloeb.pdf", data);
+    }
 }
