@@ -74,7 +74,7 @@ body {
     background-attachment: fixed;
 }
 
-@media (min-width: 90em) {
+@media (min-width: 80em) {
     .page {
         min-height: 1800px;
         background-attachment: scroll;
@@ -131,6 +131,13 @@ body {
     border-radius: 100vmax;
     padding: .5rem;
     justify-content: center;
+    height: 33%;
+}
+
+@media (min-width: 50em) {
+    .logo {
+        height: 100%
+    }
 }
 
 .logo-image {
@@ -150,7 +157,7 @@ body {
     padding: .5rem;
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
     color: var(--clr-neutral-100);
     text-align: center;
@@ -159,6 +166,12 @@ body {
     .nav-list a {
         text-decoration: none;
         font-size: var(--fs-500);
+    }
+
+    @media (min-width: 50em) {
+        .nav-list {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
 
 .nav-element {
@@ -223,13 +236,13 @@ body {
     justify-items: center;
 }
 
-@media (min-width: 60em) {
+@media (min-width: 50em) {
     .grid-card-colums {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (min-width: 90em) {
+@media (min-width: 80em) {
     .grid-card-colums {
         grid-template-columns: repeat(3, 1fr);
     }
