@@ -8,46 +8,53 @@
 :root {
     --clr-primary-400: hsl(111, 33%, 25%);
     --clr-primary-100: hsl(111, 33%, 40%);
-
     --clr-neutral-100: hsl(0, 0%, 100%);
     --clr-neutral-900: hsl(0 0% 0%);
-
     --clr-neutral-100-opaque: hsl(0, 0%, 100%, 80%);
-
     --clr-navigation-100: hsl(308, 75%, 90%);
-
     --ff-primary: "Comic Neue", serif;
     --ff-blackboard: "Blackboard";
     --ff-body: var(--ff-primary);
-    --ff-accent: var(--ff-primary);
-
     --fw-regular: 400;
     --fw-semi-bold: 550;
-    --fw-bold: 700;
+    --fw-bold: 900;
 
     --fs-300: .9rem;
-    --fs-400: 1rem;
+    --fs-350: 1rem;
+    --fs-400: 1.25rem;
     --fs-500: 1.5rem;
-    --fs-600: 2rem;
+    --fs-600: 1.25rem;
+    --fs-650: 1.75rem;
     --fs-700: 3rem;
-    --fs-800: 3.5rem;
+    --fs-800: 5rem;
     --fs-900: 7rem;
-
-    --fs-body: var(--fs-400);
-    --fs-primary-heading: var(--fs-700);
-    --fs-secondary-heading: var(--fs-700);
-    --fs-nav: var(--fs-500);
-    --fs-button: var(--fs-300);
+    --fs-950: 7rem;
+    
 
     --size-100: .25rem;
     --size-200: .5rem;
     --size-300: .75rem;
     --size-400: 1rem;
     --size-500: 1.25rem;
-    --size-600: 2rem;
+    --size-600: 1rem;
     --size-700: 3rem;
     --size-800: 4rem;
     --size-900: 5rem;
+}
+
+@media (min-width: 50em) {
+    :root {
+        --fs-300: .9rem;
+        --fs-350: 1rem;
+        --fs-400: 1.25rem;
+        --fs-500: 1.5rem;
+        --fs-600: 1.5rem;
+        --fs-650: 1.75rem;
+        --fs-700: 3rem;
+        --fs-800: 5rem;
+        --fs-900: 5rem;
+        --fs-950: 7rem;
+    }
 }
 
 /* general elements */
@@ -56,7 +63,7 @@
 }
 
 body {
-    font-size: var(--fs-body);
+    font-size: var(--fs-400);
     font-family: var(--ff-body);
     color: var(--clr-neutral-900);
 }
@@ -82,7 +89,7 @@ body {
 }
 
 .page-title {
-    font-size: var(--fs-primary-heading);
+    font-size: var(--fs-900);
     font-weight: var(--fw-semi-bold);
     color: var(--clr-navigation-100);
     text-align: center;
@@ -95,8 +102,6 @@ body {
     border: 0;
     border-radius: 100vmax;
     padding: 1em 2em;
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-button);
     color: var(--clr-neutral-100);
     background-color: var(--clr-primary-400);
     box-shadow: 0 1.25em 1em -1em var(--clr-primary-400);
@@ -104,15 +109,11 @@ body {
 
 .select {
     cursor: pointer;
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-button);
     color: var(--clr-neutral-100);
     background-color: var(--clr-primary-400);
 }
 
 .input {
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-500);
     color: var(--clr-neutral-100);
     background-color: var(--clr-primary-400);
 }
@@ -125,23 +126,17 @@ body {
 /* logo */
 .logo {
     display: grid;
-    width: fit-content;
+    width: 7rem;
+    height: 7rem;
     background: var(--clr-neutral-100);
     background-size: cover;
     border-radius: 100vmax;
     padding: .5rem;
     justify-content: center;
-    height: 33%;
-}
-
-@media (min-width: 50em) {
-    .logo {
-        height: 100%
-    }
 }
 
 .logo-image {
-    height: 5rem;
+    height: 6rem;
 }
 
 /* navigation bar */
@@ -161,11 +156,13 @@ body {
     gap: 2rem;
     color: var(--clr-neutral-100);
     text-align: center;
+    font-size: var(--fs-600);
 }
 
     .nav-list a {
         text-decoration: none;
-        font-size: var(--fs-500);
+        font-size: var(--fs-600);
+        font-weight: var(--fw-semi-bold);
     }
 
     @media (min-width: 50em) {
@@ -188,7 +185,7 @@ body {
 
 .banner-title {
     fill: var(--clr-neutral-100);
-    font-size: var(--fs-900);
+    font-size: var(--fs-950);
     font-family: var(--ff-blackboard);
 }
 
@@ -198,6 +195,7 @@ body {
     grid-template-columns: 1fr;
     padding: 0 0 0 1rem;
     background-color: var(--clr-primary-100);
+    font-size: var(--fs-400);
 }
 
 .footer-list {
@@ -213,7 +211,6 @@ body {
 
     .footer-list a {
         text-decoration: none;
-        font-size: var(--fs-100);
     }
 
 .footer-element {
@@ -261,7 +258,7 @@ body {
 
 .card-header {
     height: 1.5rem;
-    font-size: 0.50em;
+    font-size: var(--fs-300);
     text-align: right;
     color: var(--clr-neutral-100);
 }
@@ -279,16 +276,17 @@ body {
 
 .card-title {
     text-align: center;
-    font-size: var(--fs-600);
+    font-size: var(--fs-650);
     font-weight: var(--fw-bold);
     color: var(--clr-neutral-100);
-    margin: 1rem;
+    margin: 0.5rem;
 }
 
 .card-text {
     color: var(--clr-neutral-100);
     margin: 2rem;
     font-weight: var(--fw-bold);
+    font-size: var(--fs-350);
 }
 
 .card-link {
@@ -306,20 +304,31 @@ body {
 
 .article-title {
     justify-self: center;
-    font-size: var(--fs-800);
+    font-size: var(--fs-700);
     font-weight: var(--fw-bold);
     padding: 3rem;
 }
 
 .article-text {
-    padding: 4rem;
+    padding: 0 4rem 4rem 4rem;
     font-weight: var(--fw-semi-bold);
+    font-size: var(--fs-400);
 }
 
 .article-image {
-    float: right;
-    width: 20rem;
-    padding: 0 1rem 1rem 1rem;
+    float: none;
+    width: 50%;
+    padding: 0 0rem 3rem 0rem;
+    justify-self: center;
+}
+
+@media (min-width: 50em) {
+    .article-image {
+        float: right;
+        width: 40%;
+        padding: 0 0rem 0rem 4rem;
+        justify-self: auto;
+    }
 }
 
 .article-button {
@@ -340,7 +349,6 @@ body {
 
     .article-button a {
         text-decoration: none;
-        font-size: var(--fs-500);
     }
 
 /* generators */
@@ -633,42 +641,46 @@ textarea:not([rows]) {
     font-size: var(--fs-700)
 }
 
+.fs-800 {
+    font-size: var(--fs-800)
+}
+
 .fs-900 {
     font-size: var(--fs-900)
 }
 
-.padding-block-900 {
-    padding-block: var(--size-900);
-}
-
-.padding-block-800 {
-    padding-block: var(--size-800);
-}
-
-.padding-block-700 {
-    padding-block: var(--size-700);
-}
-
-.padding-block-600 {
-    padding-block: var(--size-600);
-}
-
-padding-block-500 {
-    padding-block: var(--size-500);
-}
-
-padding-block-400 {
-    padding-block: var(--size-400);
-}
-
-.padding-block-300 {
-    padding-block: var(--size-300);
+.padding-block-100 {
+    padding-block: var(--size-100);
 }
 
 .padding-block-200 {
     padding-block: var(--size-200);
 }
 
-.padding-block-100 {
-    padding-block: var(--size-100);
+.padding-block-300 {
+    padding-block: var(--size-300);
+}
+
+padding-block-400 {
+    padding-block: var(--size-400);
+}
+
+padding-block-500 {
+    padding-block: var(--size-500);
+}
+
+.padding-block-600 {
+    padding-block: var(--size-600);
+}
+
+.padding-block-700 {
+    padding-block: var(--size-700);
+}
+
+.padding-block-800 {
+    padding-block: var(--size-800);
+}
+
+.padding-block-900 {
+    padding-block: var(--size-900);
 }
