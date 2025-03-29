@@ -64,6 +64,10 @@
     justify-self: center;
 }
 
+.text-align-center {
+    text-align: center;
+}
+
 body {
     font-size: var(--fs-400);
     font-family: var(--ff-body);
@@ -103,10 +107,11 @@ body {
     cursor: pointer;
     border: 0;
     border-radius: 100vmax;
-    padding: 1em 2em;
+    padding: .5em 2em;
     color: var(--clr-neutral-100);
     background-color: var(--clr-primary-400);
     box-shadow: 0 1.25em 1em -1em var(--clr-primary-400);
+    text-decoration: none;
 }
 
 .select {
@@ -135,6 +140,7 @@ body {
     border-radius: 100vmax;
     padding: .5rem;
     justify-content: center;
+    justify-self: center;
 }
 
 .logo-image {
@@ -155,9 +161,15 @@ body {
 /* navigation bar */
 .nav-bar {
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     padding: 0 0 0 1rem;
     background-color: var(--clr-primary-100);
+}
+
+@media (min-width: 80em) {
+    .nav-bar {
+        grid-template-columns: 2fr 1fr 2fr;
+    }
 }
 
 .nav-list {
@@ -168,8 +180,6 @@ body {
     grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
     color: var(--clr-neutral-100);
-    text-align: center;
-    font-size: var(--fs-600);
 }
 
     .nav-list a {
@@ -179,13 +189,12 @@ body {
     }
 
 @media (min-width: 50em) {
-    .nav-bar {
-        grid-template-columns: 1fr 5fr 1fr;
-    }
     .nav-list {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+
 
 .nav-element {
     align-content: center;
@@ -352,7 +361,7 @@ body {
     cursor: pointer;
     border: 0;
     border-radius: 100vmax;
-    padding: 1em 2em;
+    padding: .5em 2em;
     width: fit-content;
     margin: 1rem;
     font-weight: var(--fw-bold);
@@ -360,20 +369,15 @@ body {
     color: var(--clr-neutral-100);
     background-color: var(--clr-primary-400);
     box-shadow: 0 1.25em 1em -1em var(--clr-primary-400);
-    align-content: center;
-    justify-self: center;
+    text-decoration: none;
 }
-
-    .article-button a {
-        text-decoration: none;
-    }
 
 /* generators */
 .generator-background {
     background: var(--clr-neutral-100);
     display: grid;
     justify-self: center;
-    height: 60rem;
+    height: fit-content;
     width: 100%;
     grid-template-areas:
         'headline headline'
