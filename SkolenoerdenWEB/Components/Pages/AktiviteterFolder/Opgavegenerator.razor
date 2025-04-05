@@ -19,7 +19,7 @@
             <a class="article-button" href="/Vejledninger/Opgavegenerator">Vejledning</a>
         </div>
 
-        <br/>
+        <br />
 
         <div class="generator-background">
             <h2 class="article-title headline">Skolenørdens opgaver</h2>
@@ -60,7 +60,7 @@
             }
         </div>
 
-        <br/>
+        <br />
 
         <button class="article-button align-self-center" type="submit">Generer opgavesæt</button>
 
@@ -69,34 +69,32 @@
 
 
 @code {
-    List<TaskGroupModel> taskPage = new();
-
-
-    private void AddTaskGroups()
+    List<TaskGroupModel> taskPage = new List<TaskGroupModel>
     {
-        for (int i = 0; i < 10; i++)
-        {
-            TaskGroupModel tempTaskGroup = new();
-            taskPage.Add(tempTaskGroup);
-        }
-    }
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{},
+        new TaskGroupModel{}
+    };
 
     private async Task PrintPDF()
     {
+        List<TaskGroupModel> tempTaskPage = taskPage;
         TaskPageGenerator generator = new();
-        taskPage = generator.CreateTaskPage(taskPage);
+        tempTaskPage = generator.CreateTaskPage(taskPage);
 
         PDFCreatorTaskPage pdfCreator = new();
 
-        var opgaveSaet = pdfCreator.CreateTaskPage(taskPage);
+        var opgaveSaet = pdfCreator.CreateTaskPage(tempTaskPage);
 
         byte[] data = opgaveSaet.GeneratePdf();
 
         await JS.InvokeVoidAsync("saveByteArray", "OpgaveSaet.pdf", data);
-    }
-
-    protected override void OnInitialized()
-    {
-        AddTaskGroups();
     }
 }
