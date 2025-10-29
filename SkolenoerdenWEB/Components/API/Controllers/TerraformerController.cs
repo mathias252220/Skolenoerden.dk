@@ -6,7 +6,7 @@ using System.IO;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SkattejagtGeneratorWebApp.Components.API.Controllers;
-[Route("api/[controller]")]
+[Route("api/Terraformer")]
 [ApiController]
 public class TerraformerController : ControllerBase
 {
