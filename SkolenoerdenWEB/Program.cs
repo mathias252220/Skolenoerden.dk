@@ -10,10 +10,13 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddLogicFactory();
 builder.Services.AddPDFCreatorFactory();
+builder.Services.AddControllers();
+
 
 var app = builder.Build();
 
 QuestPDF.Settings.License = LicenseType.Community;
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -25,10 +28,14 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapControllers();
 
 app.Run();
