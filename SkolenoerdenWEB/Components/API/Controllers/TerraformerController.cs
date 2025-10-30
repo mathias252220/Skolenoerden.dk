@@ -32,52 +32,50 @@ public class TerraformerController : ControllerBase
             returnString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameName + ".json");
         }
 
-        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/lastAccessedGame2.txt", gameNameInput);
-
         return returnString;
     }
 
     // POST api/Terraformer
     [HttpPost]
     [Consumes("application/json")]
-    public void Post([FromBody] JsonElement gameSaveRaw)
+    public string Post([FromBody] JsonElement gameSaveRaw)
     {
         var gameSaveJson = gameSaveRaw.GetRawText();
-        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/lastSavedGame2.json", gameSaveJson);
-        //GameSaveModel gameSave = JsonConvert.DeserializeObject<GameSaveModel>(gameSaveJson);
 
-        //string returnString;
+        GameSaveModel gameSave = JsonConvert.DeserializeObject<GameSaveModel>(gameSaveJson);
 
-        //string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
-        //GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
+        string returnString;
 
-        //if (!gameNameList.gameNames.Contains(gameSave.gameCode))
-        //{
-        //    gameNameList.gameNames.Add(gameSave.gameCode);
-        //    string updatedGameNamesJson = JsonConvert.SerializeObject(gameNameList, Formatting.Indented);
-        //    System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json", updatedGameNamesJson);
-        //    System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
-        //    returnString = "GameCreated";
-        //}
-        //else
-        //{
-        //    string oldGameSaveJson = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json");
-        //    GameSaveModel oldGameSave = JsonConvert.DeserializeObject<GameSaveModel>(oldGameSaveJson);
+        string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
+        GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
 
-        //    if (gameSave.gameMasterCode == oldGameSave.gameMasterCode)
-        //    {
-        //        string newGameSaveJson = JsonConvert.SerializeObject(gameSave, Formatting.Indented);
-        //        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
-        //        returnString = "GameSaved";
-        //    }
-        //    else
-        //    {
-        //        returnString = "WrongGameMasterCodeOrGameExists";
-        //    }
+        if (!gameNameList.gameNames.Contains(gameSave.gameCode))
+        {
+            gameNameList.gameNames.Add(gameSave.gameCode);
+            string updatedGameNamesJson = JsonConvert.SerializeObject(gameNameList, Formatting.Indented);
+            System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json", updatedGameNamesJson);
+            System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
+            returnString = "GameCreated";
+        }
+        else
+        {
+            string oldGameSaveJson = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json");
+            GameSaveModel oldGameSave = JsonConvert.DeserializeObject<GameSaveModel>(oldGameSaveJson);
 
-        //}
+            if (gameSave.gameMasterCode == oldGameSave.gameMasterCode)
+            {
+                string newGameSaveJson = JsonConvert.SerializeObject(gameSave, Formatting.Indented);
+                System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
+                returnString = "GameSaved";
+            }
+            else
+            {
+                returnString = "WrongGameMasterCodeOrGameExists";
+            }
 
-        //return returnString;
+        }
+
+        return returnString;
 
     }
 }
