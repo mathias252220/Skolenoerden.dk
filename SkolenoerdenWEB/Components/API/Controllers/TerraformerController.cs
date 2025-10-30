@@ -31,7 +31,9 @@ public class TerraformerController : ControllerBase
             returnString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameName + ".json");
         }
 
-            return returnString;
+        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/lastAccessedGame.txt", gameNameInput);
+
+        return returnString;
     }
 
     // POST api/Terraformer
