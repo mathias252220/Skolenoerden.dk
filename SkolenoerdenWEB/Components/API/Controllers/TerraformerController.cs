@@ -36,11 +36,9 @@ public class TerraformerController : ControllerBase
 
     // POST api/Terraformer
     [HttpPost]
-    public string Put([FromBody] string gameSaveString)
+    public string Post([FromBody] GameSaveModel gameSave)
     {
         string returnString;
-
-        GameSaveModel gameSave = JsonConvert.DeserializeObject<GameSaveModel>(gameSaveString);
 
         string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
         GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
