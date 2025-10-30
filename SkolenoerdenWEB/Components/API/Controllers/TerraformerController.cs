@@ -36,31 +36,39 @@ public class TerraformerController : ControllerBase
 
     // POST api/Terraformer
     [HttpPost]
-    public string Post([FromBody] string gameNameInput, string gameSaveInput, string gameMasterCodeInput)
+    public string Post([FromBody] GameSaveModel gameSave)
     {
-        string gameString = gameSaveInput;
+        string returnString;
 
-        if (gameSaveInput == "newGame")
+        string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
+        GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
+
+        if (!gameNameList.GameNames.Contains(gameSave.gameCode))
         {
-            string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
+            gameNameList.GameNames.Add(gameSave.gameCode);
+            string updatedGameNamesJson = JsonConvert.SerializeObject(gameNameList, Formatting.Indented);
+            System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json", updatedGameNamesJson);
+            returnString = "GameCreated";
+        }
+        else
+        {
+            string oldGameSaveJson = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json");
+            GameSaveModel oldGameSave = JsonConvert.DeserializeObject<GameSaveModel>(oldGameSaveJson);
 
-            GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
-
-            if (gameNameList.GameNames.FirstOrDefault(name => name == gameNameInput) == null)
+            if (gameSave.gameMasterCode == oldGameSave.gameMasterCode)
             {
-                GameSaveModel newGame = new GameSaveModel
-                {
-                    gameCode = gameNameInput,
-                    gameMasterCode = gameMasterCodeInput,
-                    teams = new List<TeamModel>()
-                };
-
-                gameString = JsonConvert.SerializeObject(newGame);
+                string newGameSaveJson = JsonConvert.SerializeObject(gameSave, Formatting.Indented);
+                System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", newGameSaveJson);
+                returnString = "GameSaved";
             }
+            else
+            {
+                returnString = "WrongGameMasterCodeOrGameExists";
+            }
+
         }
 
-        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameNameInput + ".json", gameString);
+        return returnString;
 
-        return gameString;
     }
 }
