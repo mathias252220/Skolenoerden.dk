@@ -10,11 +10,13 @@ namespace SkattejagtGeneratorWebApp.Components.API.Controllers;
 [ApiController]
 public class TerraformerController : ControllerBase
 {
+    string wwwrootPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
     // GET: api/Terraformer
     [HttpGet]
     public string Get(string gameNameInput)
     {
-        string jsonString = System.IO.File.ReadAllText("/Components/API/TerraformerSaveData/gameNames.json");
+        string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
         GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
 
         string returnString;
@@ -26,7 +28,7 @@ public class TerraformerController : ControllerBase
         }
         else
         {
-            returnString = System.IO.File.ReadAllText("/Components/API/TerraformerSaveData/" + gameName + ".json");
+            returnString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameName + ".json");
         }
 
             return returnString;
@@ -40,7 +42,7 @@ public class TerraformerController : ControllerBase
 
         if (gameSave == "newGame")
         {
-            string jsonString = System.IO.File.ReadAllText("/Components/API/TerraformerSaveData/gameNames.json");
+            string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
 
             GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
 
@@ -57,7 +59,7 @@ public class TerraformerController : ControllerBase
             }
         }
 
-        System.IO.File.WriteAllText("/Components/API/TerraformerSaveData/" + gameName + ".json", gameString);
+        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameName + ".json", gameString);
 
         return gameString;
     }
