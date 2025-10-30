@@ -14,6 +14,12 @@ builder.Services.AddControllers();
 
 
 var app = builder.Build();
+app.UseCors(policy =>
+{
+    policy.AllowAnyOrigin()
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+});
 
 QuestPDF.Settings.License = LicenseType.Community;
 
