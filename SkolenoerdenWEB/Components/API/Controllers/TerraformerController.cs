@@ -36,22 +36,22 @@ public class TerraformerController : ControllerBase
 
     // POST api/Terraformer
     [HttpPost]
-    public string Post([FromBody] string gameName, string gameSave, string gameMasterCode)
+    public string Post([FromBody] string gameNameInput, string gameSaveInput, string gameMasterCodeInput)
     {
-        string gameString = gameSave;
+        string gameString = gameSaveInput;
 
-        if (gameSave == "newGame")
+        if (gameSaveInput == "newGame")
         {
             string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
 
             GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
 
-            if (gameNameList.GameNames.FirstOrDefault(name => name == gameName) == null)
+            if (gameNameList.GameNames.FirstOrDefault(name => name == gameNameInput) == null)
             {
                 GameSaveModel newGame = new GameSaveModel
                 {
-                    gameCode = gameName,
-                    gameMasterCode = gameMasterCode,
+                    gameCode = gameNameInput,
+                    gameMasterCode = gameMasterCodeInput,
                     teams = new List<TeamModel>()
                 };
 
@@ -59,7 +59,7 @@ public class TerraformerController : ControllerBase
             }
         }
 
-        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameName + ".json", gameString);
+        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameNameInput + ".json", gameString);
 
         return gameString;
     }
