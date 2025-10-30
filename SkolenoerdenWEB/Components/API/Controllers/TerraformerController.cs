@@ -40,43 +40,44 @@ public class TerraformerController : ControllerBase
     // POST api/Terraformer
     [HttpPost]
     [Consumes("application/json")]
-    public string Post([FromBody] JsonElement gameSaveRaw)
+    public void Post([FromBody] JsonElement gameSaveRaw)
     {
         var gameSaveJson = gameSaveRaw.GetRawText();
-        GameSaveModel gameSave = JsonConvert.DeserializeObject<GameSaveModel>(gameSaveJson);
+        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/lastSavedGame2.json", gameSaveJson);
+        //GameSaveModel gameSave = JsonConvert.DeserializeObject<GameSaveModel>(gameSaveJson);
 
-        string returnString;
+        //string returnString;
 
-        string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
-        GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
+        //string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
+        //GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
 
-        if (!gameNameList.gameNames.Contains(gameSave.gameCode))
-        {
-            gameNameList.gameNames.Add(gameSave.gameCode);
-            string updatedGameNamesJson = JsonConvert.SerializeObject(gameNameList, Formatting.Indented);
-            System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json", updatedGameNamesJson);
-            System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
-            returnString = "GameCreated";
-        }
-        else
-        {
-            string oldGameSaveJson = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json");
-            GameSaveModel oldGameSave = JsonConvert.DeserializeObject<GameSaveModel>(oldGameSaveJson);
+        //if (!gameNameList.gameNames.Contains(gameSave.gameCode))
+        //{
+        //    gameNameList.gameNames.Add(gameSave.gameCode);
+        //    string updatedGameNamesJson = JsonConvert.SerializeObject(gameNameList, Formatting.Indented);
+        //    System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json", updatedGameNamesJson);
+        //    System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
+        //    returnString = "GameCreated";
+        //}
+        //else
+        //{
+        //    string oldGameSaveJson = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json");
+        //    GameSaveModel oldGameSave = JsonConvert.DeserializeObject<GameSaveModel>(oldGameSaveJson);
 
-            if (gameSave.gameMasterCode == oldGameSave.gameMasterCode)
-            {
-                string newGameSaveJson = JsonConvert.SerializeObject(gameSave, Formatting.Indented);
-                System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
-                returnString = "GameSaved";
-            }
-            else
-            {
-                returnString = "WrongGameMasterCodeOrGameExists";
-            }
+        //    if (gameSave.gameMasterCode == oldGameSave.gameMasterCode)
+        //    {
+        //        string newGameSaveJson = JsonConvert.SerializeObject(gameSave, Formatting.Indented);
+        //        System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/" + gameSave.gameCode + ".json", gameSaveJson);
+        //        returnString = "GameSaved";
+        //    }
+        //    else
+        //    {
+        //        returnString = "WrongGameMasterCodeOrGameExists";
+        //    }
 
-        }
+        //}
 
-        return returnString;
+        //return returnString;
 
     }
 }
