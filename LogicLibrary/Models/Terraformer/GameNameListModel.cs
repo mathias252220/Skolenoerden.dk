@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace LogicLibrary.Models.Terraformer;
 public class GameNameListModel
 {
-    public List<string> GameNames;
+    public List<string> gameNames;
 }

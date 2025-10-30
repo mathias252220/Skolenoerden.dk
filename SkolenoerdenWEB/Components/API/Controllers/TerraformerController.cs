@@ -20,7 +20,7 @@ public class TerraformerController : ControllerBase
         GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
 
         string returnString;
-        string gameName = gameNameList.GameNames.FirstOrDefault(name => name == gameNameInput).ToString();
+        string gameName = gameNameList.gameNames.FirstOrDefault(name => name == gameNameInput).ToString();
 
         if (gameName == null)
         {
@@ -43,9 +43,9 @@ public class TerraformerController : ControllerBase
         string jsonString = System.IO.File.ReadAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json");
         GameNameListModel gameNameList = JsonConvert.DeserializeObject<GameNameListModel>(jsonString);
 
-        if (!gameNameList.GameNames.Contains(gameSave.gameCode))
+        if (!gameNameList.gameNames.Contains(gameSave.gameCode))
         {
-            gameNameList.GameNames.Add(gameSave.gameCode);
+            gameNameList.gameNames.Add(gameSave.gameCode);
             string updatedGameNamesJson = JsonConvert.SerializeObject(gameNameList, Formatting.Indented);
             System.IO.File.WriteAllText(wwwrootPath + "/TerraformerSaveData/gameNames.json", updatedGameNamesJson);
             returnString = "GameCreated";
