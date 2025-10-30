@@ -36,7 +36,7 @@ public class TerraformerController : ControllerBase
 
     // POST api/Terraformer
     [HttpPost]
-    public string Post([FromBody] string gameSaveString)
+    public string Put([FromBody] string gameSaveString)
     {
         string returnString;
 
