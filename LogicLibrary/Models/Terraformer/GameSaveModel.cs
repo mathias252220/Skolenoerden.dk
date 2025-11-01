@@ -6,4 +6,5 @@ public class GameSaveModel
     public string gameCode;
     public string gameMasterCode;
     public List<TeamModel> teams;
+    public bool newGame;
 }

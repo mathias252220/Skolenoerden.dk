@@ -27,8 +27,7 @@
   <ItemGroup>
     <None Include="wwwroot\Ressourcer\SortskaegsDagbog\Dagbog.pdf" />
     <None Include="wwwroot\StyleSheet.css" />
-    <None Include="wwwroot\TerraformerSaveData\gameNames.json.meta" />
-    <None Include="wwwroot\TerraformerSaveData\Mathias.json.meta" />
+    <None Include="wwwroot\TerraformerSaveData\gameCodes.json.meta" />
   </ItemGroup>
 
 </Project>

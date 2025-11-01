@@ -4,7 +4,8 @@ namespace LogicLibrary.Models.Terraformer
 {
     public class TeamModel
     {
-        public string name;
+        public string teamName;
+        public string teamCode;
         public InventoryAmountModel inventory;
         public AgeEnum age;
     }

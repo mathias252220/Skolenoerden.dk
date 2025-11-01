@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LogicLibrary.Models.Terraformer;
-public class GameNameListModel
+public class GameCodeListModel
 {
-    public List<string> gameNames;
+    public List<string> gameCodes;
 }
