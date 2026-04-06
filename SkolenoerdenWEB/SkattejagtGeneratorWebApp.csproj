@@ -22,12 +22,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\SkolenoerdenAnbefaler\" />
+    <Folder Include="wwwroot\TerraformerSaveData\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\Ressourcer\SortskaegsDagbog\Dagbog.pdf" />
     <None Include="wwwroot\StyleSheet.css" />
-    <None Include="wwwroot\TerraformerSaveData\gameCodes.json.meta" />
   </ItemGroup>
 
 </Project>

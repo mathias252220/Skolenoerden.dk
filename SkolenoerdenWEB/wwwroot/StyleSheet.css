@@ -161,14 +161,14 @@ body {
 /* navigation bar */
 .nav-bar {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr;
     padding: 0 0 0 1rem;
     background-color: var(--clr-primary-100);
 }
 
 @media (min-width: 80em) {
     .nav-bar {
-        grid-template-columns: 2fr 1fr 2fr;
+        grid-template-columns: 1fr 3fr 1fr;
     }
 }
 
@@ -188,9 +188,9 @@ body {
         font-weight: var(--fw-semi-bold);
     }
 
-@media (min-width: 50em) {
+@media (min-width: 70em) {
     .nav-list {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
